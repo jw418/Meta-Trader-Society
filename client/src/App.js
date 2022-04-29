@@ -18,6 +18,10 @@ const App = () => {
     const web3 = await getWeb3()
     const accounts = await web3.eth.getAccounts()
     const networkId = await web3.eth.net.getId();
+    const deployedNetwork = SimpleStorageContract.networks[networkId]
+    const contract = await new web3.eth.Contract(
+      SimpleStorageContract.abi, SimpleStorageContract.address
+    )
 
     setWeb3(web3)
     setAccouts(accounts)
