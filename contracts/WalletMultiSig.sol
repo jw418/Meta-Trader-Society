@@ -1,0 +1,180 @@
+pragma solidity >=0.4.21 <8.10.0;
+
+contract MultiSig {
+    event Desposit(address indexed sender, uint256 amount, uint256 balance);
+    event TransactionSubmit(
+        address indexed owner,
+        uint256 transactionIndex,
+        address to,
+        uint256 value
+    );
+    event ConfirmationRevoke(address indexed sender, uint256 transactionIndex);
+    event ConfirmeTransaction(address indexed sender, uint256 transactionIndex);
+
+    mapping(address => bool) public isOwner;
+    mapping(uint256 => mapping(address => bool)) public isConfirmed;
+    mapping(address => uint256) lastTimeValided;
+    uint256 public numConfirmationsRequired;
+    address[] public owners;
+    bool canBeAlone = false;
+
+    struct Transaction {
+        address to;
+        uint256 value;
+        bool executed;
+        uint256 numConfirmations;
+    }
+
+    Transaction[] public transactions;
+
+    modifier onlyOwner() {
+        require(isOwner[msg.sender], "not owner");
+        _;
+    }
+
+    modifier transactionExists(uint256 transactionIndex) {
+        require(transactionIndex < transactions.length, "tx does not exist");
+        _;
+    }
+
+    modifier notExecuted(uint256 transactionIndex) {
+        require(
+            !transactions[transactionIndex].executed,
+            "tx already executed"
+        );
+        _;
+    }
+
+    constructor(address[] memory _owners, uint256 _numConfirmationsRequired) {
+        require(_owners.length > 0, "owners required");
+        require(
+            _numConfirmationsRequired > 0 &&
+                _numConfirmationsRequired <= _owners.length,
+            "invalid number of required confirmations"
+        );
+
+        for (uint256 i = 0; i < _owners.length; i++) {
+            address owner = _owners[i];
+
+            require(owner != address(0), "invalid owner");
+            require(!isOwner[owner], "owner not unique");
+
+            isOwner[owner] = true;
+            owners.push(owner);
+        }
+
+        numConfirmationsRequired = _numConfirmationsRequired;
+    }
+
+    receive() external payable {
+        emit Desposit(msg.sender, msg.value, address(this).balance);
+    }
+
+    function SubmitTransaction(address _to, uint256 _value) public onlyOwner {
+        uint256 transactionIndex = transactions.length;
+
+        transactions.push(
+            Transaction({
+                to: _to,
+                value: _value,
+                executed: false,
+                numConfirmations: 0
+            })
+        );
+
+        emit TransactionSubmit(msg.sender, transactionIndex, _to, _value);
+    }
+
+    function confirmTransaction(uint256 transactionIndex)
+        public
+        onlyOwner
+        transactionExists(transactionIndex)
+        notExecuted(transactionIndex)
+    {
+        Transaction storage transaction = transactions[transactionIndex];
+        transaction.numConfirmations += 1;
+        isConfirmed[transactionIndex][msg.sender] = true;
+
+        emit ConfirmeTransaction(msg.sender, transactionIndex);
+    }
+
+    function executeTransaction(uint256 transactionIndex)
+        public
+        onlyOwner
+        transactionExists(transactionIndex)
+        notExecuted(transactionIndex)
+    {
+        Transaction storage transaction = transactions[transactionIndex];
+
+        verifyValidateTime();
+        if (canBeAlone) {
+            (bool success, ) = transaction.to.call{value: transaction.value}(
+                ""
+            );
+            require(success, "transaction failed");
+        } else {
+            require(
+                transaction.numConfirmations >= numConfirmationsRequired,
+                "cannot exucute the transaction"
+            );
+
+            transaction.executed = true;
+
+            (bool success, ) = transaction.to.call{value: transaction.value}(
+                ""
+            );
+            require(success, "transaction failed");
+        }
+    }
+
+    function revokeConfirmation(uint256 transactionIndex)
+        public
+        onlyOwner
+        transactionExists(transactionIndex)
+        notExecuted(transactionIndex)
+    {
+        Transaction storage transaction = transactions[transactionIndex];
+
+        require(
+            isConfirmed[transactionIndex][msg.sender],
+            "transaction not confirmed"
+        );
+
+        transaction.numConfirmations -= 1;
+        isConfirmed[transactionIndex][msg.sender] = false;
+
+        emit ConfirmationRevoke(msg.sender, transactionIndex);
+    }
+
+    function getTransaction(uint256 transactionIndex)
+        public
+        view
+        returns (
+            address to,
+            uint256 value,
+            bool executed,
+            uint256 numConfirmations
+        )
+    {
+        Transaction storage transaction = transactions[transactionIndex];
+
+        return (
+            transaction.to,
+            transaction.value,
+            transaction.executed,
+            transaction.numConfirmations
+        );
+    }
+
+    function resetValidateTime() public onlyOwner {
+        lastTimeValided[msg.sender] = block.timestamp;
+    }
+
+    function verifyValidateTime() internal {
+        for (uint256 index = 0; index < owners.length; index++) {
+            if (lastTimeValided[owners[index]] > 5 days) {
+                canBeAlone = true;
+            }
+        }
+    }
+}
