@@ -10,13 +10,16 @@ contract MultiSig {
     );
     event ConfirmationRevoke(address indexed sender, uint256 transactionIndex);
     event ConfirmeTransaction(address indexed sender, uint256 transactionIndex);
+    event WithdrawFunds(address to, uint256 value);
 
     mapping(address => bool) public isOwner;
     mapping(uint256 => mapping(address => bool)) public isConfirmed;
     mapping(address => uint256) lastTimeValided;
+    mapping(address => bool) withdrawConfirm;
     uint256 public numConfirmationsRequired;
+
     address[] public owners;
-    bool canBeAlone = false;
+    bool public canBeAlone;
 
     struct Transaction {
         address to;
@@ -59,6 +62,7 @@ contract MultiSig {
             require(owner != address(0), "invalid owner");
             require(!isOwner[owner], "owner not unique");
 
+            lastTimeValided[_owners[i]] = block.timestamp;
             isOwner[owner] = true;
             owners.push(owner);
         }
@@ -98,6 +102,10 @@ contract MultiSig {
         emit ConfirmeTransaction(msg.sender, transactionIndex);
     }
 
+    function confirmWithdraw() public onlyOwner {
+        withdrawConfirm[msg.sender] = true;
+    }
+
     function executeTransaction(uint256 transactionIndex)
         public
         onlyOwner
@@ -112,18 +120,18 @@ contract MultiSig {
                 ""
             );
             require(success, "transaction failed");
+            transactions[transactionIndex].executed = true;
         } else {
-            require(
-                transaction.numConfirmations >= numConfirmationsRequired,
-                "cannot exucute the transaction"
-            );
-
-            transaction.executed = true;
-
-            (bool success, ) = transaction.to.call{value: transaction.value}(
-                ""
-            );
-            require(success, "transaction failed");
+            if (transaction.numConfirmations >= numConfirmationsRequired) {
+                transaction.executed = true;
+                (bool success, ) = transaction.to.call{
+                    value: transaction.value
+                }("");
+                require(success, "transaction failed");
+                transactions[transactionIndex].executed = true;
+            } else {
+                revert();
+            }
         }
     }
 
@@ -172,9 +180,35 @@ contract MultiSig {
 
     function verifyValidateTime() internal {
         for (uint256 index = 0; index < owners.length; index++) {
-            if (lastTimeValided[owners[index]] > 5 days) {
+            if (lastTimeValided[owners[index]] > 5 seconds) {
                 canBeAlone = true;
             }
+        }
+    }
+
+    //Peut être utiliser payement splitter, car ici les fonds vont être envoyé à 1 seule addresse
+    function widthdrawMultisig() public onlyOwner {
+        verifyValidateTime();
+        uint256 balance = address(this).balance;
+        if (canBeAlone) {
+            (bool succcess, ) = msg.sender.call{value: balance}("");
+            require(succcess, "Withdraw failed");
+            emit WithdrawFunds(msg.sender, balance);
+        } else {
+            if (verifiyConfirm()) {
+                (bool succcess, ) = msg.sender.call{value: balance}("");
+                require(succcess, "Withdraw failed");
+            } else {
+                revert();
+            }
+        }
+    }
+
+    function verifiyConfirm() internal view returns (bool) {
+        uint256 count = 0;
+        for (uint256 i = 0; i < owners.length; i++) {
+            if (withdrawConfirm[owners[i]] == true) count++;
+            if (count == 2) return true;
         }
     }
 }
