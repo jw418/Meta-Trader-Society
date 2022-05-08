@@ -26,6 +26,7 @@ const App = () => {
     setWeb3(web3)
     setAccouts(accounts)
     setNetwordId(networkId)
+    setContract(contract)
   }
 
   return(
