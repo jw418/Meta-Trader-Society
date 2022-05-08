@@ -1,6 +1,7 @@
 pragma solidity >=0.4.21 <8.10.0;
 
 import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 contract MultiSig {
     event Desposit(address indexed sender, uint256 amount, uint256 balance);
@@ -182,7 +183,7 @@ contract MultiSig {
 
     function verifyValidateTime() internal {
         for (uint256 index = 0; index < owners.length; index++) {
-            if (lastTimeValided[owners[index]] > 5 seconds) {
+            if (lastTimeValided[owners[index]] > 30 days) {
                 canBeAlone = true;
             }
         }
@@ -223,7 +224,7 @@ contract MultiSig {
     }
 }
 
-contract WithdrawMoney is PaymentSplitter {
+contract WithdrawMoney {
     mapping(address => bool) public isOwner;
 
     address[] public owners;
@@ -243,5 +244,5 @@ contract WithdrawMoney is PaymentSplitter {
         _;
     }
 
-    constructor() PaymentSplitter(teams, share) {}
+    // constructor() PaymentSplitter(teams, share) {}
 }
