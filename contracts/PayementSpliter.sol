@@ -58,7 +58,7 @@ contract PaymentSplitter is Context {
      */
 
     modifier onlyTeams() {
-        require(isTeam[msg.sender], "not member of the teams");
+        require(isTeam[msg.sender], "not member of the team");
         _;
     }
 
