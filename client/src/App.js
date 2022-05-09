@@ -1,46 +1,66 @@
 import React, { Component, useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import Navbar from "./Components/Navbar";
+import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
 
 const App = () => {
   const [web3, setWeb3] = useState();
   const [accounts, setAccouts] = useState();
   const [networkId, setNetwordId] = useState();
-  const [contact, setContract] = useState();
+  const [contract, setContract] = useState();
   const [userAddress, setUserAddress] = useState();
   const [balance, setBalance] = useState();
+  const [inputValue, setInputValue] = useState();
+  const [mintPrice, setMintPrice] = useState();
+  const [nftBalance, setNftBalance] = useState();
+  const [inputError, setInputError] = useState();
 
-  useEffect(() => {
-    loadData();
+  useEffect(async () => {
+    await loadData();
   }, []);
 
   const loadData = async () => {
     const web3 = await getWeb3();
     const accounts = await web3.eth.getAccounts();
     const networkId = await web3.eth.net.getId();
-    const deployedNetwork = SimpleStorageContract.networks[networkId];
+    const deployedNetwork = RatRaceNFT.networks[networkId];
     const contract = await new web3.eth.Contract(
-      SimpleStorageContract.abi,
-      SimpleStorageContract.address
+      RatRaceNFT.abi,
+      deployedNetwork && deployedNetwork.address
     );
-    let balance;
+    const Balance = await web3.eth.getBalance(accounts[0]);
 
-    // console.log(web3);
-    web3.eth
-      .getBalance(accounts[0])
-      .then((res) => setBalance(web3.utils.fromWei(res)));
-
+    setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
+    setBalance(Balance / 10 ** 18);
+    setContract(contract);
+    setMintPrice(await contract.methods.priceSale().call());
     setWeb3(web3);
     setAccouts(accounts);
     setUserAddress(accounts[0]);
     setNetwordId(networkId);
   };
 
-  setWeb3(web3);
-  setAccouts(accounts);
-  setNetwordId(networkId);
-  setContract(contract);
+  const mintFonction = async () => {
+    if (inputValue == undefined) setInputError(true);
+    else
+      await contract.methods
+        .mintNFT(inputValue)
+        .send({ from: accounts[0], value: mintPrice * inputValue })
+        .then(() => {
+          updateNFTBalance();
+        });
+  };
+
+  const updateNFTBalance = async () => {
+    setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
+  };
+
+  const changePrice = async () => {
+    await contract.methods
+      .changePriceSale(web3.utils.toWei("5", "ether"))
+      .send({ from: accounts[0] });
+  };
+
   return (
     <div className="home">
       <Navbar />
@@ -52,7 +72,6 @@ const App = () => {
           <div className="mint_display">
             <div class="metamask_input">
               <img src="../img/metamask_icon.png" />
-              {console.log(userAddress)}
               <p>
                 {userAddress != undefined ? userAddress.slice(0, -33) : null}...
               </p>
@@ -60,15 +79,30 @@ const App = () => {
             <div className="input_display">
               <div className="input_title">
                 <p>Enter the number of NFT you want to mint</p>
-                <p id="balance">
-                  Balance {balance && balance.slice(0, -15)} ETH
-                </p>
+                <p id="balance">Balance {balance && balance.toFixed(3)} ETH</p>
               </div>
-
-              <input type="text" name="price_input" className="input_token" />
-              <p>Transaction cost : 0.01 ETH</p>
+              <input
+                type="text"
+                name="price_input"
+                className="input_token"
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              {inputError && (
+                <p style={{ maginTop: "10px", marginBottom: "10px" }}>
+                  You have to enter a value
+                </p>
+              )}
+              <p>Mint price : {mintPrice && mintPrice / 10 ** 18} ETH</p>
+              <p style={{ marginTop: "10px" }}>
+                NFT balance : {nftBalance && nftBalance}
+              </p>
             </div>
-            <button className="mint_button">MINT</button>
+            <button className="mint_button" onClick={() => mintFonction()}>
+              MINT
+            </button>
+            <button className="mint_button" onClick={() => changePrice()}>
+              changePrice
+            </button>
           </div>
         </div>
       </div>

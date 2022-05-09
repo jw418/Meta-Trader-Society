@@ -17,6 +17,11 @@ module.exports = {
       port: 7545,
       network_id: "5777", 
     }, 
+    ganache2: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "1337", 
+    }, 
     
     // mainnet: {
     //   provider: function() {
