@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
 /**
- * @title PaymentSplitter
+ * @title PaymentSplitter Modified
  * @dev This contract allows to split Ether payments among a group of accounts. The sender does not need to be aware
  * that the Ether will be split in this way, since it is handled transparently by the contract.
  *
@@ -23,6 +23,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * NOTE: This contract assumes that ERC20 tokens will behave similarly to native tokens (Ether). Rebasing tokens, and
  * tokens that apply fees during transfers, are likely to not be supported as expected. If in doubt, we encourage you
  * to run tests before sending real value to this contract.
+ * the modification include the fact that only the teams can acess to the realse function
  */
 contract PaymentSplitter is Context {
     event PayeeAdded(address account, uint256 shares);

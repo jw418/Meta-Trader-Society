@@ -1,14 +1,20 @@
 pragma solidity >=0.4.21 <8.10.0;
 
+/// @title Contract RatRaceNFt
+/// @author Julien Wolff Tristan Boettger
+
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./PayementSpliter.sol";
 
-contract RatRaceNFT is ERC721Enumerable, PaymentSplitter {
+contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     uint256 public constant max_supply = 3333;
+
     uint256 public max_mint_allowed = 3;
+
     uint256 public priceSale = 1 ether;
+
     bool mintOpen = true;
 
     address[] private teams = [
@@ -29,28 +35,63 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter {
         PaymentSplitter(teams, share)
     {}
 
-    function mint(uint256 amount) external payable {
+    /**
+     *    @notice Change the price of the mint
+     *
+     *    @param _priceSale is the new price you want to set
+     **/
+    function changePriceSale(uint256 _priceSale) external onlyOwner {
+        priceSale = _priceSale;
+    }
+
+    /**
+     *    @notice Change the number NFT max you can mint
+     *
+     *    @param _maxMintAllowed is the new max
+     **/
+    function changeMaxMintAllowed(uint256 _maxMintAllowed) external onlyOwner {
+        max_mint_allowed = _maxMintAllowed;
+    }
+
+    /**
+     *    @notice Return the baseURI of the NFT
+     **/
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseURI;
+    }
+
+    /**
+     *    @notice Change base URI
+     *
+     *    @param _newBaseURI is the new URI
+     **/
+    function setBaseUri(string memory _newBaseURI) external onlyOwner {
+        baseURI = _newBaseURI;
+    }
+
+    /**
+     *   @notice Allows the mint of new NFT
+     *
+     *   @param _amount is the number of NFT you want to mint
+     **/
+    function mint(uint256 _amount) external payable {
         uint256 numberNftSold = totalSupply();
 
-        require(msg.value >= priceSale * amount, "Not enought found");
-        require(amount <= max_mint_allowed, "You can mint more nft");
-        require(
-            nftBalance[msg.sender] + amount < max_mint_allowed,
-            "To much mint"
-        );
         require(mintOpen, "mint phase is ended");
+        require(priceSale * _amount <= msg.value, "Not enought funds");
+        require(_amount <= max_mint_allowed, "You can mint more NFT");
+        require(
+            nftBalance[msg.sender] + _amount < max_mint_allowed,
+            "Too much mint"
+        );
 
-        if (numberNftSold + amount == max_supply) {
+        if (numberNftSold + _amount == max_supply) {
             mintOpen = false;
         }
 
-        nftBalance[msg.sender] += amount;
-        for (uint256 i = 1; i <= amount; i++) {
+        nftBalance[msg.sender] += _amount;
+        for (uint256 i = 1; i <= _amount; i++) {
             _safeMint(msg.sender, numberNftSold + i);
         }
     }
-
-    // function setBaseUri(string memory _newBaseURI) external onlyOwner {
-    //     baseURI = _newBaseURI;
-    // }
 }
