@@ -1,3 +1,15 @@
 *{
     list-style: none;
+    font-family: 'Comfortaa', cursive;
 }
+p{
+    margin: 0;
+    padding: 0;
+}
+body{
+  background-color: antiquewhite;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+@import "./pages/app";
+@import "./components/navbar";
