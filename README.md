@@ -15,14 +15,14 @@ INSERER IMAGE ICI
 ## Installation 🛠️
 
 Vous pouvez copiez notre repo avec la commande : 
-'''sh
+```sh
 git clone https://github.com/jw418/Meta-Trader-Society.git
-'''
+```
 
 Allez à la racine du fichier et utilisez la commande suivante :
-'''sh
+```sh
 npm install
-'''
+```
 
 Pensez à modifier le fichier truffle-config.js selon le réseau choisi.
 https://trufflesuite.com/docs/truffle/reference/configuration/
