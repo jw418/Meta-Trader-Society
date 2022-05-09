@@ -44,8 +44,6 @@ contract PaymentSplitter is Context {
 
     address[] private _payees;
 
-    address[] public owners;
-
     mapping(IERC20 => uint256) private _erc20TotalReleased;
     mapping(IERC20 => mapping(address => uint256)) private _erc20Released;
 

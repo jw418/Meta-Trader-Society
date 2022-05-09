@@ -16,6 +16,7 @@ const App = () => {
   const [inputError, setInputError] = useState();
 
   useEffect(async () => {
+    //Load blockchain Data
     await loadData();
   }, []);
 
@@ -30,6 +31,9 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
+    console.log(await contract.methods.tokenURI(1).call());
+
+    //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
     setContract(contract);
@@ -41,7 +45,9 @@ const App = () => {
   };
 
   const mintFonction = async () => {
+    //check if the input si empty or not
     if (inputValue == undefined) setInputError(true);
+    //Get the mint function of our contract
     else
       await contract.methods
         .mintNFT(inputValue)
@@ -55,11 +61,18 @@ const App = () => {
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
   };
 
+  //Only for test will be deleted
   const changePrice = async () => {
     await contract.methods
       .changePriceSale(web3.utils.toWei("5", "ether"))
       .send({ from: accounts[0] });
   };
+
+  // const setURI = async () => {
+  //   await contract.methods
+  //     .setBaseUri(JSON.stringify(json))
+  //     .send({ from: accounts[0] });
+  // };
 
   return (
     <div className="home">
@@ -100,7 +113,7 @@ const App = () => {
             <button className="mint_button" onClick={() => mintFonction()}>
               MINT
             </button>
-            <button className="mint_button" onClick={() => changePrice()}>
+            <button className="mint_button" onClick={() => setMintPrice()}>
               changePrice
             </button>
           </div>

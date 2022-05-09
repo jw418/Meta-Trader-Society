@@ -1,8 +1,7 @@
-// var MetaTraderSociety = artifacts.require("./MetaTraderSociety.sol");
 var ContractNFT = artifacts.require("./RatRaceNFT.sol");
 
 
 module.exports = function(deployer) {
-  // deployer.deploy(MetaTraderSociety);
+  //Si on veut mettre des addresses directement via le contructeur c'est ici que ça va se faire
   deployer.deploy(ContractNFT);
 };

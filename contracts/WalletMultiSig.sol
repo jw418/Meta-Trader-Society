@@ -3,6 +3,7 @@ pragma solidity >=0.4.21 <8.10.0;
 import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
+//Ce contract n'est plus utile dans le projet nous avons prit un direction différente
 contract MultiSig {
     event Desposit(address indexed sender, uint256 amount, uint256 balance);
     event TransactionSubmit(

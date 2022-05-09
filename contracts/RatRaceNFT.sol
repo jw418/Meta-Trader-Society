@@ -15,7 +15,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     uint256 public priceSale = 1 ether;
 
-    bool mintOpen = true;
+    bool public mintOpen = true;
 
     address[] private teams = [
         0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,
@@ -23,7 +23,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
     ];
 
-    uint256[] share = [45, 45, 10];
+    uint256[] private share = [45, 45, 10];
 
     string public baseURI;
 
@@ -93,5 +93,18 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         for (uint256 i = 1; i <= _amount; i++) {
             _safeMint(msg.sender, numberNftSold + i);
         }
+    }
+
+    function tokenURI(string memory _nftId)
+        public
+        view
+        returns (string memory)
+    {
+        // require(_exists(_nftId), "This NFT doesn't exist.");
+        string memory currentBaseURI = _baseURI();
+        return
+            bytes(currentBaseURI).length > 0
+                ? string(abi.encodePacked(currentBaseURI, _nftId, ".json"))
+                : "";
     }
 }
