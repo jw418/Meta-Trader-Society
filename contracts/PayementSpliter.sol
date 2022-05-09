@@ -39,7 +39,11 @@ contract PaymentSplitter is Context {
 
     mapping(address => uint256) private _shares;
     mapping(address => uint256) private _released;
+    mapping(address => bool) public isTeam;
+
     address[] private _payees;
+
+    address[] public owners;
 
     mapping(IERC20 => uint256) private _erc20TotalReleased;
     mapping(IERC20 => mapping(address => uint256)) private _erc20Released;
@@ -51,6 +55,12 @@ contract PaymentSplitter is Context {
      * All addresses in `payees` must be non-zero. Both arrays must have the same non-zero length, and there must be no
      * duplicates in `payees`.
      */
+
+    modifier onlyTeams() {
+        require(isTeam[msg.sender], "not member of the teams");
+        _;
+    }
+
     constructor(address[] memory payees, uint256[] memory shares_) payable {
         require(
             payees.length == shares_.length,
@@ -59,6 +69,7 @@ contract PaymentSplitter is Context {
         require(payees.length > 0, "PaymentSplitter: no payees");
 
         for (uint256 i = 0; i < payees.length; i++) {
+            isTeam[payees[i]] = true;
             _addPayee(payees[i], shares_[i]);
         }
     }
@@ -135,7 +146,7 @@ contract PaymentSplitter is Context {
      * @dev Triggers a transfer to `account` of the amount of Ether they are owed, according to their percentage of the
      * total shares and their previous withdrawals.
      */
-    function release(address payable account) public virtual {
+    function release(address payable account) public virtual onlyTeams {
         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
 
         uint256 totalReceived = address(this).balance + totalReleased();
@@ -159,7 +170,7 @@ contract PaymentSplitter is Context {
      * percentage of the total shares and their previous withdrawals. `token` must be the address of an IERC20
      * contract.
      */
-    function release(IERC20 token, address account) public virtual {
+    function release(IERC20 token, address account) public virtual onlyTeams {
         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
 
         uint256 totalReceived = token.balanceOf(address(this)) +
