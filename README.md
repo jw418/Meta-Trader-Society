@@ -1,6 +1,6 @@
 # Rat Race NFT
 
-![](https://github.com/jw418/Meta-Trader-Society/logo.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/logo.png)
 
 Lancement de la première collection NFTs ART TRADING BOT qui rassemble l'art numérique, la technologie algorithmique prédictive et l'intelligence artificielle appliquée au trading.
 
