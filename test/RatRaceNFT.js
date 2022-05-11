@@ -33,4 +33,15 @@ contract('RatRaceNFT', function (accounts) {
         const mintOpen = await this.RatRaceNFTInstance.mintOpen();        
         await expect(mintOpen).to.be.equal(true, "MintOpen is not true");
     });
+
+    it('nftBalance of owner must be 0', async function () {
+        const nftBalance = await this.RatRaceNFTInstance.nftBalance();
+        console.log(nftBalance);
+        await expect(nftBalance).to.be.equal('0', "nftBalance is not true");
+    });
+
+    it('name must be RatRace', async function () {
+        const name = await this.RatRaceNFTInstance.name();                
+        await expect(name).to.be.equal('RatRace', "the name is not RatRace");
+    });
 })
