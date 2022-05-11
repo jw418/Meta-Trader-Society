@@ -1,7 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
-import Navbar from "./Components/Navbar";
+import React, { useEffect, useState } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
+import Navbar from "./Components/Navbar";
 
 const App = () => {
   const [web3, setWeb3] = useState();
