@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
 import Navbar from "./Components/Navbar";
+import Description from "./Components/Description";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -75,51 +76,48 @@ const App = () => {
   // };
 
   return (
-    <div className="home">
-      <Navbar />
-      <div className="mint_interface">
-        <div className="image_mint">
-          <img src="../img/45.jpg" />
-        </div>
-        <div className="text_mint">
-          <div className="mint_display">
-            <div class="metamask_input">
-              <img src="../img/metamask_icon.png" />
-              <p>
-                {userAddress != undefined ? userAddress.slice(0, -33) : null}...
-              </p>
-            </div>
-            <div className="input_display">
-              <div className="input_title">
-                <p>Enter the number of NFT you want to mint</p>
-                <p id="balance">Balance {balance && balance.toFixed(3)} ETH</p>
-              </div>
-              <input
-                type="text"
-                name="price_input"
-                className="input_token"
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              {inputError && (
-                <p style={{ maginTop: "10px", marginBottom: "10px" }}>
-                  You have to enter a value
+    <>
+      <div className="home">
+        <Navbar userAddress={userAddress} />
+        <div className="mint_interface">
+          <div className="image_mint">
+            {/* <img src="../img/45.jpg" /> */}
+            <p style={{ margin: "auto" }}>mint image</p>
+          </div>
+          <div className="text_mint">
+            <div className="mint_display">
+              <div className="input_display">
+                <div className="input_title">
+                  <p>Enter the number of NFT you want to mint</p>
+                  <p id="balance">
+                    Balance {balance && balance.toFixed(3)} ETH
+                  </p>
+                </div>
+                <input
+                  type="text"
+                  name="price_input"
+                  className="input_token"
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
+                {inputError && (
+                  <p style={{ maginTop: "10px", marginBottom: "10px" }}>
+                    You have to enter a value
+                  </p>
+                )}
+                <p>Mint price : {mintPrice && mintPrice / 10 ** 18} ETH</p>
+                <p style={{ marginTop: "10px" }}>
+                  NFT balance : {nftBalance && nftBalance}
                 </p>
-              )}
-              <p>Mint price : {mintPrice && mintPrice / 10 ** 18} ETH</p>
-              <p style={{ marginTop: "10px" }}>
-                NFT balance : {nftBalance && nftBalance}
-              </p>
+              </div>
+              <button className="mint_button" onClick={() => mintFonction()}>
+                MINT
+              </button>
             </div>
-            <button className="mint_button" onClick={() => mintFonction()}>
-              MINT
-            </button>
-            <button className="mint_button" onClick={() => setMintPrice()}>
-              changePrice
-            </button>
           </div>
         </div>
       </div>
-    </div>
+      <Description />
+    </>
   );
 };
 

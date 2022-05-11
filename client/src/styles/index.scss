@@ -7,9 +7,11 @@ p{
     padding: 0;
 }
 body{
-  background-color: #E8D0F2;
+  margin: 0
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 @import "./pages/app";
 @import "./components/navbar";
+@import "./components/description";
+
