@@ -31,7 +31,7 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    console.log(await contract.methods.tokenURI(1).call());
+    console.log(web3);
 
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
