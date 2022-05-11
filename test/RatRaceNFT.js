@@ -47,14 +47,59 @@ contract("RatRaceNFT", function (accounts) {
     await expect(mintOpen).to.be.equal(true, "MintOpen is not true");
   });
 
-  it("nftBalance of owner must be 0", async function () {
-    const nftBalance = await this.RatRaceNFTInstance.nftBalance();
-    console.log(nftBalance);
-    await expect(nftBalance).to.be.equal("0", "nftBalance is not true");
+  it("nftBalance of owner must be equal to 0", async function () {
+    const nftBalance = await this.RatRaceNFTInstance.nftBalance(owner);
+    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
+  });
+
+  it("nftBalance of user1 must be equal to 0", async function () {
+    const nftBalance = await this.RatRaceNFTInstance.nftBalance(user1);
+    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
+  });
+
+  it("nftBalance of user2 must be equal to 0", async function () {
+    const nftBalance = await this.RatRaceNFTInstance.nftBalance(user2);
+    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
   });
 
   it("name must be RatRace", async function () {
     const name = await this.RatRaceNFTInstance.name();
     await expect(name).to.be.equal("RatRace", "the name is not RatRace");
+  });
+
+  it("symbole must be RAT", async function () {
+    const symbol = await this.RatRaceNFTInstance.symbol();
+    await expect(symbol).to.be.equal("RAT", "the symbol is not RAT");
+  });
+
+  it("totalSupply must be equal to 0", async function () {
+    const totalSupply = await this.RatRaceNFTInstance.totalSupply();
+    await expect(totalSupply).to.be.bignumber.equal(
+      "0",
+      "the totalSupply is not 0"
+    );
+  });
+
+  it("totalShares must be equal to 100", async function () {
+    const totalShares = await this.RatRaceNFTInstance.totalShares();
+    await expect(totalShares).to.be.bignumber.equal(
+      "100",
+      "the totalShares is not 100"
+    );
+  });
+
+  it("baseURI must be an empty string", async function () {
+    const baseURI = await this.RatRaceNFTInstance.baseURI();
+    await expect(baseURI).to.be.equal("", "the baseURI is not an empty string");
+  });
+
+  it("baseUri must be change", async function () {
+    const NewUri = "newuri.test";
+    await this.RatRaceNFTInstance.setBaseUri(NewUri);
+    const baseURI = await this.RatRaceNFTInstance.baseURI();
+    await expect(baseURI).to.be.equal(
+      "newuri.test",
+      "the baseUri is not correctly changed"
+    );
   });
 });

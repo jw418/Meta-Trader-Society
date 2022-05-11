@@ -25,7 +25,7 @@ contract("PayementSpliter", async (accounts) => {
       expect(await this.contract.isTeam(nonpayee1)).equal(false);
       await expectRevert(
         this.contract.release(nonpayee1, { from: nonpayee1 }),
-        "not member of the team -- Reason given: not member of the team."
+        "not member of the team."
       );
     });
 
