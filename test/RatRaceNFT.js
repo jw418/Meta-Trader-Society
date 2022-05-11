@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-const ContractNFT = artifacts.require("./ContractNFT.sol");
-const { BN } = require("@openzeppelin/test-helpers");
-const { expect } = require("chai");
-=======
 const RatRaceNFT = artifacts.require("./RatRaceNFT.sol");
 const { BN, expectRevert, expectEvent, ether } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
@@ -38,7 +33,7 @@ contract('RatRaceNFT', function (accounts) {
         const mintOpen = await this.RatRaceNFTInstance.mintOpen();        
         await expect(mintOpen).to.be.equal(true, "MintOpen is not true");
     });
-<<<<<<< HEAD
+
 
     it('nftBalance of owner must be 0', async function () {
         const nftBalance = await this.RatRaceNFTInstance.nftBalance();
@@ -51,7 +46,3 @@ contract('RatRaceNFT', function (accounts) {
         await expect(name).to.be.equal('RatRace', "the name is not RatRace");
     });
 })
-=======
-})
->>>>>>> 83863abea4a9d8f309a4244410f4ee071f59b208
->>>>>>> e4b2d101a38f5790a7a3a22cec2aa14cbc9d2ce0
