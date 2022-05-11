@@ -1,31 +1,60 @@
-
-.navbar_components{
+.navbar_components {
+  display: flex;
+  .navbar {
+    width: 40%;
     display: flex;
-    .navbar{
-        width: 40%;
-        display: flex;
-        justify-content: space-between;
-    
-        li:hover{
+    color: #6907F2;
+    justify-content: space-between;
 
-            cursor: pointer;
-        }
+    li:hover {
+      cursor: pointer;
+    }
+  }
+
+  .logos {
+    display: flex;
+    margin-left: auto;
+    width: 350px;
+    margin-right: 50px;
+    margin-top: 5px;
+
+    .metamask_input {
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+      background: #2C0AA6;
+      color: white;
+      width: 150px;
+      height: 25px;
+      padding: 10px;
+      border-radius: 15px;
+
+      #metamask {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      p {
+        margin: auto;
+      }
+    }
+    .metamask_input:hover {
+      background: rgba(156, 156, 156, 0.766);
+      transition: 0.5s;
     }
 
-    .logos{
-        margin-left: auto;
-        width: 250px;
-        margin-right: 50px;
-        margin-top: 5px;
-        img{
-            width: 30px;
-            height: 30px;
-            color: white;
-            object-fit:contain;
-            margin-left: 25px;
-        }
-        img:hover{
-            cursor: pointer;
-        }
+    .logo_contain {
+        margin: auto;
+      #logo {
+        width: 30px;
+        height: 30px;
+        color: white;
+        object-fit: contain;
+        margin-left: 25px;
+      }
+      #logo:hover {
+        cursor: pointer;
+      }
     }
+  }
 }
