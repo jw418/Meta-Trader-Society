@@ -20,26 +20,17 @@ contract("RatRaceNFT", function (accounts) {
   //
   it("max_supply must be equal to 3333", async function () {
     const maxSupply = await this.RatRaceNFTInstance.max_supply();
-    await expect(maxSupply).to.be.bignumber.equal(
-      "3333",
-      "max_supply is not 3333"
-    );
+    await expect(maxSupply).to.be.bignumber.equal("3333", "max_supply is not 3333");
   });
 
   it("max_mint_allowed must be equal to 3", async function () {
     const maxMintAllowed = await this.RatRaceNFTInstance.max_mint_allowed();
-    await expect(maxMintAllowed).to.be.bignumber.equal(
-      "3",
-      "max_mint_allowed supply is not 3"
-    );
+    await expect(maxMintAllowed).to.be.bignumber.equal("3", "max_mint_allowed supply is not 3");
   });
 
   it("priceSale must be equal to 1 ether", async function () {
     const priceSale = await this.RatRaceNFTInstance.priceSale();
-    await expect(priceSale).to.be.bignumber.equal(
-      ether("1"),
-      "priceSale is not equal to 1 ether"
-    );
+    await expect(priceSale).to.be.bignumber.equal(ether("1"),"priceSale is not equal to 1 ether");
   });
 
   it("mintOpen must be true", async function () {
