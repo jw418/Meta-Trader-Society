@@ -31,11 +31,13 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     mapping(address => uint256) public nftBalance;
 
-    constructor()
+    constructor(string memory _newBaseURI)
         public
         ERC721("RatRace", "RAT")
         PaymentSplitter(_teams, _share)
-    {}
+    {
+        baseURI = _newBaseURI;
+    }
 
     /**
      *    @notice Change the price of the mint
@@ -82,6 +84,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         require(mintOpen, "mint phase is ended");
         require(priceSale * _amount <= msg.value, "Not enought funds");
         require(_amount <= max_mint_allowed, "You can mint more NFT");
+        require(numberNftSold + _amount <= max_supply, "Max supply");
         require(
             nftBalance[msg.sender] + _amount <= max_mint_allowed,
             "Too much mint"

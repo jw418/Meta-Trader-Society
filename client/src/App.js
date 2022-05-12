@@ -81,7 +81,7 @@ const App = () => {
     <>
       <div className="home">
         <Navbar userAddress={userAddress} />
-        <div className="mint_interface" style={isMinted && { width: "150%" }}>
+        <div className="mint_interface">
           {isMinted && (
             <>
               <div className="image_mint">
@@ -89,7 +89,7 @@ const App = () => {
               </div>
             </>
           )}
-          <div className="text_mint">
+          <div className="text_mint" style={isMinted && { width: "150%" }}>
             <div className="mint_display">
               <div className="input_display">
                 <div className="input_title">
