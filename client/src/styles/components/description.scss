@@ -2,10 +2,33 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    background-color: #E39554;
     height: 100vh;
 
-    .description_div{
+
+    h1{
+        // color: white;
+    }
+    .description_comp{
         margin: auto;
-        width: 50%;
+        h1{
+            color: white;
+        }
+        img{
+            width: 250px;
+            height: 250px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border: 1px solid black;
+
+        }
+        .description_div{
+            margin: auto;
+            width: 50%;
+            background-color: white;
+            color: black;
+            padding: 50px;
+            border-radius: 15px;
+        }
     }
 }

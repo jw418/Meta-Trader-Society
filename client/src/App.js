@@ -15,6 +15,7 @@ const App = () => {
   const [mintPrice, setMintPrice] = useState();
   const [nftBalance, setNftBalance] = useState();
   const [inputError, setInputError] = useState();
+  const [isMinted, setIsMinted] = useState();
 
   useEffect(async () => {
     //Load blockchain Data
@@ -32,8 +33,6 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    console.log(web3);
-
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -46,14 +45,16 @@ const App = () => {
   };
 
   const mintFonction = async () => {
-    //check if the input si empty or not
-    if (inputValue == undefined) setInputError(true);
+    //Check if the input si empty or not
+    if (inputValue == undefined || inputValue == "") setInputError(true);
     //Get the mint function of our contract
     else
       await contract.methods
         .mintNFT(inputValue)
         .send({ from: accounts[0], value: mintPrice * inputValue })
         .then(() => {
+          setInputError(false);
+          setIsMinted(true);
           updateNFTBalance();
         });
   };
@@ -63,12 +64,13 @@ const App = () => {
   };
 
   //Only for test will be deleted
-  const changePrice = async () => {
-    await contract.methods
-      .changePriceSale(web3.utils.toWei("5", "ether"))
-      .send({ from: accounts[0] });
-  };
+  // const changePrice = async () => {
+  //   await contract.methods
+  //     .changePriceSale(web3.utils.toWei("5", "ether"))
+  //     .send({ from: accounts[0] });
+  // };
 
+  //Only for test will be deleted
   // const setURI = async () => {
   //   await contract.methods
   //     .setBaseUri(JSON.stringify(json))
@@ -79,16 +81,19 @@ const App = () => {
     <>
       <div className="home">
         <Navbar userAddress={userAddress} />
-        <div className="mint_interface">
-          <div className="image_mint">
-            {/* <img src="../img/45.jpg" /> */}
-            <p style={{ margin: "auto" }}>mint image</p>
-          </div>
+        <div className="mint_interface" style={isMinted && { width: "150%" }}>
+          {isMinted && (
+            <>
+              <div className="image_mint">
+                <img src="../img/45.jpg" />
+              </div>
+            </>
+          )}
           <div className="text_mint">
             <div className="mint_display">
               <div className="input_display">
                 <div className="input_title">
-                  <p>Enter the number of NFT you want to mint</p>
+                  <p>Number of tokens</p>
                   <p id="balance">
                     Balance {balance && balance.toFixed(3)} ETH
                   </p>
@@ -100,14 +105,24 @@ const App = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                 />
                 {inputError && (
-                  <p style={{ maginTop: "10px", marginBottom: "10px" }}>
+                  <p
+                    style={{
+                      maginTop: "10px",
+                      marginBottom: "10px",
+                      color: "red",
+                    }}
+                  >
                     You have to enter a value
                   </p>
                 )}
-                <p>Mint price : {mintPrice && mintPrice / 10 ** 18} ETH</p>
-                <p style={{ marginTop: "10px" }}>
-                  NFT balance : {nftBalance && nftBalance}
-                </p>
+                <div className="prince_balance">
+                  <p id="mint_price">
+                    Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
+                  </p>
+                  <p id="nft_balance">
+                    NFT balance : {nftBalance && nftBalance}
+                  </p>
+                </div>
               </div>
               <button className="mint_button" onClick={() => mintFonction()}>
                 MINT

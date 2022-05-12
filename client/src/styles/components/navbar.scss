@@ -3,11 +3,24 @@
   .navbar {
     width: 40%;
     display: flex;
-    color: #6907F2;
+    color: white;
     justify-content: space-between;
 
-    li:hover {
-      cursor: pointer;
+    .un {
+      display: inline-block;
+    }
+    
+    .un::after {
+      content: '';
+      width: 0px;
+      height: 1px;
+      display: block;
+      background: white;
+      transition: 300ms;
+    }
+    
+    .un:hover::after {
+      width: 100%;
     }
   }
 

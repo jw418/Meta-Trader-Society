@@ -2,22 +2,22 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #DCE6F2;
+  background-color: #210140;
 
   h1 {
     text-align: center;
   }
 
   .mint_interface {
-    display: grid;
-    grid-template-columns: 40% 60%;
+    display: flex;
+    // grid-template-columns: 40% 60%;
     height: 500px;
     width: 1250px;
     background-color: #ffffff;
     border-radius: 25px;
-    box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3)  ; 
-    -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3)  ; 
-    -moz-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3)  ; 
+    box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
     margin: auto;
 
     .image_mint {
@@ -36,6 +36,8 @@
     .text_mint {
       display: flex;
       flex-direction: column;
+      width: 85%;
+      margin: auto;
 
       .mint_display {
         display: flex;
@@ -44,13 +46,11 @@
         margin: auto;
         margin-left: auto;
 
-
-
         .input_display {
           display: flex;
           flex-direction: column;
           width: 100%;
-          margin-top: 50px;
+
           .input_token {
             padding: 20px;
             border-radius: 10px;
@@ -60,25 +60,33 @@
           }
 
           .input_title {
-            display: grid;
-            grid-template-columns: 73% 26%;
+            display: flex;
             width: 100%;
             margin-bottom: 5px;
 
-            #balance{
-                width: 200px;
+            #balance {
+              margin-left: auto;
+            }
+          }
+
+          .prince_balance{
+            display: flex;
+
+            #nft_balance{
+              margin-left: auto;
             }
           }
         }
 
         .mint_button {
           width: 20%;
-          margin-top: 25px;
+          margin-top: 150px;
           border-radius: 10px;
           border: none;
           padding: 10px;
           color: white;
-          background-color: #2C0AA6;
+          background-color: #D9D059;
+          margin: auto;
         }
         .mint_button:hover {
           background: rgba(156, 156, 156, 0.766);

@@ -2,15 +2,15 @@ import React from "react";
 
 const Navbar = ({ userAddress }) => {
   return (
-    <div className="navbar_components">
+    <div className="navbar_components" style={{ marginTop: "10px" }}>
       <ul className="navbar">
-        <li>Roadmap</li>
-        <li>Team</li>
-        <li>Open Sea</li>
+        <span className="un">Roadmap</span>
+        <span className="un">Team</span>
+        <span className="un">Open Sea</span>
       </ul>
 
       <div className="logos">
-        <div class="metamask_input">
+        <div className="metamask_input">
           <img id="metamask" src="../img/metamask_icon.png" />
           <p>
             {userAddress != undefined

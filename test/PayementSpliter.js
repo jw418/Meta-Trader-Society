@@ -22,6 +22,7 @@ contract("PayementSpliter", async (accounts) => {
     });
 
     it("Should not accept the release cause the address is not member of the team", async () => {
+      //Check if the address is the member of the team
       expect(await this.contract.isTeam(nonpayee1)).equal(false);
       await expectRevert(
         this.contract.release(nonpayee1, { from: nonpayee1 }),
