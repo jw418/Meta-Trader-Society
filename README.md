@@ -38,7 +38,7 @@ utiliser Hashlips_Art_Engine.
 Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
 
-## Livrables Certification
+## Livrables Certification :file_folder:
 
 Le README du Smart Contract RatRaceNFT.sol :
 https://github.com/jw418/Meta-Trader-Society/blob/main/RatRaceNFTDoc.md
