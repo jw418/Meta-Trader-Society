@@ -2,17 +2,21 @@
 
 pragma solidity >=0.4.21 <8.10.0;
 
-/// @title Contract RatRaceNFt
-/// @author Julien Wolff Tristan Boettger
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./PayementSpliter.sol";
 
+/// @title Contract RatRaceNFt
+/// @author Julien Wolff Tristan Boettger
+/// @notice This contract is an ERC721 was written as part of our final project alyra
 contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     using Strings for uint256;
 
+    
+    
+   
     uint256 public constant max_supply = 3333;
 
     uint256 public max_mint_allowed = 3;
@@ -35,6 +39,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     mapping(address => uint256) public nftBalance;
 
+    /// @dev The recommended format is as follows: "ipsf//:{your CID}"
+    /// @param _newBaseURI indicate the URI of your NFT series
     constructor(string memory _newBaseURI)
         public
         ERC721("RatRace", "RAT")
@@ -44,35 +50,44 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     }
 
     /**
-     *    @notice Change the price of the mint
-     *
-     *    @param _priceSale is the new price you want to set
-     **/
+    *    @dev You can add requirements to prevent the price from being too low or too expensive
+    *
+    *    @notice Change the price of the mint   
+    *
+    *    @param _priceSale is the new price you want to set   
+    */
     function changePriceSale(uint256 _priceSale) external onlyOwner {
         priceSale = _priceSale;
     }
 
-    /**
-     *    @notice Change the number NFT max you can mint
+    
+     /**
+     *  @dev You can add requirements to prevent the _maxMintAllowed from being too low or too high
      *
-     *    @param _maxMintAllowed is the new max
-     **/
+     *  @notice Change the number NFT max you can mint
+     *    
+     *  @param _maxMintAllowed is the new max     
+     */
     function changeMaxMintAllowed(uint256 _maxMintAllowed) external onlyOwner {
         max_mint_allowed = _maxMintAllowed;
     }
 
     /**
-     *    @notice Return the baseURI of the NFT
-     **/
+    *    @notice This function allows you to obtain the URI
+    *
+    *    @return the baseURI of the NFT
+    */
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }
 
     /**
+     *    @dev Reminder: the recommended format is as follows: "ipsf//:{your CID}
+     *    
      *    @notice Change base URI
      *
      *    @param _newBaseURI is the new URI
-     **/
+     */
     function setBaseUri(string memory _newBaseURI) external onlyOwner {
         baseURI = _newBaseURI;
     }
@@ -81,7 +96,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *   @notice Allows the mint of new NFT
      *
      *   @param _amount is the number of NFT you want to mint
-     **/
+     */
     function mintNFT(uint256 _amount) external payable {
         uint256 numberNftSold = totalSupply();
 
@@ -89,10 +104,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         require(priceSale * _amount <= msg.value, "Not enought funds");
         require(_amount <= max_mint_allowed, "You can mint more NFT");
         require(numberNftSold + _amount <= max_supply, "Max supply");
-        require(
-            nftBalance[msg.sender] + _amount <= max_mint_allowed,
-            "Too much mint"
-        );
+        require(nftBalance[msg.sender] + _amount <= max_mint_allowed,"Too much mint");
 
         if (numberNftSold + _amount == max_supply) {
             mintOpen = false;
@@ -104,6 +116,11 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         }
     }
 
+    /**
+    *   @param _nftId id of the nft whose uri you want
+    *
+    *   @return the uri of the chosen nft
+    */
     function tokenURI(uint256 _nftId)
         public
         view
