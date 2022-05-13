@@ -24,6 +24,8 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * tokens that apply fees during transfers, are likely to not be supported as expected. If in doubt, we encourage you
  * to run tests before sending real value to this contract.
  * the modification include the fact that only the teams can acess to the realse function
+ *
+ * @notice This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
  */
 contract PaymentSplitter is Context {
     event PayeeAdded(address account, uint256 shares);
@@ -55,11 +57,16 @@ contract PaymentSplitter is Context {
      * duplicates in `payees`.
      */
 
+    /// @notice this modifier allows you to check that the msg.sender is part of the team     
     modifier onlyTeams() {
         require(isTeam[msg.sender], "not member of the team");
         _;
     }
 
+
+    /// @notice the constructor of the smart contarct
+    /// @param payees array of addresses to be paid    
+    /// @param shares_ arrays of the distribution of payments
     constructor(address[] memory payees, uint256[] memory shares_) payable {
         require(
             payees.length == shares_.length,
@@ -81,21 +88,21 @@ contract PaymentSplitter is Context {
      * To learn more about this see the Solidity documentation for
      * https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function[fallback
      * functions].
+     *
+     * @notice An event is emit when a payment is received
+     *
      */
     receive() external payable virtual {
         emit PaymentReceived(_msgSender(), msg.value);
     }
 
-    /**
-     * @dev Getter for the total shares held by payees.
-     */
+ 
+    /// @return  total number of shares 
     function totalShares() public view returns (uint256) {
         return _totalShares;
     }
 
-    /**
-     * @dev Getter for the total amount of Ether already released.
-     */
+    /// @return total amount of Ether already released     
     function totalReleased() public view returns (uint256) {
         return _totalReleased;
     }
@@ -103,28 +110,40 @@ contract PaymentSplitter is Context {
     /**
      * @dev Getter for the total amount of `token` already released. `token` should be the address of an IERC20
      * contract.
+     * 
+     * @param token token address 
+     * @return amount released from the token given as an argument
      */
     function totalReleased(IERC20 token) public view returns (uint256) {
         return _erc20TotalReleased[token];
     }
 
-    /**
-     * @dev Getter for the amount of shares held by an account.
-     */
+    /// @param account account to be queried
+    /// @return amount of shares held by an account    
     function shares(address account) public view returns (uint256) {
         return _shares[account];
     }
 
     /**
-     * @dev Getter for the amount of Ether already released to a payee.
+     * @notice this function allows to know the amount received for a given address
+     * 
+     * @param account the account to be queried
+     *
+     * @return amount of Ether already released to a payee
      */
     function released(address account) public view returns (uint256) {
         return _released[account];
     }
 
     /**
-     * @dev Getter for the amount of `token` tokens already released to a payee. `token` should be the address of an
-     * IERC20 contract.
+     * @dev `token` should be the address of an IERC20 contract.
+     *
+     * @param token contract address
+     *
+     * @param account the account to be queried
+     *
+     * @return amount of `token` tokens already released to a payee
+     *
      */
     function released(IERC20 token, address account)
         public
@@ -135,7 +154,9 @@ contract PaymentSplitter is Context {
     }
 
     /**
-     * @dev Getter for the address of the payee number `index`.
+     * @param  index an index of the payee array
+     * 
+     * @return address of the payee number `index`.
      */
     function payee(uint256 index) public view returns (address) {
         return _payees[index];
@@ -144,6 +165,10 @@ contract PaymentSplitter is Context {
     /**
      * @dev Triggers a transfer to `account` of the amount of Ether they are owed, according to their percentage of the
      * total shares and their previous withdrawals.
+     *
+     * @notice emit an event with the account paid and the amount
+     *
+     * @param account account to released
      */
     function release(address payable account) public virtual onlyTeams {
         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
@@ -167,7 +192,14 @@ contract PaymentSplitter is Context {
     /**
      * @dev Triggers a transfer to `account` of the amount of `token` tokens they are owed, according to their
      * percentage of the total shares and their previous withdrawals. `token` must be the address of an IERC20
-     * contract.
+     * contract. This function is onlyTeams.
+     *
+     * @notice relase IERC20 token to an account and emint an event
+     *
+     * @param token contract address
+     *
+     * @param account address to pay
+     *     
      */
     function release(IERC20 token, address account) public virtual onlyTeams {
         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
@@ -192,6 +224,16 @@ contract PaymentSplitter is Context {
     /**
      * @dev internal logic for computing the pending payment of an `account` given the token historical balances and
      * already released amounts.
+     *
+     * @notice to know the amount of pending payments
+     * 
+     * @param account the account to be queried
+     * 
+     * @param totalReceived the total amount received
+     * 
+     * @param alreadyReleased the amount already released
+     *
+     * @return amount of pending payement
      */
     function _pendingPayment(
         address account,
@@ -204,6 +246,7 @@ contract PaymentSplitter is Context {
 
     /**
      * @dev Add a new payee to the contract.
+     * @notice to add a payee, emit an event with the address and the associated share
      * @param account The address of the payee to add.
      * @param shares_ The number of shares owned by the payee.
      */
