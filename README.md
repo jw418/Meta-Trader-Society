@@ -42,16 +42,16 @@ Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
 Le README du Smart Contract RatRaceNFT.sol : 
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/RatRaceNFTDoc.md)
+https://github.com/jw418/Meta-Trader-Society/blob/main/RatRaceNFTDoc.md
 
 Le README du Smart Contract PayementSpliter.sol :
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/PayementSplitterDoc.md)
+https://github.com/jw418/Meta-Trader-Society/blob/main/PayementSplitterDoc.md
 
 Le document avoiding_common_atacks.md qui éxplique quelles mesures ont été prises pour éviter les failles de sécurité:
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/avoiding_common_attacks.md)
+https://github.com/jw418/Meta-Trader-Society/blob/main/avoiding_common_attacks.md
 
 le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/design_patern_desicions.md)
+https://github.com/jw418/Meta-Trader-Society/blob/main/design_patern_desicions.md
