@@ -11,6 +11,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./PayementSpliter.sol";
 
 contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
+    using Strings for uint256;
+
     uint256 public constant max_supply = 3333;
 
     uint256 public max_mint_allowed = 3;
@@ -18,6 +20,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     uint256 public priceSale = 1 ether;
 
     bool public mintOpen = true;
+
+    string public baseExtension = ".json";
 
     address[] private _teams = [
         0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,
@@ -100,16 +104,22 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         }
     }
 
-    function tokenURI(string memory _nftId)
+    function tokenURI(uint256 _nftId)
         public
         view
+        override(ERC721)
         returns (string memory)
     {
-        // require(_exists(_nftId), "This NFT doesn't exist.");
         string memory currentBaseURI = _baseURI();
         return
             bytes(currentBaseURI).length > 0
-                ? string(abi.encodePacked(currentBaseURI, _nftId, ".json"))
+                ? string(
+                    abi.encodePacked(
+                        currentBaseURI,
+                        _nftId.toString(),
+                        baseExtension
+                    )
+                )
                 : "";
     }
 }

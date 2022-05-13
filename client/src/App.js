@@ -3,7 +3,7 @@ import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
 import Navbar from "./Components/Navbar";
 import Description from "./Components/Description";
-
+const axios = require("axios");
 const App = () => {
   const [web3, setWeb3] = useState();
   const [accounts, setAccouts] = useState();
@@ -16,6 +16,7 @@ const App = () => {
   const [nftBalance, setNftBalance] = useState();
   const [inputError, setInputError] = useState();
   const [isMinted, setIsMinted] = useState();
+  const [imageMinted, setImageMinted] = useState();
 
   useEffect(async () => {
     //Load blockchain Data
@@ -33,6 +34,15 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
+    console.log(await contract.methods.tokenURI("1").call());
+
+    let url = await contract.methods.tokenURI("1").call();
+
+    url = url.slice(7, url.length);
+    await fetch("https://ipfs.io/ipfs/" + url)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+    // axios.get(url).then((res) => console.log(res));
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -52,15 +62,34 @@ const App = () => {
       await contract.methods
         .mintNFT(inputValue)
         .send({ from: accounts[0], value: mintPrice * inputValue })
-        .then(() => {
+        .then((res) => {
+          let token_id = res.events.Transfer.returnValues.tokenId;
+
+          getImage(token_id);
           setInputError(false);
           setIsMinted(true);
           updateNFTBalance();
+          updateBalance();
         });
+  };
+
+  const getImage = async (token_id) => {
+    let url = await contract.methods.tokenURI(token_id).call();
+
+    url = url.slice(7, url.length);
+    await fetch("https://ipfs.io/ipfs/" + url)
+      .then((res) => res.json())
+      .then((data) => setImageMinted(data.image));
   };
 
   const updateNFTBalance = async () => {
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
+  };
+
+  const updateBalance = async () => {
+    const Balance = await web3.eth.getBalance(accounts[0]);
+
+    setBalance(Balance / 10 ** 18);
   };
 
   //Only for test will be deleted
@@ -85,7 +114,7 @@ const App = () => {
           {isMinted && (
             <>
               <div className="image_mint">
-                <img src="../img/45.jpg" />
+                <img src={imageMinted} />
               </div>
             </>
           )}
