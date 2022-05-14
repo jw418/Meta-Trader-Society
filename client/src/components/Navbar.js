@@ -2,11 +2,11 @@ import React from "react";
 
 const Navbar = ({ userAddress }) => {
   return (
-    <div className="navbar_components" style={{ marginTop: "10px" }}>
+    <div className="navbar_components">
       <ul className="navbar">
         <span className="un">Roadmap</span>
         <span className="un">Team</span>
-        <span className="un">Open Sea</span>
+        <span className="un">NFT Wallet</span>
       </ul>
 
       <div className="logos">

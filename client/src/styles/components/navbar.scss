@@ -1,5 +1,13 @@
 .navbar_components {
   display: flex;
+  background-color: #e0c6c1;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: fixed;
+  width: 100%;
+
+
   .navbar {
     width: 40%;
     display: flex;
@@ -8,6 +16,8 @@
 
     .un {
       display: inline-block;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
     
     .un::after {
@@ -35,12 +45,14 @@
       display: flex;
       flex-direction: row;
       text-align: center;
-      background: #2C0AA6;
+      background: #D6B0C3;
       color: white;
       width: 150px;
       height: 25px;
       padding: 10px;
       border-radius: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
 
       #metamask {
         max-width: 100%;

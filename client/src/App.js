@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
 import Navbar from "./Components/Navbar";
 import Description from "./Components/Description";
-const axios = require("axios");
+import DisplayNFT from "./Components/DisplayNFT";
+
 const App = () => {
   const [web3, setWeb3] = useState();
   const [accounts, setAccouts] = useState();
@@ -16,7 +17,11 @@ const App = () => {
   const [nftBalance, setNftBalance] = useState();
   const [inputError, setInputError] = useState();
   const [isMinted, setIsMinted] = useState();
-  const [imageMinted, setImageMinted] = useState();
+  const [infoMinted, setInfoMinted] = useState();
+  const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
+  const [nftInfos, setNftInfos] = useState([]);
+  const [, fctMiseAJour] = useState({});
+  const miseAJour = useCallback(() => fctMiseAJour({}), []);
 
   useEffect(async () => {
     //Load blockchain Data
@@ -34,15 +39,8 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    console.log(await contract.methods.tokenURI("1").call());
+    await getNFTBalance(contract);
 
-    let url = await contract.methods.tokenURI("1").call();
-
-    url = url.slice(7, url.length);
-    await fetch("https://ipfs.io/ipfs/" + url)
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-    // axios.get(url).then((res) => console.log(res));
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -52,9 +50,61 @@ const App = () => {
     setAccouts(accounts);
     setUserAddress(accounts[0]);
     setNetwordId(networkId);
+    loadImages(contract);
+  };
+
+  const loadImages = (contract) => {
+    nftBalanceIndex.forEach(async (n) => {
+      try {
+        let url = await contract.methods.tokenURI(n).call();
+        url = url.slice(7, url.length);
+        await fetch("https://ipfs.io/ipfs/" + url)
+          .then((res) => res.json())
+          .then((data) => {
+            let temps2 = data;
+            temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");       
+            nftInfos.push(temps2)
+            miseAJour();
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
+
+  const loadImagesByIndex = async (index, length) => {
+    let temp = [];
+    if (length > 1) {
+      temp = await loadMultiNFT(index);
+      return temp;
+    } else {
+      let url = await contract.methods.tokenURI(index[0]).call();
+      url = url.slice(7, url.length);
+      await fetch("https://ipfs.io/ipfs/" + url)
+        .then((res) => res.json())
+        .then((data) => {
+          temp = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
+        });
+      return temp;
+    }
+  };
+
+  const loadMultiNFT = async (index) => {
+    let temp = [];
+    await index.forEach(async (n) => {
+      let url = await contract.methods.tokenURI(n).call();
+      url = url.slice(7, url.length);
+      await fetch("https://ipfs.io/ipfs/" + url)
+        .then((res) => res.json())
+        .then((data) => {
+          temp.push(data.image.replace("ipfs://", "https://ipfs.io/ipfs"));
+        });
+      });
+      return temp;
   };
 
   const mintFonction = async () => {
+    let index = [];
     //Check if the input si empty or not
     if (inputValue == undefined || inputValue == "") setInputError(true);
     //Get the mint function of our contract
@@ -63,14 +113,29 @@ const App = () => {
         .mintNFT(inputValue)
         .send({ from: accounts[0], value: mintPrice * inputValue })
         .then((res) => {
-          let token_id = res.events.Transfer.returnValues.tokenId;
+          if (res.events.Transfer.length > 1)
+            res.events.Transfer.forEach((n) => {
+              index.push(n.returnValues.tokenId);
+            });
+          else index = res.events.Transfer.returnValues.tokenId;
+          if(index.length == 1) getImage(index[0])
 
-          getImage(token_id);
           setInputError(false);
           setIsMinted(true);
           updateNFTBalance();
           updateBalance();
         });
+        // loadImagesByIndex(index,index.length)
+  };
+
+  const getNFTBalance = async (contract) => {
+    const totalSupply = await contract.methods.totalSupply().call();
+
+    for (let i = 1; i <= totalSupply; i++) {
+      if (await contract.methods.ownerOf(i).call()) {
+        if (!nftBalanceIndex.includes(i)) nftBalanceIndex.push(i);
+      }
+    }
   };
 
   const getImage = async (token_id) => {
@@ -79,7 +144,11 @@ const App = () => {
     url = url.slice(7, url.length);
     await fetch("https://ipfs.io/ipfs/" + url)
       .then((res) => res.json())
-      .then((data) => setImageMinted(data.image));
+      .then((data) => {
+        let temp = data;
+        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/")
+        setInfoMinted(temp);
+      });
   };
 
   const updateNFTBalance = async () => {
@@ -92,20 +161,6 @@ const App = () => {
     setBalance(Balance / 10 ** 18);
   };
 
-  //Only for test will be deleted
-  // const changePrice = async () => {
-  //   await contract.methods
-  //     .changePriceSale(web3.utils.toWei("5", "ether"))
-  //     .send({ from: accounts[0] });
-  // };
-
-  //Only for test will be deleted
-  // const setURI = async () => {
-  //   await contract.methods
-  //     .setBaseUri(JSON.stringify(json))
-  //     .send({ from: accounts[0] });
-  // };
-
   return (
     <>
       <div className="home">
@@ -114,7 +169,12 @@ const App = () => {
           {isMinted && (
             <>
               <div className="image_mint">
-                <img src={imageMinted} />
+                <img src={infoMinted && infoMinted.image} />
+                <ul>Specifities :
+                  {infoMinted && infoMinted.attributes.map((n,i) => (
+                    <li key={i}>{n.trait_type} : {n.value}</li>
+                  ))}
+                </ul>
               </div>
             </>
           )}
@@ -160,6 +220,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      <DisplayNFT nftInfos={nftInfos}/>
       <Description />
     </>
   );

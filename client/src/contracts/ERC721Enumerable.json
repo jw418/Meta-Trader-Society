@@ -8511,8 +8511,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2022-05-13T08:50:55.111Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-05-14T18:39:10.315Z",
   "devdoc": {
     "details": "This implements an optional extension of {ERC721} defined in the EIP that adds enumerability of all the token ids in the contract as well as all token ids owned by each account.",
     "kind": "dev",
