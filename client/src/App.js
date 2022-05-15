@@ -132,6 +132,7 @@ const App = () => {
           setIsMinted(true);
           updateNFTBalance();
           updateBalance();
+          loadImages(contract)
         });
   };
 
@@ -233,7 +234,9 @@ const App = () => {
           </div>
         </div>
       </div>
+      <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
+      <div className="trait"></div>
       <Description />
     </>
   );

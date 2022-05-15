@@ -4,7 +4,7 @@ const Description = () => {
   return (
     <div className="description_component">
       <div className="description_comp">
-        <h1>Description du projet</h1>
+        <h1>Présentation du projet</h1>
         <div className="description_div">
           <p>
             Rat Race NFT Le ticket d'entrée au HedgeFund Etant réservé aux plus
