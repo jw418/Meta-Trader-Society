@@ -2,7 +2,6 @@
 
 pragma solidity >=0.4.21 <8.10.0;
 
-
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -14,9 +13,6 @@ import "./PayementSpliter.sol";
 contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     using Strings for uint256;
 
-    
-    
-   
     uint256 public constant max_supply = 3333;
 
     uint256 public max_mint_allowed = 3;
@@ -27,13 +23,13 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     string public baseExtension = ".json";
 
-    address[] private _teams = [
-        0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,
-        0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2,
-        0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
-    ];
+    // address[] private _teams = [
+    //     0xde28322100395F0aaFaAb232993cF9ef14334328,
+    //     0x9A09c80fccede9b53b8125c36832e4e8354825b3,
+    //     0xa1D37E635da170F5d439024D1498C7a94Bf903BC
+    // ];
 
-    uint256[] private _share = [45, 45, 10];
+    // uint256[] private _share = [45, 45, 10];
 
     string public baseURI;
 
@@ -41,49 +37,48 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     /// @dev The recommended format is as follows: "ipsf//:{your CID}"
     /// @param _newBaseURI indicate the URI of your NFT series
-    constructor(string memory _newBaseURI)
-        public
-        ERC721("RatRace", "RAT")
-        PaymentSplitter(_teams, _share)
-    {
+    constructor(
+        string memory _newBaseURI,
+        address[] memory _teams,
+        uint256[] memory _share
+    ) public ERC721("RatRace", "RAT") PaymentSplitter(_teams, _share) {
         baseURI = _newBaseURI;
     }
 
     /**
-    *    @dev You can add requirements to prevent the price from being too low or too expensive
-    *
-    *    @notice Change the price of the mint   
-    *
-    *    @param _priceSale is the new price you want to set   
-    */
+     *    @dev You can add requirements to prevent the price from being too low or too expensive
+     *
+     *    @notice Change the price of the mint
+     *
+     *    @param _priceSale is the new price you want to set
+     */
     function changePriceSale(uint256 _priceSale) external onlyOwner {
         priceSale = _priceSale;
     }
 
-    
-     /**
+    /**
      *  @dev You can add requirements to prevent the _maxMintAllowed from being too low or too high
      *
      *  @notice Change the number NFT max you can mint
-     *    
-     *  @param _maxMintAllowed is the new max     
+     *
+     *  @param _maxMintAllowed is the new max
      */
     function changeMaxMintAllowed(uint256 _maxMintAllowed) external onlyOwner {
         max_mint_allowed = _maxMintAllowed;
     }
 
     /**
-    *    @notice This function allows you to obtain the URI
-    *
-    *    @return the baseURI of the NFT
-    */
+     *    @notice This function allows you to obtain the URI
+     *
+     *    @return the baseURI of the NFT
+     */
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }
 
     /**
      *    @dev Reminder: the recommended format is as follows: "ipsf//:{your CID}
-     *    
+     *
      *    @notice Change base URI
      *
      *    @param _newBaseURI is the new URI
@@ -104,7 +99,10 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         require(priceSale * _amount <= msg.value, "Not enought funds");
         require(_amount <= max_mint_allowed, "You can mint more NFT");
         require(numberNftSold + _amount <= max_supply, "Max supply");
-        require(nftBalance[msg.sender] + _amount <= max_mint_allowed,"Too much mint");
+        require(
+            nftBalance[msg.sender] + _amount <= max_mint_allowed,
+            "Too much mint"
+        );
 
         if (numberNftSold + _amount == max_supply) {
             mintOpen = false;
@@ -117,16 +115,17 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     }
 
     /**
-    *   @param _nftId id of the nft whose uri you want
-    *
-    *   @return the uri of the chosen nft
-    */
+     *   @param _nftId id of the nft whose uri you want
+     *
+     *   @return the uri of the chosen nft
+     */
     function tokenURI(uint256 _nftId)
         public
         view
         override(ERC721)
         returns (string memory)
     {
+        require(_exists(_nftId), "id doesn't exist");
         string memory currentBaseURI = _baseURI();
         return
             bytes(currentBaseURI).length > 0

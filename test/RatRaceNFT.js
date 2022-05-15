@@ -3,6 +3,7 @@ const {
   BN,
   expectRevert,
   expectEvent,
+  balance,
   send,
   ether,
 } = require("@openzeppelin/test-helpers");
@@ -20,7 +21,9 @@ contract("RatRaceNFT", function (accounts) {
   const reelAmount = ether("1");
 
   beforeEach(async function () {
-    this.RatRaceNFTInstance = await RatRaceNFT.new("URI", { from: owner });
+    this.RatRaceNFTInstance = await RatRaceNFT.new("URI", team, share, {
+      from: owner,
+    });
   });
 
   //--Test deja fait
@@ -42,104 +45,116 @@ contract("RatRaceNFT", function (accounts) {
   // Mint 2 token V
   // Mint 3 token V
   // Fail to mint 4 Token V
-  // Fail to ming 3 + 1
+  // Fail to ming 3 + 1 V
+  // release V
+  // test share for each address V
+  // test URI V 
 
   //--Tristan
-  // test mint (Test URI, test max supply)
-  // release
-  // test share for each address
+  // test max supply
 
   //--Julien
 
   //---------Ce qu'on doit faire
-  //Tester les fonctions only owner
-  //Refuser le mint quand le nombre est trop élevé
-  //Tester tous les requires
+  //Tester les fonctions only owner V
+  //Refuser le mint quand le nombre est trop élevé V
+  //Tester tous les requires 
   //Tester les events
   //Variable avant après changemenet
   //Tester les sucesion d'event (mint 1 puis re mint 1)
 
-  //Numéroter les tests ?
+  context("varaible test", () => {
+    it("1 : max_supply must be equal to 3333", async function () {
+      const maxSupply = await this.RatRaceNFTInstance.max_supply();
+      await expect(maxSupply).to.be.bignumber.equal(
+        "3333",
+        "max_supply is not 3333"
+      );
+    });
 
-  it("max_supply must be equal to 3333", async function () {
-    const maxSupply = await this.RatRaceNFTInstance.max_supply();
-    await expect(maxSupply).to.be.bignumber.equal(
-      "3333",
-      "max_supply is not 3333"
-    );
+    it("2 : max_mint_allowed must be equal to 3", async function () {
+      const maxMintAllowed = await this.RatRaceNFTInstance.max_mint_allowed();
+      await expect(maxMintAllowed).to.be.bignumber.equal(
+        "3",
+        "max_mint_allowed supply is not 3"
+      );
+    });
+
+    it("3 : priceSale must be equal to 1 ether", async function () {
+      const priceSale = await this.RatRaceNFTInstance.priceSale();
+      await expect(priceSale).to.be.bignumber.equal(
+        ether("1"),
+        "priceSale is not equal to 1 ether"
+      );
+    });
+
+    it("4 : mintOpen must be true", async function () {
+      const mintOpen = await this.RatRaceNFTInstance.mintOpen();
+      await expect(mintOpen).to.be.equal(true, "MintOpen is not true");
+    });
+
+    it("5 : nftBalance of owner must be equal to 0", async function () {
+      const nftBalance = await this.RatRaceNFTInstance.nftBalance(owner);
+      await expect(nftBalance).to.be.bignumber.equal(
+        "0",
+        "nftBalance is not 0"
+      );
+    });
+
+    it("6 : nftBalance of user1 must be equal to 0", async function () {
+      const nftBalance = await this.RatRaceNFTInstance.nftBalance(user1);
+      await expect(nftBalance).to.be.bignumber.equal(
+        "0",
+        "nftBalance is not 0"
+      );
+    });
+
+    it("7 : nftBalance of user2 must be equal to 0", async function () {
+      const nftBalance = await this.RatRaceNFTInstance.nftBalance(user2);
+      await expect(nftBalance).to.be.bignumber.equal(
+        "0",
+        "nftBalance is not 0"
+      );
+    });
   });
 
-  it("max_mint_allowed must be equal to 3", async function () {
-    const maxMintAllowed = await this.RatRaceNFTInstance.max_mint_allowed();
-    await expect(maxMintAllowed).to.be.bignumber.equal(
-      "3",
-      "max_mint_allowed supply is not 3"
-    );
+  context("test contructor", () => {
+    it("8 : name must be RatRace", async function () {
+      const name = await this.RatRaceNFTInstance.name();
+      await expect(name).to.be.equal("RatRace", "the name is not RatRace");
+    });
+
+    it("9 : symbole must be RAT", async function () {
+      const symbol = await this.RatRaceNFTInstance.symbol();
+      await expect(symbol).to.be.equal("RAT", "the symbol is not RAT");
+    });
+
+    it("10 : totalSupply must be equal to 0", async function () {
+      const totalSupply = await this.RatRaceNFTInstance.totalSupply();
+      await expect(totalSupply).to.be.bignumber.equal(
+        "0",
+        "the totalSupply is not 0"
+      );
+    });
+
+    it("11 : totalShares must be equal to 100", async function () {
+      const totalShares = await this.RatRaceNFTInstance.totalShares();
+      await expect(totalShares).to.be.bignumber.equal(
+        "100",
+        "the totalShares is not 100"
+      );
+    });
+
+    it("12 : baseURI must be an empty string", async function () {
+      const baseURI = await this.RatRaceNFTInstance.baseURI();
+      await expect(baseURI).to.be.equal(
+        "URI",
+        "the baseURI is not an empty string"
+      );
+    });
   });
 
-  it("priceSale must be equal to 1 ether", async function () {
-    const priceSale = await this.RatRaceNFTInstance.priceSale();
-    await expect(priceSale).to.be.bignumber.equal(
-      ether("1"),
-      "priceSale is not equal to 1 ether"
-    );
-  });
-
-  it("mintOpen must be true", async function () {
-    const mintOpen = await this.RatRaceNFTInstance.mintOpen();
-    await expect(mintOpen).to.be.equal(true, "MintOpen is not true");
-  });
-
-  it("nftBalance of owner must be equal to 0", async function () {
-    const nftBalance = await this.RatRaceNFTInstance.nftBalance(owner);
-    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
-  });
-
-  it("nftBalance of user1 must be equal to 0", async function () {
-    const nftBalance = await this.RatRaceNFTInstance.nftBalance(user1);
-    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
-  });
-
-  it("nftBalance of user2 must be equal to 0", async function () {
-    const nftBalance = await this.RatRaceNFTInstance.nftBalance(user2);
-    await expect(nftBalance).to.be.bignumber.equal("0", "nftBalance is not 0");
-  });
-
-  it("name must be RatRace", async function () {
-    const name = await this.RatRaceNFTInstance.name();
-    await expect(name).to.be.equal("RatRace", "the name is not RatRace");
-  });
-
-  it("symbole must be RAT", async function () {
-    const symbol = await this.RatRaceNFTInstance.symbol();
-    await expect(symbol).to.be.equal("RAT", "the symbol is not RAT");
-  });
-
-  it("totalSupply must be equal to 0", async function () {
-    const totalSupply = await this.RatRaceNFTInstance.totalSupply();
-    await expect(totalSupply).to.be.bignumber.equal(
-      "0",
-      "the totalSupply is not 0"
-    );
-  });
-
-  it("totalShares must be equal to 100", async function () {
-    const totalShares = await this.RatRaceNFTInstance.totalShares();
-    await expect(totalShares).to.be.bignumber.equal(
-      "100",
-      "the totalShares is not 100"
-    );
-  });
-
-  it("baseURI must be an empty string", async function () {
-    const baseURI = await this.RatRaceNFTInstance.baseURI();
-    await expect(baseURI).to.be.equal(
-      "URI",
-      "the baseURI is not an empty string"
-    );
-  });
-
-  it("baseUri must be change", async function () {
+  it("13 : baseUri must be change", async function () {
     const NewUri = "newuri.test";
     await this.RatRaceNFTInstance.setBaseUri(NewUri);
     const baseURI = await this.RatRaceNFTInstance.baseURI();
@@ -149,7 +164,7 @@ contract("RatRaceNFT", function (accounts) {
     );
   });
 
-  it("priceSale will be changed", async function () {
+  it("14 : priceSale will be changed", async function () {
     await this.RatRaceNFTInstance.changePriceSale(ether("2"));
     const newPriceSale = await this.RatRaceNFTInstance.priceSale();
     await expect(newPriceSale).to.be.bignumber.equal(
@@ -157,16 +172,22 @@ contract("RatRaceNFT", function (accounts) {
       "priceSale is not equal to 1 ether"
     );
   });
+  it("15 : max mint will be changed", async function () {
+    await this.RatRaceNFTInstance.changeMaxMintAllowed("5");
+    const newMAxMintAllowed =
+      await this.RatRaceNFTInstance.max_mint_allowed();
+    await expect(newMAxMintAllowed).to.be.bignumber.equal("5");
+  });
 
   context("test mint", () => {
-    it("max mint will be changed", async function () {
-      await this.RatRaceNFTInstance.changeMaxMintAllowed("5");
-      const newMAxMintAllowed =
-        await this.RatRaceNFTInstance.max_mint_allowed();
-      await expect(newMAxMintAllowed).to.be.bignumber.equal("5");
+    it("16 : will fail to mint not enought funds", async function () {
+      await expectRevert(this.RatRaceNFTInstance.mintNFT("1", {
+        from: user1,
+        value: ether("0.5"),
+      }), "Not enought funds");
     });
 
-    it("will mint 1 new token", async function () {
+    it("17 : will mint 1 new token", async function () {
       await this.RatRaceNFTInstance.mintNFT("1", {
         from: user1,
         value: reelAmount,
@@ -177,7 +198,7 @@ contract("RatRaceNFT", function (accounts) {
       await expect(totalSupply).to.be.bignumber.equal("1");
     });
 
-    it("will mint 2 new token", async function () {
+    it("18 : will mint 2 new token", async function () {
       await this.RatRaceNFTInstance.mintNFT("2", {
         from: user1,
         value: 2 * reelAmount,
@@ -188,7 +209,7 @@ contract("RatRaceNFT", function (accounts) {
       await expect(totalSupply).to.be.bignumber.equal("2");
     });
 
-    it("will mint 3 new token", async function () {
+    it("19 : will mint 3 new token", async function () {
       await this.RatRaceNFTInstance.mintNFT("3", {
         from: user1,
         value: 3 * reelAmount,
@@ -199,7 +220,7 @@ contract("RatRaceNFT", function (accounts) {
       await expect(totalSupply).to.be.bignumber.equal("3");
     });
 
-    it("will fail to mint 4 new token", async function () {
+    it("20 : will fail to mint 4 new token", async function () {
       await expectRevert(
         this.RatRaceNFTInstance.mintNFT("4", {
           from: user1,
@@ -209,7 +230,7 @@ contract("RatRaceNFT", function (accounts) {
       );
     });
 
-    it("will fail to mint 3 + 1", async function () {
+    it("21 : will fail to mint 3 + 1", async function () {
       await this.RatRaceNFTInstance.mintNFT("3", {
         from: user1,
         value: 3 * reelAmount,
@@ -224,15 +245,88 @@ contract("RatRaceNFT", function (accounts) {
     });
   });
 
+  context("only owner", () => {
+    it("22 : Should revert priceSale", async function () {
+      await expectRevert(
+        this.RatRaceNFTInstance.changePriceSale(ether("2"), {
+          from: accounts[1],
+        }),
+        "Ownable: caller is not the owner"
+      );
+    });
+    it("23 : Should revert changeMaxMint", async function () {
+      await expectRevert(
+        this.RatRaceNFTInstance.changeMaxMintAllowed("2", {
+          from: accounts[1],
+        }),
+        "Ownable: caller is not the owner"
+      );
+    });
+    it("24 : Should revert setBaseURI", async function () {
+      await expectRevert(
+        this.RatRaceNFTInstance.setBaseUri("newURI", { from: accounts[1] }),
+        "Ownable: caller is not the owner"
+      );
+    });
+  });
+
   context("test release", () => {
-    it("should release", async function () {
+    it("25 : should release to a member of the team", async function () {
+      //Send 1 eth
       await send.ether(owner, this.RatRaceNFTInstance.address, reelAmount);
-      //Problème on ne peut pas test pour le moment car les addresses sont définit en dur dans le code
       await expect(
-        await this.RatRaceNFTInstance.isTeam(
-          "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"
-        )
+        await this.RatRaceNFTInstance.isTeam(accounts[2])
       ).to.be.equal(true);
+      await expect(
+        await this.RatRaceNFTInstance.isTeam(accounts[3])
+      ).to.be.equal(true);
+      await expect(
+        await this.RatRaceNFTInstance.isTeam(accounts[4])
+      ).to.be.equal(true);
+      //Test first share
+      const tracker1 = await balance.tracker(accounts[2]);
+      await this.RatRaceNFTInstance.release(accounts[2], {
+        from: accounts[3],
+      });
+      const profit1 = await tracker1.delta();
+      await expect(profit1).to.be.bignumber.equal(ether("0.45"));
+      //Test second share
+      const tracker2 = await balance.tracker(accounts[3]);
+      await this.RatRaceNFTInstance.release(accounts[3], {
+        from: accounts[2],
+      });
+      const profit2 = await tracker2.delta();
+      await expect(profit2).to.be.bignumber.equal(ether("0.45"));
+      //Test third share
+      const tracker3 = await balance.tracker(accounts[4]);
+      await this.RatRaceNFTInstance.release(accounts[4], {
+        from: accounts[3],
+      });
+      const profit3 = await tracker3.delta();
+      await expect(profit3).to.be.bignumber.equal(ether("0.10"));
+    });
+
+    it("26 : should'nt release", async function () {
+      await send.ether(owner, this.RatRaceNFTInstance.address, reelAmount);
+      await expectRevert(this.RatRaceNFTInstance.release(accounts[2],{from:owner}), "not member of the team.");
+    });
+  });
+
+  context("tokenURI", () => {
+    it("27 : should'nt return tokenId doesn't exist", async function () {
+      await expectRevert(
+        this.RatRaceNFTInstance.tokenURI("5"),
+        "id doesn't exist"
+      );
+    });
+
+    it("28 : should return tokenId", async function () {
+      await this.RatRaceNFTInstance.mintNFT("1", {
+        from: user1,
+        value: reelAmount,
+      });
+      let tokenURI = await this.RatRaceNFTInstance.tokenURI("1");
+      await expect(tokenURI).to.be.equal("URI1.json")
     });
   });
 });
