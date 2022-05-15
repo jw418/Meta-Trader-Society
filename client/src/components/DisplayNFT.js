@@ -3,13 +3,13 @@ import React from "react";
 const DisplayNFT = ({ nftInfos }) => {
   return (
     <div className="displayNFT_pages">
-      <h1>Vos NFT déjà possèdés</h1>
+      <h1>Vos NFT déjà possédés</h1>
       <div className="displayOwned">
         {nftInfos &&
           nftInfos.map((n, i) => (
             <ul key={i}>
               <img style={{ width: "450px", height: "450px" }} src={n.image} />
-              <h3>Attributes :</h3>
+              <h3></h3>
               <ul className="showAttributes">
                 {n.attributes.map((n, i) => (
                   <li key={i}>

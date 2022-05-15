@@ -35534,8 +35534,8 @@
         }
       },
       "links": {},
-      "address": "0xf0d28029C1719583D2Af7dB518bD9C4567678176",
-      "transactionHash": "0x63c6b144108150fc8214ce3950f643e556d6c5ef511f26e3dee382d5f77f1df5"
+      "address": "0x59b7b542DC05962a1Fa9aC654946A4950B77831E",
+      "transactionHash": "0xf3c29505b00ff3b7c03c140c7498a3d1b6dfc4372c90b70b345974b22448ca17"
     },
     "1337": {
       "events": {
@@ -35717,12 +35717,12 @@
         }
       },
       "links": {},
-      "address": "0xF602C33c4DcbFE54597bfebfb44fe1488D0FDB21",
-      "transactionHash": "0x1cd50e46072ce9b135621f1dcdef43465990d14609caabcc26ee63f2da7180a6"
+      "address": "0x59b7b542DC05962a1Fa9aC654946A4950B77831E",
+      "transactionHash": "0xf65c91b974655478d7df3e076004a660b444539568c346290744970681d7ae21"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-05-14T18:39:20.598Z",
+  "updatedAt": "2022-05-15T11:52:24.087Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Julien Wolff Tristan Boettger",

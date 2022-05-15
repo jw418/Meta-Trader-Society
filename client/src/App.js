@@ -41,6 +41,7 @@ const App = () => {
 
     await getNFTBalance(contract);
 
+    console.log(web3);
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -62,8 +63,11 @@ const App = () => {
           .then((res) => res.json())
           .then((data) => {
             let temps2 = data;
-            temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");       
-            nftInfos.push(temps2)
+            temps2.image = data.image.replace(
+              "ipfs://",
+              "https://ipfs.io/ipfs/"
+            );
+            nftInfos.push(temps2);
             miseAJour();
           });
       } catch (err) {
@@ -83,7 +87,8 @@ const App = () => {
       await fetch("https://ipfs.io/ipfs/" + url)
         .then((res) => res.json())
         .then((data) => {
-          temp = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
+          temp = data 
+          temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
         });
       return temp;
     }
@@ -97,10 +102,12 @@ const App = () => {
       await fetch("https://ipfs.io/ipfs/" + url)
         .then((res) => res.json())
         .then((data) => {
-          temp.push(data.image.replace("ipfs://", "https://ipfs.io/ipfs"));
+          let temp2 = data;
+          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs")
+          temp.push(temp2)
         });
-      });
-      return temp;
+    });
+    return temp;
   };
 
   const mintFonction = async () => {
@@ -118,14 +125,14 @@ const App = () => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
-          if(index.length == 1) getImage(index[0])
+          if (index.length == 1) getImage(index[0]);
+          else loadImagesByIndex(index,index.length)
 
           setInputError(false);
           setIsMinted(true);
           updateNFTBalance();
           updateBalance();
         });
-        // loadImagesByIndex(index,index.length)
   };
 
   const getNFTBalance = async (contract) => {
@@ -146,7 +153,7 @@ const App = () => {
       .then((res) => res.json())
       .then((data) => {
         let temp = data;
-        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/")
+        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
         setInfoMinted(temp);
       });
   };
@@ -170,10 +177,16 @@ const App = () => {
             <>
               <div className="image_mint">
                 <img src={infoMinted && infoMinted.image} />
-                <ul>Specifities :
-                  {infoMinted && infoMinted.attributes.map((n,i) => (
-                    <li key={i}>{n.trait_type} : {n.value}</li>
-                  ))}
+                Attributes :
+                <ul className="showAttributes">
+                  {infoMinted &&
+                    infoMinted.attributes.map((n, i) => (
+                      <li key={i}>
+                        <p>
+                          {n.trait_type} : {n.value}
+                        </p>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </>
@@ -220,7 +233,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      <DisplayNFT nftInfos={nftInfos}/>
+      {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
       <Description />
     </>
   );
