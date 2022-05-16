@@ -20,6 +20,8 @@ const App = () => {
   const [infoMinted, setInfoMinted] = useState();
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
+  const [multiMint, setMultiMint] = useState(false);
+  const [showMultiMint, setShowMultiMint] = useState();
   const [, fctMiseAJour] = useState({});
   const miseAJour = useCallback(() => fctMiseAJour({}), []);
 
@@ -51,10 +53,11 @@ const App = () => {
     setAccouts(accounts);
     setUserAddress(accounts[0]);
     setNetwordId(networkId);
-    loadImages(contract);
+    loadWalletNFT(contract);
   };
 
-  const loadImages = (contract) => {
+  //Load the wallet of the user
+  const loadWalletNFT = (contract) => {
     nftBalanceIndex.forEach(async (n) => {
       try {
         let url = await contract.methods.tokenURI(n).call();
@@ -76,6 +79,7 @@ const App = () => {
     });
   };
 
+  //Load nft by their index
   const loadImagesByIndex = async (index, length) => {
     let temp = [];
     if (length > 1) {
@@ -87,13 +91,14 @@ const App = () => {
       await fetch("https://ipfs.io/ipfs/" + url)
         .then((res) => res.json())
         .then((data) => {
-          temp = data 
+          temp = data;
           temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
         });
       return temp;
     }
   };
 
+  //If there more than 1 nft to load
   const loadMultiNFT = async (index) => {
     let temp = [];
     await index.forEach(async (n) => {
@@ -103,8 +108,8 @@ const App = () => {
         .then((res) => res.json())
         .then((data) => {
           let temp2 = data;
-          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs")
-          temp.push(temp2)
+          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
+          temp.push(temp2);
         });
     });
     return temp;
@@ -119,26 +124,28 @@ const App = () => {
       await contract.methods
         .mintNFT(inputValue)
         .send({ from: accounts[0], value: mintPrice * inputValue })
-        .then((res) => {
+        .then(async (res) => {
           if (res.events.Transfer.length > 1)
             res.events.Transfer.forEach((n) => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
           if (index.length == 1) getImage(index[0]);
-          else loadImagesByIndex(index,index.length)
+          else {
+            setMultiMint(true);
+            console.log(await loadImagesByIndex(index, index.length));
+          }
 
           setInputError(false);
           setIsMinted(true);
           updateNFTBalance();
           updateBalance();
-          loadImages(contract)
+          // loadWalletNFT(contract);
         });
   };
 
   const getNFTBalance = async (contract) => {
     const totalSupply = await contract.methods.totalSupply().call();
-
     for (let i = 1; i <= totalSupply; i++) {
       if (await contract.methods.ownerOf(i).call()) {
         if (!nftBalanceIndex.includes(i)) nftBalanceIndex.push(i);
@@ -148,7 +155,6 @@ const App = () => {
 
   const getImage = async (token_id) => {
     let url = await contract.methods.tokenURI(token_id).call();
-
     url = url.slice(7, url.length);
     await fetch("https://ipfs.io/ipfs/" + url)
       .then((res) => res.json())
@@ -165,7 +171,6 @@ const App = () => {
 
   const updateBalance = async () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
-
     setBalance(Balance / 10 ** 18);
   };
 
@@ -173,25 +178,36 @@ const App = () => {
     <>
       <div className="home">
         <Navbar userAddress={userAddress} />
+        <img src="../img/metro.png" id="metro1" />
+        <img src="../img/metro.png" id="metro2" />
         <div className="mint_interface">
           {isMinted && (
-            <>
-              <div className="image_mint">
-                <img src={infoMinted && infoMinted.image} />
-                Attributes :
-                <ul className="showAttributes">
-                  {infoMinted &&
-                    infoMinted.attributes.map((n, i) => (
-                      <li key={i}>
-                        <p>
-                          {n.trait_type} : {n.value}
-                        </p>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            </>
+            <div className="image_mint">
+              {!multiMint ? (
+                <>
+                  <img src={infoMinted && infoMinted.image} />
+                  Attributes :
+                  <ul className="showAttributes">
+                    {infoMinted &&
+                      infoMinted.attributes.map((n, i) => (
+                        <li key={i}>
+                          <p>
+                            {n.trait_type} : {n.value}
+                          </p>
+                        </li>
+                      ))}
+                  </ul>
+                </>
+              ) : (
+                <div>
+                  <button onClick={() => setShowMultiMint(true)}>
+                    Display Mint
+                  </button>
+                </div>
+              )}
+            </div>
           )}
+          {/* {} */}
           <div className="text_mint" style={isMinted && { width: "150%" }}>
             <div className="mint_display">
               <div className="input_display">
@@ -230,6 +246,7 @@ const App = () => {
               <button className="mint_button" onClick={() => mintFonction()}>
                 MINT
               </button>
+              <img src="../img/mouseSprite.gif" id="mouseRun" />
             </div>
           </div>
         </div>
