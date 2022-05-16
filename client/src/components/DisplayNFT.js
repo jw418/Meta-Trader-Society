@@ -9,12 +9,11 @@ const DisplayNFT = ({ nftInfos }) => {
           nftInfos.map((n, i) => (
             <ul key={i}>
               <img style={{ width: "450px", height: "450px" }} src={n.image} />
-              <h3></h3>
               <ul className="showAttributes">
                 {n.attributes.map((n, i) => (
                   <li key={i}>
                     <p>
-                    {n.trait_type} : {n.value}
+                      {n.trait_type} : {n.value}
                     </p>
                   </li>
                 ))}

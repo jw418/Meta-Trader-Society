@@ -63,7 +63,7 @@ contract("RatRaceNFT", function (accounts) {
   //Variable avant après changemenet
   //Tester les sucesion d'event (mint 1 puis re mint 1)
 
-  context("varaible test", () => {
+  context("variable test", () => {
     it("1 : max_supply must be equal to 3333", async function () {
       const maxSupply = await this.RatRaceNFTInstance.max_supply();
       await expect(maxSupply).to.be.bignumber.equal(

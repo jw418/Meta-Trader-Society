@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
-import Navbar from "./Components/Navbar";
 import Description from "./Components/Description";
 import DisplayNFT from "./Components/DisplayNFT";
+import Navbar from "./Components/Nav";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -43,7 +43,6 @@ const App = () => {
 
     await getNFTBalance(contract);
 
-    console.log(web3);
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -177,6 +176,7 @@ const App = () => {
   return (
     <>
       <div className="home">
+        {/* <Navbar userAddress={userAddress} /> */}
         <Navbar userAddress={userAddress} />
         <img src="../img/metro.png" id="metro1" />
         <img src="../img/metro.png" id="metro2" />
