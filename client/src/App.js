@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
-import Description from "./Components/Description";
-import DisplayNFT from "./Components/DisplayNFT";
-import Navbar from "./Components/Nav";
+import Description from "./components/Description";
+import DisplayNFT from "./components/DisplayNFT";
+import Navbar from "./components/Nav";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -251,7 +251,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div className="trait"></div>
+      <div className="trait"></div>a
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
       <div className="trait"></div>
       <Description />
