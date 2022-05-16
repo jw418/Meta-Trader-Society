@@ -4,6 +4,7 @@ import getWeb3 from "./getWeb3";
 import Description from "./components/Description";
 import DisplayNFT from "./components/DisplayNFT";
 import Navbar from "./components/Nav";
+import DisplayMint from "./components/DisplayMint";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -132,7 +133,7 @@ const App = () => {
           if (index.length == 1) getImage(index[0]);
           else {
             setMultiMint(true);
-            console.log(await loadImagesByIndex(index, index.length));
+            setNftInfos(await loadImagesByIndex(index, index.length));
           }
 
           setInputError(false);
@@ -176,11 +177,14 @@ const App = () => {
   return (
     <>
       <div className="home">
-        {/* <Navbar userAddress={userAddress} /> */}
         <Navbar userAddress={userAddress} />
         <img src="../img/metro.png" id="metro1" />
         <img src="../img/metro.png" id="metro2" />
         <div className="mint_interface">
+          {showMultiMint && (
+            <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
+          )}
+
           {isMinted && (
             <div className="image_mint">
               {!multiMint ? (
@@ -207,7 +211,6 @@ const App = () => {
               )}
             </div>
           )}
-          {/* {} */}
           <div className="text_mint" style={isMinted && { width: "150%" }}>
             <div className="mint_display">
               <div className="input_display">
@@ -246,7 +249,6 @@ const App = () => {
               <button className="mint_button" onClick={() => mintFonction()}>
                 MINT
               </button>
-              <img src="../img/mouseSprite.gif" id="mouseRun" />
             </div>
           </div>
         </div>
