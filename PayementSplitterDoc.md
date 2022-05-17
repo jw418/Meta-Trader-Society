@@ -1,5 +1,3 @@
-    #ethdoc-viewer{ font-size: 0.8em; padding: 1em; } #ethdoc-viewer .lead{ font-size: 1em; } #ethdoc-viewer table { width: 50%; } #ethdoc-viewer hr { margin: 0; margin-bottom: 0.5rem; } #ethdoc-viewer p{ margin-bottom: 0.5rem; }
-
 ### PaymentSplitter : PaymentSplitter Modified
 
 This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
