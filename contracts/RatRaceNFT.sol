@@ -23,14 +23,6 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     string public baseExtension = ".json";
 
-    // address[] private _teams = [
-    //     0xde28322100395F0aaFaAb232993cF9ef14334328,
-    //     0x9A09c80fccede9b53b8125c36832e4e8354825b3,
-    //     0xa1D37E635da170F5d439024D1498C7a94Bf903BC
-    // ];
-
-    // uint256[] private _share = [45, 45, 10];
-
     string public baseURI;
 
     mapping(address => uint256) public nftBalance;

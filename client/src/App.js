@@ -203,11 +203,12 @@ const App = () => {
                   </ul>
                 </>
               ) : (
-                <div>
-                  <button onClick={() => setShowMultiMint(true)}>
-                    Display Mint
-                  </button>
-                </div>
+                <button
+                  onClick={() => setShowMultiMint(true)}
+                  style={{ margin: "auto" }}
+                >
+                  Display Mint
+                </button>
               )}
             </div>
           )}
