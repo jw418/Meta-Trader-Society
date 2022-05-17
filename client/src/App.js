@@ -92,7 +92,7 @@ const App = () => {
         .then((res) => res.json())
         .then((data) => {
           temp = data;
-          temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
+          temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
         });
       return temp;
     }
@@ -108,7 +108,7 @@ const App = () => {
         .then((res) => res.json())
         .then((data) => {
           let temp2 = data;
-          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs");
+          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
           temp.push(temp2);
         });
     });
@@ -253,7 +253,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div className="trait"></div>a
+      <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
       <div className="trait"></div>
       <Description />
