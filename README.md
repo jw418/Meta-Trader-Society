@@ -6,24 +6,25 @@ Lancement de la première collection NFTs ART TRADING BOT qui rassemble l'art nu
 
 ## Présentation du projet
 
-Le ticket d'entrée au Hedge Fund étant réservé aux plus fortunés à ce jour, Meta Trader Society(MTS) a pour but d'en démocratiser l’accès via la création d'un hedge fund collaboratif (DAO), où les trade seront effectuer par bot de trading, crée grace à l'inteligence artificielle.
-Dans le but de Crée cette DAO, nous avons besoins d'etablir notre communauté et pour ce faire nous allons crée trois series de NFT.
+Le ticket d'entrée au Hedge Fund étant réservé aux plus fortunés à ce jour, Meta Trader Society(MTS) a pour but d'en démocratiser l’accès via la création d'un hedge fund collaboratif (DAO), où les trade seront effectués par bot de trading, crée grâce à l'intelligence artificielle.
+Dans le but de créer cette DAO, nous avons besoin d'établir notre communauté et pour ce faire nous allons créer trois séries de NFT.
 
-Ceci est le repo github de notre premiere série 
+Ceci est le repo github de notre première série 
 
-Libérez vous de la Rat Race! Minter un Rat!! En plus de l'oeuvre designer par (Nom de l'auteur), cette première série vous donnera des avantages pour les étapes suivantes de notre roadmap mais vous donnera également accés a un bot de trading (insérer les specs du bot ici(AI,MT4, etc..)).
+Libérez-vous de la Rat Race! Minter un Rat!! En plus de l'œuvre désigner par (Nom de l'auteur), cette première série vous donnera des avantages pour les étapes suivantes de notre roadmap mais vous donnera également accès à un bot de trading (insérer les specs du bot ici(AI,MT4, etc..)).
 
-Pour plus d'info consultez notre site web : [ℹ️ Website](insérer lien)
+Pour plus d'info consultez notre site web : https://mtsalyra.herokuapp.com/
+
 
 
 ## Installation 🛠️
 
-Vous pouvez copiez notre repo avec la commande : 
+Vous pouvez copiez notre repo avec la commande : 
 ```sh
 git clone https://github.com/jw418/Meta-Trader-Society.git
 ```
 
-Allez à la racine du fichier et utilisez la commande suivante :
+Allez à la racine du fichier et utilisez la commande suivante :
 ```sh
 npm install
 ```
@@ -31,11 +32,11 @@ npm install
 Pensez à modifier le fichier truffle-config.js selon le réseau choisi.
 https://trufflesuite.com/docs/truffle/reference/configuration/
 
-Pensez a configurer votre fichier .ENV et l'ajoutez a votre .gitignore.
+Pensez à configurer votre fichier .ENV et l'ajouter à votre .gitignore.
 
 Pour l’assemblage des calques et la créations des metadata nous avons 
 utiliser Hashlips_Art_Engine.
-Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
+Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
 
 ## Livrables Certification :file_folder:
@@ -51,3 +52,16 @@ https://github.com/jw418/Meta-Trader-Society/blob/main/avoiding_common_attacks.m
 
 le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
 https://github.com/jw418/Meta-Trader-Society/blob/main/design_patern_desicions.md
+
+### Tests
+
+Vous pouvez exécuter les scripts de test de nos smart contract:
+
+Pour RatRaceNFT.sol tapez la commande:
+```sh
+truffle  test test/RatRaceNFT.js
+```
+Et pour PayementSpliter.sol tapez la commande:
+```sh
+ truffle  test test/PayementSpliter.js
+```
