@@ -26,30 +26,6 @@ contract("RatRaceNFT", function (accounts) {
     });
   });
 
-  //--Test deja fait
-  //Supply  = 3333 V
-  // Max Mint = 3 V
-  // Price Sale = 1 V
-  // mintOpen = true V
-  // NFTBalance = 0 V
-  // NFTBalance of all users = 0 V
-  // Name =RatRace V
-  // Symbol = RAT V
-  // TotalSupply = 0 V
-  // totalShare = 100 V
-  // baseURI = "" V
-  // baseURI mustChange V
-  // priceSale Change V
-  // Max mint change V
-  // Mint 1 token V
-  // Mint 2 token V
-  // Mint 3 token V
-  // Fail to mint 4 Token V
-  // Fail to ming 3 + 1 V
-  // release V
-  // test share for each address V
-  // test URI V
-
   //--Tristan
   // test max supply
 

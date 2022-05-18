@@ -13,9 +13,10 @@ Ne concerne pas notre sécteur
 Timestamp Dependence => {
 Cette attaque ne nous concerne pas car nous n'utilisont pas de block.timestamp
 }
-Insecure Arithmetic
 Denial of Service => {
-On utilise pas de fonction qui rende des eth, nous sommes pas concerner par cette attaque
+On utilise pas de fonction qui rendre des eth, nous sommes pas concerner par cette attaque
+Ou de fonction qui peuvent causer un gas limit
 }
+Insecure Arithmetic
 Griefing
 Force Feeding
