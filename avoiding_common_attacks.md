@@ -11,8 +11,11 @@ Ne concerne pas notre secteur
 ## Timestamp Dependence 
 Cette attaque ne nous concerne pas car nous n'utilisons pas de block.timestamp
 ## Denial of Service 
-On utilise pas de fonction qui rendre des eth, nous sommes pas concernés par cette attaque
+On n’utilise pas de fonction qui renvoie des eth, nous sommes pas concernés par cette attaque
 Ou de fonction qui peuvent causer un gas limit
-## Insecure Arithmetic 
+## Insecure Arithmetic
+Après vérification, il nous semble qu'aucune valeur ne peut dépasser la valeur maximale pour un uint, l'incrimination de nos variables se fait qu'avec des faibles valeurs, aucune de nos variables ne peut être décrémenter.
 ## Griefing
+Pour ce type d'attaque, les fonctions appelées sont soit issues d'oppenzeplin  ou limitées à une liste restreinte d'adresses de confiance.
 ## Force Feeding
+Recevoir des ethers de force ne nous pose pas de problèmes de comptabilité interne
