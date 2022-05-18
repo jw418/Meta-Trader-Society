@@ -5,7 +5,7 @@ Reentrancy => {
 Nous avons placé les modifications des variables avant les transactions (withdraw, mint)
 }
 Oracle Manipulation => {
-Cette attaque ne nous concerne pas car nous n'utilisont pas d'orable
+Cette attaque ne nous concerne pas car nous n'utilisont pas d'oracle
 }
 Frontrunning => {
 Ne concerne pas notre sécteur
@@ -15,7 +15,7 @@ Cette attaque ne nous concerne pas car nous n'utilisont pas de block.timestamp
 }
 Insecure Arithmetic
 Denial of Service => {
-
+On utilise pas de fonction qui rende des eth, nous sommes pas concerner par cette attaque
 }
 Griefing
 Force Feeding
