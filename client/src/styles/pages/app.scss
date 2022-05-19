@@ -31,12 +31,11 @@
     height: 100px;
   }
   .mint_component {
-    height: 70vh;
+    height: 100vh;
     display: flex;
     .mint_interface {
       position: relative;
       display: flex;
-      // grid-template-columns: 40% 60%;
       height: 665px;
       width: 1250px;
       background-color: #f2f2f2;
@@ -45,9 +44,6 @@
       -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
       -moz-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
       margin: auto;
-      // margin-top: 20px;
-      // height: 100vh;
-      // padding-bottom: 50px;
 
       .image_mint {
         display: flex;
