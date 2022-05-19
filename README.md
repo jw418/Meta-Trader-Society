@@ -1,4 +1,4 @@
-# Rat Race NFT
+# Rat Race NFT :rat:
 
 Lancement de la première collection NFTs ART TRADING BOT qui rassemble l'art numérique, la technologie algorithmique prédictive et l'intelligence artificielle appliquée au trading.
 
@@ -53,7 +53,7 @@ https://github.com/jw418/Meta-Trader-Society/blob/main/avoiding_common_attacks.m
 le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
 https://github.com/jw418/Meta-Trader-Society/blob/main/design_patern_desicions.md
 
-### Tests
+## Tests :test_tube:
 
 Vous pouvez exécuter les scripts de test de nos smart contract:
 

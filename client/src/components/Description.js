@@ -5,8 +5,11 @@ const Description = () => {
     <div className="description_component">
       <div className="description_comp">
         <h1>Présentation du projet</h1>
+        
         <div className="description_div">
-          <h3>Rat Race NFT</h3>             
+        <img src="../img/logo.png" />  
+          <h3>Rat Race NFT</h3> 
+                    
           <p>
             Le ticket d'entrée au HedgeFund Étant réservé aux plus
             fortunés a ce jour, Meta Trader Society(MTS) a pour but d'en
@@ -17,7 +20,7 @@ const Description = () => {
             allons créer trois séries de NFT. Ceci est le page web de notre
             Première série Libérez vous de la Rat Race! Minter un Rat!!
           </p>
-          <img src="../img/45.jpg" />
+          
           <p>
             En plus de l'oeuvre designer par (Nom de l'auteur), cette première
             série vous donnera des avantages pour les étapes suivantes de notre

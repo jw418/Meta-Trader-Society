@@ -6,7 +6,7 @@
     // background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(101,132,194,1) 0%, rgba(120,151,213,1) 100%);
 
 
-    h1{
+    h1{      
         color: white;
     }
     .description_comp{
@@ -15,10 +15,13 @@
             color: white;
         }
         img{
+            float: left;
             width: 250px;
             height: 250px;
             margin-top: 25px;
             margin-bottom: 25px;
+            margin-left: 25px;
+            margin-right: 25px;
             border: 1px solid black;
 
         }
