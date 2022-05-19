@@ -37,7 +37,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         string memory _newBaseURI,
         address[] memory _teams,
         uint256[] memory _share
-    ) public ERC721("RatRace", "RAT") PaymentSplitter(_teams, _share) {
+    ) ERC721("RatRace", "RAT") PaymentSplitter(_teams, _share) {
         baseURI = _newBaseURI;
     }
 
