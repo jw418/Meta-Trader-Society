@@ -1,4 +1,4 @@
-# Rat Race NFT
+# Rat Race NFT :rat:
 
 Lancement de la première collection NFTs ART TRADING BOT qui rassemble l'art numérique, la technologie algorithmique prédictive et l'intelligence artificielle appliquée au trading.
 
