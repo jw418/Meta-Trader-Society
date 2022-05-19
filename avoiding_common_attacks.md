@@ -1,4 +1,4 @@
-# Avoiding common attacks
+# Avoiding common attacks 	:crossed_swords::shield:
 Dans ce document nous allons listé les attaques les plus communes et les mesures prises pour éviter que nos smart contract y soient vulnérables.
 Nous nous baserons sur ceux référencer par consensys https://consensys.github.io/smart-contract-best-practices/attacks/
  
