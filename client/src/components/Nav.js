@@ -3,6 +3,7 @@ import React from "react";
 const Navbar = ({ userAddress }) => {
   return (
     <div className="navbar_components">
+      <img id="logo_rat" src="../img/logo_rat_navbar.png" />
       <ul className="navbar">
         <span className="un">Roadmap</span>
         <span className="un">Team</span>

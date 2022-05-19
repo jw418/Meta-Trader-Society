@@ -178,6 +178,7 @@ const App = () => {
     <>
       <div className="home">
         <Navbar userAddress={userAddress} />
+        <Description />
         <img src="../img/metro.png" id="metro1" />
         <img src="../img/metro.png" id="metro2" />
         <div className="mint_interface">
@@ -257,7 +258,7 @@ const App = () => {
       <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
       <div className="trait"></div>
-      <Description />
+      
     </>
   );
 };
