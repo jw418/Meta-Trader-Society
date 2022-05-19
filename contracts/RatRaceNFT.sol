@@ -17,6 +17,10 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     uint256 public max_mint_allowed = 3;
 
+    uint256 public priceMin = 1 ether;
+
+    uint256 public priceMax = 5 ether;
+
     uint256 public priceSale = 1 ether;
 
     bool public mintOpen = true;
@@ -45,6 +49,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *    @param _priceSale is the new price you want to set
      */
     function changePriceSale(uint256 _priceSale) external onlyOwner {
+        require(_priceSale >= priceMin,'this price is too low');
+        require(_priceSale <= priceMax, 'This price is above the limit');
         priceSale = _priceSale;
     }
 
