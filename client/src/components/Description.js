@@ -8,7 +8,7 @@ const Description = () => {
 
         <div className="description_div">
           <img src="../img/logo.png" />
-          <div>
+          <div className="text_description">
             <h3>Rat Race NFT</h3>
             <p>
               Le ticket d'entrée au HedgeFund Étant réservé aux plus fortunés a

@@ -175,6 +175,19 @@ const App = () => {
     setBalance(Balance / 10 ** 18);
   };
 
+  const handleScroll = (e) => {
+    const navbar = document.querySelector(".navbar_components");
+    if (window.scrollY > 800) {
+      navbar.style.top = "-150px";
+    } else {
+      navbar.style.top = "0";
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <div className="home">
