@@ -21,6 +21,7 @@ const App = () => {
   const [infoMinted, setInfoMinted] = useState();
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
+  const [mintOpen, setMintOpen] = useState();
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
   const [, fctMiseAJour] = useState({});
@@ -213,44 +214,48 @@ const App = () => {
             </div>
           )}
           <div className="text_mint" style={isMinted && { width: "150%" }}>
-            <div className="mint_display">
-              <div className="input_display">
-                <div className="input_title">
-                  <p>Number of tokens</p>
-                  <p id="balance">
-                    Balance {balance && balance.toFixed(3)} ETH
-                  </p>
+            {mintOpen ? (
+              <div className="mint_display">
+                <div className="input_display">
+                  <div className="input_title">
+                    <p>Number of tokens</p>
+                    <p id="balance">
+                      Balance {balance && balance.toFixed(3)} ETH
+                    </p>
+                  </div>
+                  <input
+                    type="text"
+                    name="price_input"
+                    className="input_token"
+                    onChange={(e) => setInputValue(e.target.value)}
+                  />
+                  {inputError && (
+                    <p
+                      style={{
+                        maginTop: "10px",
+                        marginBottom: "10px",
+                        color: "red",
+                      }}
+                    >
+                      You have to enter a value
+                    </p>
+                  )}
+                  <div className="prince_balance">
+                    <p id="mint_price">
+                      Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
+                    </p>
+                    <p id="nft_balance">
+                      NFT balance : {nftBalance && nftBalance}
+                    </p>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  name="price_input"
-                  className="input_token"
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-                {inputError && (
-                  <p
-                    style={{
-                      maginTop: "10px",
-                      marginBottom: "10px",
-                      color: "red",
-                    }}
-                  >
-                    You have to enter a value
-                  </p>
-                )}
-                <div className="prince_balance">
-                  <p id="mint_price">
-                    Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
-                  </p>
-                  <p id="nft_balance">
-                    NFT balance : {nftBalance && nftBalance}
-                  </p>
-                </div>
+                <button className="mint_button" onClick={() => mintFonction()}>
+                  MINT
+                </button>
               </div>
-              <button className="mint_button" onClick={() => mintFonction()}>
-                MINT
-              </button>
-            </div>
+            ) : (
+              "mint closed"
+            )}
           </div>
         </div>
       </div>
