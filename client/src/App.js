@@ -21,7 +21,7 @@ const App = () => {
   const [infoMinted, setInfoMinted] = useState();
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
-  const [mintOpen, setMintOpen] = useState();
+  const [mintOpen, setMintOpen] = useState(true);
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
   const [, fctMiseAJour] = useState({});
@@ -182,88 +182,94 @@ const App = () => {
         <Description />
         <img src="../img/metro.png" id="metro1" />
         <img src="../img/metro.png" id="metro2" />
-        <div className="mint_interface">
-          {showMultiMint && (
-            <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
-          )}
 
-          {isMinted && (
-            <div className="image_mint">
-              {!multiMint ? (
-                <>
-                  <img src={infoMinted && infoMinted.image} />
-                  Attributes :
-                  <ul className="showAttributes">
-                    {infoMinted &&
-                      infoMinted.attributes.map((n, i) => (
-                        <li key={i}>
-                          <p>
-                            {n.trait_type} : {n.value}
-                          </p>
-                        </li>
-                      ))}
-                  </ul>
-                </>
+        <div className="trait"></div>
+        <div className="mint_component">
+          <div className="mint_interface">
+            {showMultiMint && (
+              <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
+            )}
+
+            {isMinted && (
+              <div className="image_mint">
+                {!multiMint ? (
+                  <>
+                    <img src={infoMinted && infoMinted.image} />
+                    Attributes :
+                    <ul className="showAttributes">
+                      {infoMinted &&
+                        infoMinted.attributes.map((n, i) => (
+                          <li key={i}>
+                            <p>
+                              {n.trait_type} : {n.value}
+                            </p>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setShowMultiMint(true)}
+                    style={{ margin: "auto" }}
+                  >
+                    Display Mint
+                  </button>
+                )}
+              </div>
+            )}
+            <div className="text_mint" style={isMinted && { width: "150%" }}>
+              {mintOpen ? (
+                <div className="mint_display">
+                  <div className="input_display">
+                    <div className="input_title">
+                      <p>Number of tokens</p>
+                      <p id="balance">
+                        Balance {balance && balance.toFixed(3)} ETH
+                      </p>
+                    </div>
+                    <input
+                      type="text"
+                      name="price_input"
+                      className="input_token"
+                      onChange={(e) => setInputValue(e.target.value)}
+                    />
+                    {inputError && (
+                      <p
+                        style={{
+                          maginTop: "10px",
+                          marginBottom: "10px",
+                          color: "red",
+                        }}
+                      >
+                        You have to enter a value
+                      </p>
+                    )}
+                    <div className="prince_balance">
+                      <p id="mint_price">
+                        Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
+                      </p>
+                      <p id="nft_balance">
+                        NFT balance : {nftBalance && nftBalance}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    className="mint_button"
+                    onClick={() => mintFonction()}
+                  >
+                    MINT
+                  </button>
+                </div>
               ) : (
-                <button
-                  onClick={() => setShowMultiMint(true)}
-                  style={{ margin: "auto" }}
-                >
-                  Display Mint
-                </button>
+                "mint closed"
               )}
             </div>
-          )}
-          <div className="text_mint" style={isMinted && { width: "150%" }}>
-            {mintOpen ? (
-              <div className="mint_display">
-                <div className="input_display">
-                  <div className="input_title">
-                    <p>Number of tokens</p>
-                    <p id="balance">
-                      Balance {balance && balance.toFixed(3)} ETH
-                    </p>
-                  </div>
-                  <input
-                    type="text"
-                    name="price_input"
-                    className="input_token"
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                  {inputError && (
-                    <p
-                      style={{
-                        maginTop: "10px",
-                        marginBottom: "10px",
-                        color: "red",
-                      }}
-                    >
-                      You have to enter a value
-                    </p>
-                  )}
-                  <div className="prince_balance">
-                    <p id="mint_price">
-                      Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
-                    </p>
-                    <p id="nft_balance">
-                      NFT balance : {nftBalance && nftBalance}
-                    </p>
-                  </div>
-                </div>
-                <button className="mint_button" onClick={() => mintFonction()}>
-                  MINT
-                </button>
-              </div>
-            ) : (
-              "mint closed"
-            )}
           </div>
         </div>
       </div>
+
       <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
-      <div className="trait"></div>
-      
     </>
   );
 };
