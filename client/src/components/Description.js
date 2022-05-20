@@ -3,7 +3,7 @@ import React from "react";
 const Description = () => {
   return (
     <div className="description_component">
-      <div className="description_comp">
+      {/* <div className="description_comp">
         <h1>Présentation du projet</h1>
 
         <div className="description_div">
@@ -29,7 +29,8 @@ const Description = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
+      <img src="../img/logo.png" />
     </div>
   );
 };

@@ -1,0 +1,109 @@
+.home_comonent {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .nav {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    #logo_rat {
+      width: 60px;
+      height: 60px;
+      margin-left: 10px;
+      margin-top: 5px;
+    }
+    p {
+      margin: auto;
+      margin-left: 25px;
+      font-size: larger;
+      font-weight: bold;
+      color: white;
+    }
+  }
+  .right_part {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    img {
+      height: 91vh;
+      //   width: 93%;
+    }
+
+    .bottom_navbar {
+      display: grid;
+      grid-template-columns: 33% 33% 34%;
+      height: 100%;
+      //   width: 93%;
+      background-color: #4d9be3;
+
+      .navbar_list {
+        display: flex;
+        height: 100%;
+        background-color: #4d9be3;
+
+        .un {
+          color: white;
+          display: inline-block;
+          font-weight: bold;
+          font-size: 1.2rem;
+          margin: auto;
+        }
+
+        .un::after {
+          content: "";
+          width: 0px;
+          height: 1px;
+          display: block;
+          background: white;
+          transition: 300ms;
+        }
+        .un:hover::after {
+          width: 100%;
+        }
+
+        a {
+          margin: auto;
+        }
+      }
+      .navbar_list:hover {
+        background-color: #3e76ab;
+        transition: 0.5s;
+      }
+    }
+  }
+  .left_part {
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.685);
+    display: flex;
+    flex-direction: column;
+    .text_description {
+      background-color: white;
+      height: 25%;
+      width: 75%;
+      padding: 10px;
+      margin: auto;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
+    }
+    .div_title_NFT {
+        display: flex;
+      position: absolute;
+      height: 150px;
+      width: 350px;
+      bottom: 0;
+      background-color: #3e76ab;
+      margin-bottom: 88px;
+      border: 1px solid black;
+      border-left:0px;
+      color: white;
+      p{
+          margin: auto;
+          font-size: 2rem;
+      }
+    }
+  }
+}

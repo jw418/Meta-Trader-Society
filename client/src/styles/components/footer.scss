@@ -1,0 +1,35 @@
+.footer_div {
+  height: 250px;
+  background-color: rgba(0, 35, 111, 0.414);
+  margin-top: 150px;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+
+  .first_div {
+    display: flex;
+  }
+  ul {
+    margin: auto;
+    li {
+      color: white;
+      .un {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: auto;
+      }
+
+      .un::after {
+        content: "";
+        width: 0px;
+        height: 1px;
+        display: block;
+        background: white;
+        transition: 300ms;
+      }
+      .un:hover::after {
+        width: 100%;
+      }
+    }
+  }
+}

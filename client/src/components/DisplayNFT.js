@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DisplayNFT = ({ nftInfos }) => {
+  const [imagesLoaded, setImagesLoaded] = useState();
   return (
     <div className="displayNFT_pages">
-      <h1>Vos NFT déjà possédés</h1>
+      <h1>Wallet NFT</h1>
       <div className="displayOwned">
         {nftInfos &&
           nftInfos.map((n, i) => (
             <ul key={i}>
-              <img style={{ width: "450px", height: "450px" }} src={n.image} />
+              {!imagesLoaded && <img src="../img/load.gif" />}
+
+              <img
+                className="wallet_images"
+                src={n.image}
+                onLoad={() => setImagesLoaded(true)}
+              />
               <ul className="showAttributes">
                 {n.attributes.map((n, i) => (
                   <li key={i}>
