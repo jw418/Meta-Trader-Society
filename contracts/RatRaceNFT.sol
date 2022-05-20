@@ -13,23 +13,39 @@ import "./PayementSpliter.sol";
 contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     using Strings for uint256;
 
+    enum State {
+        Paused,
+        Open,        
+        Finished
+    }
+
+    State public StateMint = State.Paused;
+
     uint256 public constant max_supply = 3333;
+
+    uint256 public constant min_qty_mint_allowed = 1;
+
+    uint256 public constant max_qty_mint_allowed = 6;
 
     uint256 public max_mint_allowed = 3;
 
-    uint256 public priceMin = 1 ether;
+    uint256 public constant priceMin = 1 ether;
 
-    uint256 public priceMax = 5 ether;
+    uint256 public constant priceMax = 5 ether;
 
-    uint256 public priceSale = 1 ether;
-
-    bool public mintOpen = true;
+    uint256 public priceSale = 1 ether;   
 
     string public baseExtension = ".json";
 
     string public baseURI;
 
     mapping(address => uint256) public nftBalance;
+
+    /// events
+    event PriceChange(uint oldPrice, uint newPrice);
+    event MaxMintAllowedChange(uint oldMax, uint newMax);
+    event BaseUriChange(string newUri);
+    event MintStatus(State actualMintState);
 
     /// @dev The recommended format is as follows: "ipsf//:{your CID}"
     /// @param _newBaseURI indicate the URI of your NFT series
@@ -41,6 +57,20 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         baseURI = _newBaseURI;
     }
 
+    /// @notice Open the Mint
+    function setMintOpen() external onlyOwner {
+        require(StateMint != State.Finished,"Mint already finished");
+        StateMint = State.Open;
+        emit MintStatus(State.Open);
+    }
+
+    /// @notice Paused the Mint
+    function setMintPaused() external onlyOwner {
+        require(StateMint != State.Paused, "Contract already paused");
+        StateMint = State.Paused;
+        emit MintStatus(State.Paused);
+    }
+
     /**
      *    @dev You can add requirements to prevent the price from being too low or too expensive
      *
@@ -48,10 +78,12 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *
      *    @param _priceSale is the new price you want to set
      */
-    function changePriceSale(uint256 _priceSale) external onlyOwner {
+    function changePriceSale(uint256 _priceSale) external onlyOwner {        
         require(_priceSale >= priceMin,'this price is too low');
         require(_priceSale <= priceMax, 'This price is above the limit');
+        emit PriceChange(priceSale, _priceSale);
         priceSale = _priceSale;
+        
     }
 
     /**
@@ -62,6 +94,9 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *  @param _maxMintAllowed is the new max
      */
     function changeMaxMintAllowed(uint256 _maxMintAllowed) external onlyOwner {
+        require(_maxMintAllowed >= min_qty_mint_allowed,'cannot be zero');
+        require(_maxMintAllowed <=  max_qty_mint_allowed, 'must be 6 or lower');
+        emit MaxMintAllowedChange(max_mint_allowed, _maxMintAllowed);
         max_mint_allowed = _maxMintAllowed;
     }
 
@@ -83,6 +118,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      */
     function setBaseUri(string memory _newBaseURI) external onlyOwner {
         baseURI = _newBaseURI;
+        emit BaseUriChange(_newBaseURI);
     }
 
     /**
@@ -92,18 +128,15 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      */
     function mintNFT(uint256 _amount) external payable {
         uint256 numberNftSold = totalSupply();
-
-        require(mintOpen, "mint phase is ended");
+        require(tx.origin == msg.sender,"Contract cannot call this function");
+        require(StateMint == State.Open, "Mint is not open");
         require(priceSale * _amount <= msg.value, "Not enought funds");
         require(_amount <= max_mint_allowed, "You can mint more NFT");
         require(numberNftSold + _amount <= max_supply, "Max supply");
-        require(
-            nftBalance[msg.sender] + _amount <= max_mint_allowed,
-            "Too much mint"
-        );
+        require(nftBalance[msg.sender] + _amount <= max_mint_allowed, "Too much mint");
 
         if (numberNftSold + _amount == max_supply) {
-            mintOpen = false;
+            StateMint = State.Finished;
         }
 
         nftBalance[msg.sender] += _amount;
