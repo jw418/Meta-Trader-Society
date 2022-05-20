@@ -1,6 +1,5 @@
 const RatRaceNFT = artifacts.require("./RatRaceNFT.sol");
-const {
-  BN,
+const {  BN,
   expectRevert,
   expectEvent,
   balance,
@@ -56,7 +55,23 @@ contract("RatRaceNFT", function (accounts) {
       );
     });
 
-    it("3 : priceSale must be equal to 1 ether", async function () {
+    it("3 : priceMin must be equal to 1 ether", async function () {
+      const priceMin = await this.RatRaceNFTInstance.priceMin();
+      await expect(priceMin).to.be.bignumber.equal(
+        ether("1"),
+        "priceMin is not equal to 1 ether"
+      );
+    });
+    
+    it("3 Bis : priceMax must be equal to 5 ether", async function () {
+      const priceMax = await this.RatRaceNFTInstance.priceMax();
+      await expect(priceMax).to.be.bignumber.equal(
+        ether("5"),
+        "priceMax is not equal to 5 ether"
+      );
+    });
+
+    it("3 Ter: priceSale must be equal to 1 ether", async function () {
       const priceSale = await this.RatRaceNFTInstance.priceSale();
       await expect(priceSale).to.be.bignumber.equal(
         ether("1"),
@@ -141,6 +156,25 @@ contract("RatRaceNFT", function (accounts) {
       );
     });
 
+   
+    it("14 : Should have a revert: this price is too low", async function () {
+      await this.RatRaceNFTInstance.changePriceSale(ether("2"));
+      const newPriceSale = await this.RatRaceNFTInstance.priceSale();
+      await expect(newPriceSale).to.be.bignumber.equal(
+        ether("2"),
+        "priceSale is not equal to 1 ether"
+      );
+    });
+    
+    it("14 : Should Have a revert: this price is above the limit", async function () {
+      await this.RatRaceNFTInstance.changePriceSale(ether("2"));
+      const newPriceSale = await this.RatRaceNFTInstance.priceSale();
+      await expect(newPriceSale).to.be.bignumber.equal(
+        ether("2"),
+        "priceSale is not equal to 1 ether"
+      );
+    });
+      
     it("14 : priceSale will be changed", async function () {
       await this.RatRaceNFTInstance.changePriceSale(ether("2"));
       const newPriceSale = await this.RatRaceNFTInstance.priceSale();
@@ -149,6 +183,7 @@ contract("RatRaceNFT", function (accounts) {
         "priceSale is not equal to 1 ether"
       );
     });
+
     it("15 : max mint will be changed", async function () {
       await this.RatRaceNFTInstance.changeMaxMintAllowed("5");
       const newMAxMintAllowed =
@@ -235,6 +270,7 @@ contract("RatRaceNFT", function (accounts) {
         "Ownable: caller is not the owner"
       );
     });
+
     it("23 : Should revert changeMaxMint", async function () {
       await expectRevert(
         this.RatRaceNFTInstance.changeMaxMintAllowed("2", {
