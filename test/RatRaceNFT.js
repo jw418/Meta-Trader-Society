@@ -95,30 +95,30 @@ contract(`RatRaceNFT`, function (accounts) {
     it(`4bis : StateMint must be Open`, async function () {
       await this.RatRaceNFTInstance.setMintOpen();
       const StateMint = await this.RatRaceNFTInstance.StateMint();
-      await expect(StateMint).to.be.bignumber.equal('1', `StateMint is not Open`);
+      await expect(StateMint).to.be.bignumber.equal('2', `StateMint is not Open`);
     });
 
-    it(`5 : nftBalance of owner must be equal to 0`, async function () {
-      const nftBalance = await this.RatRaceNFTInstance.nftBalance(owner);
-      await expect(nftBalance).to.be.bignumber.equal(
+    it(`5 : balanceOfNftMinted of owner must be equal to 0`, async function () {
+      const balanceOfNftMinted = await this.RatRaceNFTInstance.balanceOfNftMinted(owner);
+      await expect(balanceOfNftMinted).to.be.bignumber.equal(
         `0`,
-        `nftBalance is not 0`
+        `balanceOfNftMinted is not 0`
       );
     });
 
-    it(`6 : nftBalance of user1 must be equal to 0`, async function () {
-      const nftBalance = await this.RatRaceNFTInstance.nftBalance(user1);
-      await expect(nftBalance).to.be.bignumber.equal(
+    it(`6 : balanceOfNftMinted of user1 must be equal to 0`, async function () {
+      const balanceOfNftMinted = await this.RatRaceNFTInstance.balanceOfNftMinted(user1);
+      await expect(balanceOfNftMinted).to.be.bignumber.equal(
         `0`,
-        `nftBalance is not 0`
+        `balanceOfNftMinted is not 0`
       );
     });
 
-    it(`7 : nftBalance of user2 must be equal to 0`, async function () {
-      const nftBalance = await this.RatRaceNFTInstance.nftBalance(user2);
-      await expect(nftBalance).to.be.bignumber.equal(
+    it(`7 : balanceOfNftMinted of user2 must be equal to 0`, async function () {
+      const balanceOfNftMinted = await this.RatRaceNFTInstance.balanceOfNftMinted(user2);
+      await expect(balanceOfNftMinted).to.be.bignumber.equal(
         `0`,
-        `nftBalance is not 0`
+        `balanceOfNftMinted is not 0`
       );
     });
   });
@@ -225,7 +225,7 @@ contract(`RatRaceNFT`, function (accounts) {
         from: user1,
         value: reelAmount,
       });
-      const balance = await this.RatRaceNFTInstance.nftBalance(user1);
+      const balance = await this.RatRaceNFTInstance.balanceOfNftMinted(user1);
       const totalSupply = await this.RatRaceNFTInstance.totalSupply();
       await expect(balance).to.be.bignumber.equal(`1`);
       await expect(totalSupply).to.be.bignumber.equal(`1`);
@@ -237,7 +237,7 @@ contract(`RatRaceNFT`, function (accounts) {
         from: user1,
         value: 2 * reelAmount,
       });
-      const balance = await this.RatRaceNFTInstance.nftBalance(user1);
+      const balance = await this.RatRaceNFTInstance.balanceOfNftMinted(user1);
       const totalSupply = await this.RatRaceNFTInstance.totalSupply();
       await expect(balance).to.be.bignumber.equal(`2`);
       await expect(totalSupply).to.be.bignumber.equal(`2`);
@@ -249,7 +249,7 @@ contract(`RatRaceNFT`, function (accounts) {
         from: user1,
         value: 3 * reelAmount,
       });
-      const balance = await this.RatRaceNFTInstance.nftBalance(user1);
+      const balance = await this.RatRaceNFTInstance.balanceOfNftMinted(user1);
       const totalSupply = await this.RatRaceNFTInstance.totalSupply();
       await expect(balance).to.be.bignumber.equal(`3`);
       await expect(totalSupply).to.be.bignumber.equal(`3`);
@@ -262,7 +262,7 @@ contract(`RatRaceNFT`, function (accounts) {
           from: user1,
           value: 4 * reelAmount,
         }),
-        `You can mint more NFT`
+        `You cant mint more NFT`
       );
     });
 

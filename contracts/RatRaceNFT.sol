@@ -15,6 +15,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     enum State {
         Paused,
+        Premint,
         Open,        
         Finished
     }
@@ -22,6 +23,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     State public StateMint = State.Paused;
 
     uint256 public constant max_supply = 3333;
+
+    uint256 public constant giftLimit = 33;
 
     uint256 public constant min_qty_mint_allowed = 1;
 
@@ -39,7 +42,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     string public baseURI;
 
-    mapping(address => uint256) public nftBalance;
+    mapping(address => uint256) public balanceOfNftMinted;
 
     /// events
     event PriceChange(uint oldPrice, uint newPrice);
@@ -57,24 +60,32 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         baseURI = _newBaseURI;
     }
 
-    /// @notice Open the Mint
+    /// @notice turn state of the mint to premint and emit an event
+    function setToPremint() external onlyOwner {
+        require(StateMint != State.Finished && StateMint != State.Open,"Mint already open or finished");
+        StateMint = State.Premint;
+        emit MintStatus(State.Premint);
+    }
+   
+    /// @notice Open the Mint and emit an event
     function setMintOpen() external onlyOwner {
         require(StateMint != State.Finished,"Mint already finished");
         StateMint = State.Open;
         emit MintStatus(State.Open);
     }
 
-    /// @notice Paused the Mint
+    /// @notice Paused the Mint and emit an event
     function setMintPaused() external onlyOwner {
         require(StateMint != State.Paused, "Contract already paused");
         StateMint = State.Paused;
         emit MintStatus(State.Paused);
     }
 
+   
     /**
      *    @dev You can add requirements to prevent the price from being too low or too expensive
      *
-     *    @notice Change the price of the mint
+     *    @notice Change the price of the mint and emit an event
      *
      *    @param _priceSale is the new price you want to set
      */
@@ -89,7 +100,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     /**
      *  @dev You can add requirements to prevent the _maxMintAllowed from being too low or too high
      *
-     *  @notice Change the number NFT max you can mint
+     *  @notice Change the number NFT max you can mint and emit an event
      *
      *  @param _maxMintAllowed is the new max
      */
@@ -121,6 +132,19 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         emit BaseUriChange(_newBaseURI);
     }
 
+
+     /**
+     *    @notice send a free nft to the indicated address
+     *
+     *    @param _to address where you want to send the nft gift
+     */
+    function gift(address _to) external onlyOwner {
+        uint256 numberNftSold = totalSupply();
+        require(StateMint == State.Premint, "We are not in the Premint phase");
+        require(numberNftSold<= giftLimit, "giftLimit reached");       
+        _safeMint(_to, numberNftSold + 1); 
+    }
+
     /**
      *   @notice Allows the mint of new NFT
      *
@@ -131,19 +155,21 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         require(tx.origin == msg.sender,"Contract cannot call this function");
         require(StateMint == State.Open, "Mint is not open");
         require(priceSale * _amount <= msg.value, "Not enought funds");
-        require(_amount <= max_mint_allowed, "You can mint more NFT");
+        require(_amount <= max_mint_allowed, "You cant mint more NFT");
+        require(balanceOfNftMinted[msg.sender] + _amount <= max_mint_allowed, "Too much mint");
         require(numberNftSold + _amount <= max_supply, "Max supply");
-        require(nftBalance[msg.sender] + _amount <= max_mint_allowed, "Too much mint");
+        
 
-        if (numberNftSold + _amount == max_supply) {
+        if (numberNftSold + _amount >= max_supply) {
             StateMint = State.Finished;
         }
 
-        nftBalance[msg.sender] += _amount;
+        balanceOfNftMinted[msg.sender] += _amount;
         for (uint256 i = 1; i <= _amount; i++) {
             _safeMint(msg.sender, numberNftSold + i);
         }
     }
+ 
 
     /**
      *   @param _nftId id of the nft whose uri you want
