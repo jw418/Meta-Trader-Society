@@ -46,7 +46,7 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
 
     //Set to all the state
-    setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
+    setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
     setContract(contract);
     setMintPrice(await contract.methods.priceSale().call());
@@ -170,7 +170,7 @@ const App = () => {
   };
 
   const updateNFTBalance = async () => {
-    setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
+    setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
   };
 
   const updateBalance = async () => {
