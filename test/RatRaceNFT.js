@@ -27,7 +27,7 @@ contract(`RatRaceNFT`, function (accounts) {
       from: owner,
     });
     testCounter += 1;
-    console.log(testCounter,'1');
+    console.log(testCounter);
     
   });
 
@@ -207,7 +207,7 @@ contract(`RatRaceNFT`, function (accounts) {
   });
 
   context(`test mint`, () => {
-        
+
     it(`16 : will fail to mint not enought funds`, async function () {
       await this.RatRaceNFTInstance.setMintOpen();
       await expectRevert(
