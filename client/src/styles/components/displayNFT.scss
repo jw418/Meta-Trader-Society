@@ -7,9 +7,15 @@
         color: white;
     }
     .displayOwned{
-        display: flex;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
         text-align: center;
-        margin: auto;
+        padding: 10px;
+
+        .wallet_images{
+            width: 450px;
+            height: 450px;
+        }
 
         .showAttributes{
             display: grid;
@@ -23,7 +29,7 @@
                 background-color: rgba(199, 236, 247, 0.396);
                 border:1px solid  rgba(64, 64, 64, 0.396);
                 border-radius: 10px;
-                
+            
                 p{
                     margin: auto;
                 }

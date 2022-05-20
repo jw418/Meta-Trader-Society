@@ -11,17 +11,19 @@
     position: absolute;
     left: 0;
     top: 42%;
-    width: 250px;
-    height: 150px;
+    width: 350px;
+    height: 235px;
+    object-fit: contain;
   }
 
   #metro2 {
     position: absolute;
     right: 0;
     top: 42%;
-    width: 250px;
-    height: 150px;
+    width: 350px;
+    height: 235px;
     transform: scaleX(-1);
+    object-fit: contain;
   }
 
   #mouseRun {
@@ -149,6 +151,20 @@
   width: 100%;
   height: 1px;
   background-color: #886fbf;
-  margin-top: 25px;
-  margin-bottom: 25px;
+}
+
+//Reponsive
+
+@media screen and (max-width: 1400px) {
+  .home {
+    #metro1 {
+      width: 230px;
+      height: 215px;
+    }
+
+    #metro2 {
+      width: 230px;
+      height: 215px;
+    }
+  }
 }

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DisplayMint = ({ trigger, nftInfos }) => {
-  console.log(nftInfos);
+  const [imagesLoaded, setImagesLoaded] = useState();
+
   return (
     <div className="display_mint">
       <div className="inner_display_mint">
@@ -13,9 +14,12 @@ const DisplayMint = ({ trigger, nftInfos }) => {
           {nftInfos &&
             nftInfos.map((n, i) => (
               <ul key={i}>
+                {!imagesLoaded && <img src="../img/load.gif" />}
+
                 <img
                   style={{ width: "300px", height: "300px" }}
                   src={n.image}
+                  onLoad={() => setImagesLoaded(true)}
                 />
                 <ul className="showAttributes">
                   {n.attributes.map((n, i) => (

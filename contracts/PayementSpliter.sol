@@ -27,7 +27,13 @@ import "@openzeppelin/contracts/utils/Context.sol";
  *
  * @notice This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
  */
-contract PaymentSplitter is Context {
+
+// import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract PaymentSplitter is
+    Context
+    // Ownable
+{
     event PayeeAdded(address account, uint256 shares);
     event PaymentReleased(address to, uint256 amount);
     event ERC20PaymentReleased(
@@ -45,7 +51,6 @@ contract PaymentSplitter is Context {
     mapping(address => bool) public isTeam;
 
     address[] private _payees;
-
     mapping(IERC20 => uint256) private _erc20TotalReleased;
     mapping(IERC20 => mapping(address => uint256)) private _erc20Released;
 
@@ -57,15 +62,14 @@ contract PaymentSplitter is Context {
      * duplicates in `payees`.
      */
 
-    /// @notice this modifier allows you to check that the msg.sender is part of the team     
+    /// @notice this modifier allows you to check that the msg.sender is part of the team
     modifier onlyTeams() {
         require(isTeam[msg.sender], "not member of the team");
         _;
     }
 
-
     /// @notice the constructor of the smart contarct
-    /// @param payees array of addresses to be paid    
+    /// @param payees array of addresses to be paid
     /// @param shares_ arrays of the distribution of payments
     constructor(address[] memory payees, uint256[] memory shares_) payable {
         require(
@@ -96,13 +100,12 @@ contract PaymentSplitter is Context {
         emit PaymentReceived(_msgSender(), msg.value);
     }
 
- 
-    /// @return  total number of shares 
+    /// @return  total number of shares
     function totalShares() public view returns (uint256) {
         return _totalShares;
     }
 
-    /// @return total amount of Ether already released     
+    /// @return total amount of Ether already released
     function totalReleased() public view returns (uint256) {
         return _totalReleased;
     }
@@ -110,8 +113,8 @@ contract PaymentSplitter is Context {
     /**
      * @dev Getter for the total amount of `token` already released. `token` should be the address of an IERC20
      * contract.
-     * 
-     * @param token token address 
+     *
+     * @param token token address
      * @return amount released from the token given as an argument
      */
     function totalReleased(IERC20 token) public view returns (uint256) {
@@ -119,14 +122,29 @@ contract PaymentSplitter is Context {
     }
 
     /// @param account account to be queried
-    /// @return amount of shares held by an account    
+    /// @return amount of shares held by an account
     function shares(address account) public view returns (uint256) {
         return _shares[account];
     }
 
+    //Function ajouté a revoir
+    // function resetPayee(address[] memory _newPayee, uint256[] memory _newShare)
+    //     public
+    //     onlyOwner
+    // {
+    //     for (uint256 i = 0; i < _payees.length; i++) {
+    //         isTeam[_payees[i]] = false;
+    //     }
+    //     delete _payees;
+    //     for (uint256 i = 0; i < _newPayee.length; i++) {
+    //         isTeam[_newPayee[i]] = true;
+    //         _addPayee(_newPayee[i], _newShare[i]);
+    //     }
+    // }
+
     /**
      * @notice this function allows to know the amount received for a given address
-     * 
+     *
      * @param account the account to be queried
      *
      * @return amount of Ether already released to a payee
@@ -155,7 +173,7 @@ contract PaymentSplitter is Context {
 
     /**
      * @param  index an index of the payee array
-     * 
+     *
      * @return address of the payee number `index`.
      */
     function payee(uint256 index) public view returns (address) {
@@ -199,7 +217,7 @@ contract PaymentSplitter is Context {
      * @param token contract address
      *
      * @param account address to pay
-     *     
+     *
      */
     function release(IERC20 token, address account) public virtual onlyTeams {
         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
@@ -226,11 +244,11 @@ contract PaymentSplitter is Context {
      * already released amounts.
      *
      * @notice to know the amount of pending payments
-     * 
+     *
      * @param account the account to be queried
-     * 
+     *
      * @param totalReceived the total amount received
-     * 
+     *
      * @param alreadyReleased the amount already released
      *
      * @return amount of pending payement

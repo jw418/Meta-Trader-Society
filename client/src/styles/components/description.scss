@@ -1,48 +1,61 @@
-.description_component{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    height: 100vh;
+.description_component {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: rgb(29,29,29);
+  background: linear-gradient(0deg, rgba(29,29,29,1) 0%, rgba(0,0,0,1) 100%);
+  height: 100vh;
 
-    h1{      
-        color: white;
+  h1 {
+    color: white;
+  }
+  .description_comp {
+    margin: auto;
+
+    h1 {
+      color: white;
     }
-    .description_comp{
+    img {
+      float: left;
+      width: 250px;
+      height: 250px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+      margin-left: 25px;
+      margin-right: 25px;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+    .description_div {
+      display: flex;
+      flex-direction: row;
+      margin: auto;
+      width: 50%;
+      background-color: white;
+      color: black;
+      padding: 50px;
+      border-radius: 15px;
+      box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
+
+      .text_description {
+        display: flex;
+        flex-direction: column;
         margin: auto;
-        h1{
-            color: white;
-        }
-        img{
-            float: left;
-            width: 250px;
-            height: 250px;
-            margin-top: 25px;
-            margin-bottom: 25px;
-            margin-left: 25px;
-            margin-right: 25px;
-            border: 1px solid black;
-            border-radius: 10px;
 
+        h3 {
+          margin-top: 0;
         }
-        .description_div{
-            display: flex;
-            flex-direction: row;
-            margin: auto;
-            width: 50%;
-            background-color: white;
-            color: black;
-            padding: 50px;
-            border-radius: 15px;
-
-            .text_description{
-                display: flex;
-                flex-direction: column;
-                margin: auto;
-
-                h3{
-                    margin-top: 0;
-                }
-            }
-        }
+      }
     }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .description_component {
+    .description_comp {
+      .description_div {
+          width: 60%;
+      }
+    }
+  }
 }

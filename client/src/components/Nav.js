@@ -3,11 +3,22 @@ import React from "react";
 const Navbar = ({ userAddress }) => {
   return (
     <div className="navbar_components">
-      <img id="logo_rat" src="../img/logo_rat_navbar.png" />
+      <a>
+        <img id="logo_rat" src="../img/logo_rat_navbar.png" />
+      </a>
       <ul className="navbar">
-        <span className="un">Roadmap</span>
-        <span className="un">Team</span>
-        <span className="un">NFT Wallet</span>
+        <span className="un">
+          <a>Meta Trader Society </a>
+        </span>
+        <span className="un">
+          <a>Roadmap </a>
+        </span>
+        <span className="un">
+          <a>Team</a>
+        </span>
+        <span className="un">
+          <a>NFT Wallet</a>
+        </span>
       </ul>
 
       <div className="logos">
@@ -22,7 +33,7 @@ const Navbar = ({ userAddress }) => {
               : "Connect"}
           </p>
         </div>
-        <div className="logo_contain">
+        {/* <div className="logo_contain">
           <a href="https://discord.com/" target="_blank">
             <img id="logo" src="../img/discord_logo.png" />
           </a>
@@ -32,7 +43,7 @@ const Navbar = ({ userAddress }) => {
           <a href="https://twitter.com/" target="_blank">
             <img id="logo" src="../img/twitter_logo.png" />
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import Description from "./components/Description";
 import DisplayNFT from "./components/DisplayNFT";
 import Navbar from "./components/Nav";
 import DisplayMint from "./components/DisplayMint";
+import Footer from "./components/Footer";
+import Home from "./components/Home";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -43,8 +45,6 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    await getNFTBalance(contract);
-
     //Set to all the state
     setNftBalance(await contract.methods.nftBalance(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -52,7 +52,8 @@ const App = () => {
     setMintPrice(await contract.methods.priceSale().call());
     setWeb3(web3);
     setAccouts(accounts);
-    setUserAddress(accounts[0]);
+    await setUserAddress(accounts[0]);
+    await getNFTBalance(contract, accounts[0]);
     setNetwordId(networkId);
     loadWalletNFT(contract);
   };
@@ -145,11 +146,13 @@ const App = () => {
         });
   };
 
-  const getNFTBalance = async (contract) => {
+  const getNFTBalance = async (contract, accounts) => {
     const totalSupply = await contract.methods.totalSupply().call();
     for (let i = 1; i <= totalSupply; i++) {
-      if (await contract.methods.ownerOf(i).call()) {
-        if (!nftBalanceIndex.includes(i)) nftBalanceIndex.push(i);
+      if ((await contract.methods.ownerOf(i).call()) == accounts) {
+        if (!nftBalanceIndex.includes(i)) {
+          nftBalanceIndex.push(i);
+        }
       }
     }
   };
@@ -175,27 +178,14 @@ const App = () => {
     setBalance(Balance / 10 ** 18);
   };
 
-  const handleScroll = (e) => {
-    const navbar = document.querySelector(".navbar_components");
-    if (window.scrollY > 800) {
-      navbar.style.top = "-150px";
-    } else {
-      navbar.style.top = "0";
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <>
       <div className="home">
-        <Navbar userAddress={userAddress} />
-        <Description />
-        <img src="../img/metro.png" id="metro1" />
-        <img src="../img/metro.png" id="metro2" />
-
+        {/* <Navbar userAddress={userAddress} /> */}
+        {/* <Description /> */}
+        {/* <img src="../img/metro.png" id="metro1" /> */}
+        {/* <img src="../img/metro.png" id="metro2" /> */}
+        <Home />
         <div className="trait"></div>
         <div className="mint_component">
           <div className="mint_interface">
@@ -283,6 +273,7 @@ const App = () => {
 
       <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
+      <Footer />
     </>
   );
 };
