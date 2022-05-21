@@ -16,7 +16,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     enum State {
         Paused,
         Premint,
-        Open,        
+        Open,
         Finished
     }
 
@@ -36,7 +36,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     uint256 public constant priceMax = 5 ether;
 
-    uint256 public priceSale = 1 ether;   
+    uint256 public priceSale = 1 ether;
 
     string public baseExtension = ".json";
 
@@ -45,8 +45,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     mapping(address => uint256) public balanceOfNftMinted;
 
     /// events
-    event PriceChange(uint oldPrice, uint newPrice);
-    event MaxMintAllowedChange(uint oldMax, uint newMax);
+    event PriceChange(uint256 oldPrice, uint256 newPrice);
+    event MaxMintAllowedChange(uint256 oldMax, uint256 newMax);
     event BaseUriChange(string newUri);
     event MintStatus(State actualMintState);
 
@@ -62,14 +62,17 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     /// @notice turn state of the mint to premint and emit an event
     function setToPremint() external onlyOwner {
-        require(StateMint != State.Finished && StateMint != State.Open,"Mint already open or finished");
+        require(
+            StateMint != State.Finished && StateMint != State.Open,
+            "Mint already open or finished"
+        );
         StateMint = State.Premint;
         emit MintStatus(State.Premint);
     }
-   
+
     /// @notice Open the Mint and emit an event
     function setMintOpen() external onlyOwner {
-        require(StateMint != State.Finished,"Mint already finished");
+        require(StateMint != State.Finished, "Mint already finished");
         StateMint = State.Open;
         emit MintStatus(State.Open);
     }
@@ -81,7 +84,6 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         emit MintStatus(State.Paused);
     }
 
-   
     /**
      *    @dev You can add requirements to prevent the price from being too low or too expensive
      *
@@ -89,12 +91,11 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *
      *    @param _priceSale is the new price you want to set
      */
-    function changePriceSale(uint256 _priceSale) external onlyOwner {        
-        require(_priceSale >= priceMin,'this price is too low');
-        require(_priceSale <= priceMax, 'This price is above the limit');
+    function changePriceSale(uint256 _priceSale) external onlyOwner {
+        require(_priceSale >= priceMin, "this price is too low");
+        require(_priceSale <= priceMax, "This price is above the limit");
         emit PriceChange(priceSale, _priceSale);
         priceSale = _priceSale;
-        
     }
 
     /**
@@ -105,8 +106,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      *  @param _maxMintAllowed is the new max
      */
     function changeMaxMintAllowed(uint256 _maxMintAllowed) external onlyOwner {
-        require(_maxMintAllowed >= min_qty_mint_allowed,'cannot be zero');
-        require(_maxMintAllowed <=  max_qty_mint_allowed, 'must be 6 or lower');
+        require(_maxMintAllowed >= min_qty_mint_allowed, "cannot be zero");
+        require(_maxMintAllowed <= max_qty_mint_allowed, "must be 6 or lower");
         emit MaxMintAllowedChange(max_mint_allowed, _maxMintAllowed);
         max_mint_allowed = _maxMintAllowed;
     }
@@ -132,8 +133,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         emit BaseUriChange(_newBaseURI);
     }
 
-
-     /**
+    /**
      *    @notice send a free nft to the indicated address
      *
      *    @param _to address where you want to send the nft gift
@@ -141,8 +141,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
     function gift(address _to) external onlyOwner {
         uint256 numberNftSold = totalSupply();
         require(StateMint == State.Premint, "We are not in the Premint phase");
-        require(numberNftSold<= giftLimit, "giftLimit reached");       
-        _safeMint(_to, numberNftSold + 1); 
+        require(numberNftSold <= giftLimit, "giftLimit reached");
+        _safeMint(_to, numberNftSold + 1);
     }
 
     /**
@@ -152,13 +152,15 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
      */
     function mintNFT(uint256 _amount) external payable {
         uint256 numberNftSold = totalSupply();
-        require(tx.origin == msg.sender,"Contract cannot call this function");
+        require(tx.origin == msg.sender, "Contract cannot call this function");
         require(StateMint == State.Open, "Mint is not open");
         require(priceSale * _amount <= msg.value, "Not enought funds");
         require(_amount <= max_mint_allowed, "You cant mint more NFT");
-        require(balanceOfNftMinted[msg.sender] + _amount <= max_mint_allowed, "Too much mint");
+        require(
+            balanceOfNftMinted[msg.sender] + _amount <= max_mint_allowed,
+            "Too much mint"
+        );
         require(numberNftSold + _amount <= max_supply, "Max supply");
-        
 
         if (numberNftSold + _amount >= max_supply) {
             StateMint = State.Finished;
@@ -169,7 +171,6 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
             _safeMint(msg.sender, numberNftSold + i);
         }
     }
- 
 
     /**
      *   @param _nftId id of the nft whose uri you want

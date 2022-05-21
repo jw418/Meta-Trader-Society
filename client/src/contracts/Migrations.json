@@ -17,7 +17,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -30,7 +31,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -449,7 +451,7 @@
   "sourceMap": "69:353:14:-:0;;;246:51;;;;;;;;;-1:-1:-1;271:5:14;:18;;-1:-1:-1;;;;;;271:18:14;279:10;271:18;;;69:353;;;;;;",
   "deployedSourceMap": "69:353:14:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;123:39;;;;;;;;;160:25:17;;;148:2;133:18;123:39:14;;;;;;;;96:20;;;;;-1:-1:-1;;;;;96:20:14;;;;;;-1:-1:-1;;;;;360:32:17;;;342:51;;330:2;315:18;96:20:14;196:203:17;305:114:14;;;;;;:::i;:::-;;:::i;:::-;;;222:5;;-1:-1:-1;;;;;222:5:14;208:10;:19;204:26;;375:24:::1;:36:::0;;;204:26;305:114;:::o;404:180:17:-;463:6;516:2;504:9;495:7;491:23;487:32;484:52;;;532:1;529;522:12;484:52;-1:-1:-1;555:23:17;;404:180;-1:-1:-1;404:180:17:o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.21 <0.9.0;\r\n\r\ncontract Migrations {\r\n    address public owner;\r\n    uint256 public last_completed_migration;\r\n\r\n    modifier restricted() {\r\n        if (msg.sender == owner) _;\r\n    }\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    function setCompleted(uint256 completed) public restricted {\r\n        last_completed_migration = completed;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\juwol\\Desktop\\DEV\\ProjetFinalAlyra\\MetaTraderSociety\\contracts\\Migrations.sol",
+  "sourcePath": "C:\\Users\\Tristan\\Desktop\\Meta-Trader-Society\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -1258,9 +1260,17 @@
     "name": "solc",
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
-  "networks": {},
-  "schemaVersion": "3.4.6",
-  "updatedAt": "2022-05-20T23:27:54.202Z",
+  "networks": {
+    "1337": {
+      "events": {},
+      "links": {},
+      "address": "0x1EA4a0912DC3c1f907d36aD3a4c9de7853C6FA13",
+      "transactionHash": "0x4cfc6d16e70c8fb67c62c469c2b4825d55941c9f39e699cc376e9aab71993388"
+    }
+  },
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-05-21T12:20:16.430Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -2,29 +2,18 @@ import React, { useEffect } from "react";
 import Navbar from "./Nav";
 
 const Home = () => {
-  const handleScroll = (e) => {
-    const navbar = document.querySelector(".navbar_components");
-    if (window.scrollY > 800) {
-      navbar.style.top = "-150px";
-    } else {
-      navbar.style.top = "0";
-    }
-  };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="home_comonent">
         <div className="right_part">
-          <div className="nav">
+          {/* <div className="nav">
             <a>
               <img id="logo_rat" src="../img/logo_rat_navbar.png" />
             </a>
             <p>Meta Trader Society</p>
-          </div>
+          </div> */}
           <img src="../img/logo.png" />
           <div className="bottom_navbar">
             <div className="navbar_list">

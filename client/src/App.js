@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import RatRaceNFT from "./contracts/RatRaceNFT.json";
 import getWeb3 from "./getWeb3";
-import Description from "./components/Description";
 import DisplayNFT from "./components/DisplayNFT";
-import Navbar from "./components/Nav";
 import DisplayMint from "./components/DisplayMint";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
+import Description from "./components/Description"
+import Navbar
+ from "./components/Nav";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -45,6 +46,7 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
+    console.log(deployedNetwork.address);
     //Set to all the state
     setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -177,14 +179,25 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
     setBalance(Balance / 10 ** 18);
   };
+  const handleScroll = (e) => {
+    const navbar = document.querySelector(".navbar_components");
+    if (window.scrollY > 800) {
+      navbar.style.top = "-150px";
+    } else {
+      navbar.style.top = "0";
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       <div className="home">
+        <Navbar userAddress={userAddress}/>
         {/* <Navbar userAddress={userAddress} /> */}
         {/* <Description /> */}
-        {/* <img src="../img/metro.png" id="metro1" /> */}
-        {/* <img src="../img/metro.png" id="metro2" /> */}
         <Home />
         <div className="trait"></div>
         <div className="mint_component">
