@@ -1,5 +1,6 @@
 const RatRaceNFT = artifacts.require(`./RatRaceNFT.sol`);
-const {  BN,
+const {
+  BN,
   expectRevert,
   expectEvent,
   balance,
@@ -8,6 +9,7 @@ const {  BN,
 } = require(`@openzeppelin/test-helpers`);
 const { expect } = require(`chai`);
 const constants = require(`@openzeppelin/test-helpers/src/constants`);
+const { web3 } = require("@openzeppelin/test-helpers/src/setup");
 
 contract(`RatRaceNFT`, function (accounts) {
   const owner = accounts[0];
@@ -20,64 +22,62 @@ contract(`RatRaceNFT`, function (accounts) {
   const reelAmount = ether(`1`);
   var testCounter = 0;
 
-
-  beforeEach(async function () {   
-    
+  beforeEach(async function () {
     this.RatRaceNFTInstance = await RatRaceNFT.new(`URI`, team, share, {
       from: owner,
     });
-  });  
+  });
 
   //--a faire
   // modifier le sc pour passer en gwei et modifier les test en conséquence (https://eth-converter.com/)
   // tester les nouveaux require
-  // tester les fonctions de StateMint
+  // tester les fonctions de StateMint V
   // tester les changemetns d'états 
   // decider de la solutions pour l'index
-  // tester les events
-  // tester gift fonction
+  // tester les events V
+  // tester gift fonction (en partie)
   // faire une capture avec tous les test qui passent et ajouté a expication test
-    
+
   context(`###### variable test ######`, () => {
-  
+
     it(`${testCounter++}: max_supply must be equal to 3333`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.max_supply();
       await expect(maxSupply).to.be.bignumber.equal(
         `3333`,
         `max_supply is not 3333`
-      );      
-    });   
+      );
+    });
 
     it(`${testCounter++}: giftLimit must be equal to 33`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.giftLimit();
       await expect(maxSupply).to.be.bignumber.equal(
         `33`,
         `giftLimit is not 33`
-      );      
-    }); 
+      );
+    });
 
     it(`${testCounter++}: min_qty_mint_allowed must be equal to 1`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.min_qty_mint_allowed();
       await expect(maxSupply).to.be.bignumber.equal(
         `1`,
         `min_qty_mint_allowed is not 1`
-      );      
+      );
     });
-    
+
     it(`${testCounter++}: max_qty_mint_allowed must be equal to 6`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.max_qty_mint_allowed();
       await expect(maxSupply).to.be.bignumber.equal(
         `6`,
         `max_qty_mint_allowed is not 6`
-      );      
+      );
     });
-    
+
     it(`${testCounter++} : max_mint_allowed must be equal to 3`, async function () {
       const maxMintAllowed = await this.RatRaceNFTInstance.max_mint_allowed();
       await expect(maxMintAllowed).to.be.bignumber.equal(
         `3`,
         `max_mint_allowed supply is not 3`
-      );     
+      );
     });
 
     it(`${testCounter++} : priceMin must be equal to 1 ether`, async function () {
@@ -85,9 +85,9 @@ contract(`RatRaceNFT`, function (accounts) {
       await expect(priceMin).to.be.bignumber.equal(
         ether(`1`),
         `priceMin is not equal to 1 ether`
-      );  
+      );
     });
-   
+
     it(`${testCounter++} : priceMax must be equal to 5 ether`, async function () {
       const priceMax = await this.RatRaceNFTInstance.priceMax();
       await expect(priceMax).to.be.bignumber.equal(
@@ -110,8 +110,8 @@ contract(`RatRaceNFT`, function (accounts) {
         ".json",
         `baseExtension is not equal to ".json"`
       );
-    });  
-   
+    });
+
     it(`${testCounter++}: balanceOfNftMinted of owner must be equal to 0`, async function () {
       const balanceOfNftMinted = await this.RatRaceNFTInstance.balanceOfNftMinted(owner);
       await expect(balanceOfNftMinted).to.be.bignumber.equal(
@@ -174,6 +174,48 @@ contract(`RatRaceNFT`, function (accounts) {
     });
   });
 
+  context(`###### test StateMint ######`, () => {
+    it(`${testCounter++}: StateMint should be paused`, async function () {
+      const state = await this.RatRaceNFTInstance.StateMint.call();
+      await expect(state).to.be.bignumber.equal("0");
+    });
+
+    it(`${testCounter++}: StateMint should be to preMint`, async function () {
+      await this.RatRaceNFTInstance.setToPremint({ from: owner });
+      const state = await this.RatRaceNFTInstance.StateMint.call();
+      await expect(state).to.be.bignumber.equal("1");
+    });
+
+    it(`${testCounter++}: StateMint should be open`, async function () {
+      await this.RatRaceNFTInstance.setMintOpen({ from: owner });
+      const state = await this.RatRaceNFTInstance.StateMint.call();
+      await expect(state).to.be.bignumber.equal("2");
+    });
+
+    it(`${testCounter++}: StateMint should be paused`, async function () {
+      await this.RatRaceNFTInstance.setToPremint({ from: owner });
+      await this.RatRaceNFTInstance.setMintOpen({ from: owner });
+      await this.RatRaceNFTInstance.setMintPaused({ from: owner });
+      const state = await this.RatRaceNFTInstance.StateMint.call();
+      await expect(state).to.be.bignumber.equal("0");
+    });
+
+    it(`${testCounter++}: setMintPaused Should Have a revert: state is already paused`, async function () {
+      await expectRevert(
+        this.RatRaceNFTInstance.setMintPaused({ from: owner }),
+        "Contract already paused"
+      );
+    });
+
+    it(`${testCounter++}: setToPremint Should Have a revert: mint is open`, async function () {
+      await this.RatRaceNFTInstance.setMintOpen({ from: owner });
+      await expectRevert(
+        this.RatRaceNFTInstance.setToPremint({ from: owner }),
+        "Mint already open or finished"
+      );
+    });
+  });
+
   context(`###### change value ######`, () => {
 
     it(`${testCounter++}: baseUri must be change`, async function () {
@@ -187,10 +229,10 @@ contract(`RatRaceNFT`, function (accounts) {
     });
 
     it(`${testCounter++}: StateMint must be Paused`, async function () {
-      const StateMint = await this.RatRaceNFTInstance.StateMint();      
+      const StateMint = await this.RatRaceNFTInstance.StateMint();
       await expect(StateMint).to.be.bignumber.equal('0', `StateMint is not Paused`);
     });
-   
+
     it(`${testCounter++}: Should have a revert: this price is too low`, async function () {
       await this.RatRaceNFTInstance.changePriceSale(ether(`2`));
       const newPriceSale = await this.RatRaceNFTInstance.priceSale();
@@ -199,7 +241,7 @@ contract(`RatRaceNFT`, function (accounts) {
         `priceSale is not equal to 1 ether`
       );
     });
-    
+
     it(`${testCounter++}: Should Have a revert: this price is above the limit`, async function () {
       await this.RatRaceNFTInstance.changePriceSale(ether(`2`));
       const newPriceSale = await this.RatRaceNFTInstance.priceSale();
@@ -208,7 +250,7 @@ contract(`RatRaceNFT`, function (accounts) {
         `priceSale is not equal to 1 ether`
       );
     });
-      
+
     it(`${testCounter++}: priceSale will be changed`, async function () {
       await this.RatRaceNFTInstance.changePriceSale(ether(`2`));
       const newPriceSale = await this.RatRaceNFTInstance.priceSale();
@@ -300,6 +342,47 @@ contract(`RatRaceNFT`, function (accounts) {
         `Too much mint`
       );
     });
+
+    it(`${testCounter++}: will fail mint is not open`, async function () {
+    await expectRevert(this.RatRaceNFTInstance.mintNFT(`3`, {
+      from: user1,
+      value: 3 * reelAmount,
+    }), "Mint is not open");
+  });
+  });
+
+  context(`###### test gift ######`, () => {
+    it(`${testCounter++}: Should gift a nft`, async function () {
+      await this.RatRaceNFTInstance.setToPremint({ from: owner });
+      await this.RatRaceNFTInstance.gift(user1, { from: owner });
+      const balance = await this.RatRaceNFTInstance.tokenOfOwnerByIndex(user1, 0);
+      await expect(balance).to.be.bignumber.equal("1");
+
+    });
+
+  it(`${testCounter++}: Gift Should Have a revert: the state is not in premint`, async function () {
+    await expectRevert(
+      this.RatRaceNFTInstance.gift(user1, { from: owner }),
+      "We are not in the Premint phase"
+    );
+  });
+
+  it(`${testCounter++}: Gift Should Have a revert: gift limit`, async function () {
+    await this.RatRaceNFTInstance.setToPremint({ from: owner });
+    for (let index = 0; index <= 33; index++) {
+      await this.RatRaceNFTInstance.gift(user1, { from: owner });
+    }
+    await expectRevert(
+      this.RatRaceNFTInstance.gift(user1, { from: owner }),
+      "giftLimit reached"
+    );
+  });
+
+  it(`${testCounter++}: Gift Should Have a revert:`, async function () {
+    await this.RatRaceNFTInstance.setMintOpen({
+            from: owner,
+          });
+  });
   });
 
   context(`###### only owner ######`, () => {
@@ -327,6 +410,35 @@ contract(`RatRaceNFT`, function (accounts) {
         `Ownable: caller is not the owner`
       );
     });
+
+    it(`${testCounter++}: Should revert setToPremint`, async function () {
+    await expectRevert(
+      this.RatRaceNFTInstance.setToPremint({from:user1}),
+      `Ownable: caller is not the owner`
+    );
+  });
+
+  it(`${testCounter++}: Should revert setMintOpen`, async function () {
+    await this.RatRaceNFTInstance.setToPremint({from:owner})
+    await expectRevert(
+      this.RatRaceNFTInstance.setMintOpen({from:user1}),
+      `Ownable: caller is not the owner`
+    );
+  });
+
+  it(`${testCounter++}: Should revert setMintPaused`, async function () {
+    await this.RatRaceNFTInstance.setToPremint({from:owner})
+    await this.RatRaceNFTInstance.setMintOpen({from:owner})
+    await expectRevert(
+      this.RatRaceNFTInstance.setMintPaused({from:user1}),
+      `Ownable: caller is not the owner`
+    );
+  });
+
+  it(`${testCounter++}: Should revert gift`, async function () {
+      await expectRevert(this.RatRaceNFTInstance.gift(user1,{from:user1}),`Ownable: caller is not the owner`);
+  });
+
   });
 
   context(`###### test release ######`, () => {
@@ -392,6 +504,51 @@ contract(`RatRaceNFT`, function (accounts) {
       });
       let tokenURI = await this.RatRaceNFTInstance.tokenURI(`1`);
       await expect(tokenURI).to.be.equal(`URI1.json`);
+    });
+  });
+
+  context("###### events ######", () => {
+    it(`${testCounter++}: Emit premit`, async function () {
+      const receipt = await this.RatRaceNFTInstance.setToPremint({
+        from: owner,
+      });
+      await expectEvent(receipt, "MintStatus", { 0: new BN("1") });
+    });
+
+    it(`${testCounter++}: Emit mintOpen`, async function () {
+      const receipt = await this.RatRaceNFTInstance.setMintOpen({
+        from: owner,
+      });
+      await expectEvent(receipt, "MintStatus", { 0: new BN("2") });
+    });
+
+    it(`${testCounter++}: Emit paused`, async function () {
+      await this.RatRaceNFTInstance.setMintOpen({ from: owner });
+      const receipt = await this.RatRaceNFTInstance.setMintPaused({
+        from: owner,
+      });
+      await expectEvent(receipt, "MintStatus", { 0: new BN("0") });
+    });
+
+    it(`${testCounter++}: Emit priceChange`, async function () {
+      const receipt = await this.RatRaceNFTInstance.changePriceSale(
+        ether("2"),
+        { from: owner }
+      );
+      await expectEvent(receipt, "PriceChange", {
+        oldPrice: ether("1"),
+        newPrice: ether("2"),
+      });
+    });
+
+    it(`${testCounter++}: Emit changeMaxMintAllowed`, async function () {
+      const receipt = await this.RatRaceNFTInstance.changeMaxMintAllowed("5", {
+        from: owner,
+      });
+      await expectEvent(receipt, "MaxMintAllowedChange", {
+        oldMax: "3",
+        newMax: "5",
+      });
     });
   });
 });
