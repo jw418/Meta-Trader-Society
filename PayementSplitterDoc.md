@@ -35,11 +35,11 @@ This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have
 |    💵    | Function is payable |
 
 ## Graph
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.png)
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphPayementSpliter.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.PNG)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphPayementSpliter.PNG)
 
 ## InheritancePayementSpliter
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritancePayementSpliter.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritancePayementSpliter.PNG)
 
 ## Doc generate with ETHDOC  
 

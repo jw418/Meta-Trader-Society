@@ -33,11 +33,11 @@ This contract is an ERC721 was written as part of our final project alyra
 |    💵    | Function is payable |
 
 ## Graph
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.png)
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphRatRaceNFT.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.PNG)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphRatRaceNFT.PNG)
 
 ## InheritanceRatRaceNFT
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritanceRatRaceNFT.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritanceRatRaceNFT.PNG)
 
 ## Doc generate with ETHDOC
 
