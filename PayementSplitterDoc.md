@@ -1,4 +1,4 @@
-# README PaymentSplitter.sol : PaymentSplitter Modified
+# README PaymentSplitter.sol : PaymentSplitter Modified 
 
 This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
 
