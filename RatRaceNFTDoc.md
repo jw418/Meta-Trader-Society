@@ -1,6 +1,45 @@
-## RatRaceNFT : Contract RatRaceNFt
+# Readme RatRaceNFT.sol : Contract RatRaceNFt
 
 This contract is an ERC721 was written as part of our final project alyra
+
+## Sūrya's Description Report
+
+ Contracts Description Table
+
+
+|  Contract  |         Type        |       Bases      |                  |                 |
+|:----------:|:-------------------:|:----------------:|:----------------:|:---------------:|
+|     └      |  **Function Name**  |  **Visibility**  |  **Mutability**  |  **Modifiers**  |
+||||||
+| **RatRaceNFT** | Implementation | ERC721Enumerable, PaymentSplitter, Ownable |||
+| └ | <Constructor> | Public ❗️ | 🛑  | ERC721 PaymentSplitter |
+| └ | setToPremint | External ❗️ | 🛑  | onlyOwner |
+| └ | setMintOpen | External ❗️ | 🛑  | onlyOwner |
+| └ | setMintPaused | External ❗️ | 🛑  | onlyOwner |
+| └ | changePriceSale | External ❗️ | 🛑  | onlyOwner |
+| └ | changeMaxMintAllowed | External ❗️ | 🛑  | onlyOwner |
+| └ | _baseURI | Internal 🔒 |   | |
+| └ | setBaseUri | External ❗️ | 🛑  | onlyOwner |
+| └ | gift | External ❗️ | 🛑  | onlyOwner |
+| └ | mintNFT | External ❗️ |  💵 |NO❗️ |
+| └ | tokenURI | Public ❗️ |   |NO❗️ |
+
+
+ Legend
+
+|  Symbol  |  Meaning  |
+|:--------:|-----------|
+|    🛑    | Function can modify state |
+|    💵    | Function is payable |
+
+## Graph
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphRatRaceNFT.png)
+
+## InheritanceRatRaceNFT
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritanceRatRaceNFT.png)
+
+## Doc generate with ETHDOC
 
 Author: Julien Wolff Tristan Boettger
 

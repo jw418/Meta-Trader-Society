@@ -1,8 +1,47 @@
-### PaymentSplitter : PaymentSplitter Modified
+# README PaymentSplitter.sol : PaymentSplitter Modified
 
 This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
 
-  
+## Sūrya's Description Report
+
+ Contracts Description Table
+
+
+|  Contract  |         Type        |       Bases      |                  |                 |
+|:----------:|:-------------------:|:----------------:|:----------------:|:---------------:|
+|     └      |  **Function Name**  |  **Visibility**  |  **Mutability**  |  **Modifiers**  |
+||||||
+| **PaymentSplitter** | Implementation | Context |||
+| └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
+| └ | <Receive Ether> | External ❗️ |  💵 |NO❗️ |
+| └ | totalShares | Public ❗️ |   |NO❗️ |
+| └ | totalReleased | Public ❗️ |   |NO❗️ |
+| └ | totalReleased | Public ❗️ |   |NO❗️ |
+| └ | shares | Public ❗️ |   |NO❗️ |
+| └ | released | Public ❗️ |   |NO❗️ |
+| └ | released | Public ❗️ |   |NO❗️ |
+| └ | payee | Public ❗️ |   |NO❗️ |
+| └ | release | Public ❗️ | 🛑  | onlyTeams |
+| └ | release | Public ❗️ | 🛑  | onlyTeams |
+| └ | _pendingPayment | Private 🔐 |   | |
+| └ | _addPayee | Private 🔐 | 🛑  | |
+
+
+ Legend
+
+|  Symbol  |  Meaning  |
+|:--------:|-----------|
+|    🛑    | Function can modify state |
+|    💵    | Function is payable |
+
+## Graph
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphLegend.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphPayementSpliter.png)
+
+## InheritancePayementSpliter
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/inheritancePayementSpliter.png)
+
+## Doc generate with ETHDOC  
 
 **Functions**
 
