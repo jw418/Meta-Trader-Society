@@ -35,10 +35,10 @@ const Home = () => {
       const thisImage = document.querySelector("#slider");
       const thisText = document.querySelector("#sliderText");
       var tl = new TimelineMax();
-      setTimeout(() => {
+      // setTimeout(() => {
         tl.from(thisText, 1, { scaleX: 0, transformOrigin: "left" });
-        gsap.from(thisImage, { duration: 1, ease:"expo.out", y: -200 })
-      },100)
+        gsap.from(thisImage, { duration: 1, ease:"expo.out", y: 400 })
+      // },100)
     }, 5000);
     
 

@@ -128,18 +128,95 @@
           }
 
           .mint_button {
-            width: 20%;
-            margin-top: 150px;
-            border-radius: 10px;
-            border: none;
-            padding: 10px;
-            color: white;
-            background-color: #d9d059;
-            margin: auto;
+            background-clip: padding-box;
+            border-style: none;
+            box-sizing: border-box;
+            color: rgba(0, 0, 0, 0.612);
+            cursor: pointer;
+            display: inline-block;
+            flex-direction: row;
+            flex-shrink: 0;
+            font-family: Eina01, sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            justify-content: center;
+            line-height: 24px;
+            min-height: 64px;
+            outline: none;
+            padding: 19px 26px;
+            pointer-events: auto;
+            position: absolute;
+            text-align: center;
+            width: 250px;
+            height: 50px;
+            left: 40%;
+            bottom: 0;
+            margin-bottom: 10%;
+            // transform: translateX(-50px);
+            z-index: 0;
           }
-          .mint_button:hover {
-            background: rgba(156, 156, 156, 0.766);
-            transition: 0.5s;
+
+          .mint_button:before,
+          .mint_button:after {
+            border-radius: 80px;
+          }
+
+          .mint_button:before {
+            background-color: rgba(150, 184, 239, 0.32);
+            content: "";
+            display: block;
+            height: 100%;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: -2;
+          }
+
+          .mint_button:after {
+            background: rgb(235,235,236);
+            background: linear-gradient(90deg, rgba(235,235,236,0.7175245098039216) 0%, rgba(255,255,255,1) 100%);
+            bottom: 4px;
+            content: "";
+            display: block;
+            left: 4px;
+            overflow: hidden;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            transition: all 100ms ease-out;
+            z-index: -1;
+          }
+
+          .mint_button:hover:not(:disabled):after {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            transition-timing-function: ease-in;
+          }
+
+          .mint_button:active:not(:disabled) {
+            color: #ccc;
+          }
+
+          .mint_button:active:not(:disabled):after {
+            background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2)
+              ),
+              linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+            bottom: 4px;
+            left: 4px;
+            right: 4px;
+            top: 4px;
+          }
+
+          .mint_button:disabled {
+            cursor: default;
+            opacity: 0.24;
           }
         }
       }
@@ -157,14 +234,12 @@
 
 @media screen and (max-width: 1400px) {
   .home {
-    #metro1 {
-      width: 230px;
-      height: 215px;
-    }
-
-    #metro2 {
-      width: 230px;
-      height: 215px;
+    .mint_component {
+      .mint_interface {
+        margin: auto;
+        width: 85%;
+        height: 75%;
+      }
     }
   }
 }

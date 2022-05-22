@@ -181,7 +181,7 @@ const App = () => {
   };
   const handleScroll = (e) => {
     const navbar = document.querySelector(".navbar_components");
-    if (window.scrollY > 800) {
+    if (window.scrollY > 400) {
       navbar.style.top = "-150px";
     } else {
       navbar.style.top = "0";
@@ -280,11 +280,11 @@ const App = () => {
                 "mint closed"
               )}
             </div>
+            
           </div>
         </div>
       </div>
 
-      <div className="trait"></div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
       <Footer />
     </>

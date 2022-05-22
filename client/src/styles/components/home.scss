@@ -25,30 +25,12 @@
   .right_part {
     display: flex;
     flex-direction: column;
+    background-color: #3e76ab;
     height: 100vh;
 
-    .alert-enter {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    .alert-enter-active {
-      opacity: 1;
-      transform: translateX(0);
-      transition: opacity 300ms, transform 300ms;
-    }
-    .alert-exit {
-      opacity: 1;
-    }
-    .alert-exit-active {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 300ms, transform 300ms;
-    }
-    
     img {
       height: 85vh;
     }
-
 
     .bottom_navbar {
       display: grid;
@@ -109,20 +91,39 @@
     }
 
     .div_title_NFT {
-        display: flex;
+      display: flex;
       position: absolute;
       height: 150px;
       width: 350px;
       bottom: 0;
       background-color: #3e76ab;
       margin-bottom: 15vh;
-      border: 1px solid black;
-      border-left:0px;
+      // border: 1px solid black;
+      border-left: 10px solid rgb(73, 77, 98);
       color: white;
-      p{
-          margin: auto;
-          font-size: 2rem;
-          transition: 0.5s ease-in-out;
+      p {
+        margin: auto;
+        font-size: 2rem;
+        transition: 0.5s ease-in-out;
+      }
+    }
+  }
+}
+
+//Reponsive
+
+@media screen and (max-width: 1300px) {
+  .home_comonent {
+    .left_part {
+      .text_description {
+        margin-top: 11%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .div_title_NFT{
+        height: 100px;
+
       }
     }
   }

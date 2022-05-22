@@ -1,20 +1,20 @@
 *{
     list-style: none;
-    font-family: 'Comfortaa', cursive;
+    // font-family: 'Comfortaa', cursive;
+    // font-family: Eina01, sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     padding-inline-start: 0;
 } 
 html{
   scroll-behavior: smooth;
 }
 p{
+    // font-family: 'Titillium Web', sans-serif;
     margin: 0;
     padding: 0;
 }
 body{
   margin: 0;
-  // background: rgb(107,126,182);
-  // background: linear-gradient(0deg, rgba(107,126,182,1) 0%, rgba(138,151,190,1) 26%); 
-  
 }
 body::-webkit-scrollbar {
   width: 12px; /* width of the entire scrollbar */
@@ -29,7 +29,8 @@ body::-webkit-scrollbar-thumb {
   border-radius: 20px; /* roundness of the scroll thumb */
   border: 3px solid black; /* creates padding around scroll thumb */
 }
-
+// @import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 @import "./pages/app";
 @import "./components/navbar";
