@@ -1,20 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Nav";
+import  {gsap, TimelineMax} from "gsap"
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
+let i = 1;
 const Home = () => {
+  const [images, setImages] = useState();
+  const [name, setNames] = useState();
+  const data = [
+    {
+      image: "../img/1.png",
+      name: "RatRace_1",
+    },
+    {
+      image: "../img/4.png",
+      name: "RatRace_4",
+    },
+    {
+      image: "../img/5.png",
+      name: "RatRace_5",
+    },
+    {
+      image: "../img/43.png",
+      name: "RatRace_43",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImages(data[i].image);
+      setNames(data[i].name);
+      i++;
+      if (i == 4) i = 0;
+      const thisImage = document.querySelector("#slider");
+      const thisText = document.querySelector("#sliderText");
+      var tl = new TimelineMax();
+      setTimeout(() => {
+        tl.from(thisText, 1, { scaleX: 0, transformOrigin: "left" });
+        gsap.from(thisImage, { duration: 1, ease:"expo.out", y: -200 })
+      },100)
+    }, 5000);
+    
+
+    return () => clearInterval(interval);
+  });
 
   return (
     <>
       {/* <Navbar /> */}
       <div className="home_comonent">
         <div className="right_part">
-          {/* <div className="nav">
-            <a>
-              <img id="logo_rat" src="../img/logo_rat_navbar.png" />
-            </a>
-            <p>Meta Trader Society</p>
-          </div> */}
-          <img src="../img/logo.png" />
+            <img id="slider" src={images ? images :"../img/1.png" } />
           <div className="bottom_navbar">
             <div className="navbar_list">
               <a className="un">Discord</a>
@@ -49,8 +85,8 @@ const Home = () => {
               les specs du bot ici(AI,MT4, etc..)).
             </p>
           </div>
-          <div className="div_title_NFT">
-            <p>RatReace_15</p>
+          <div id="sliderText" className="div_title_NFT">
+            <p>{name ? name : "RatRace_1"}</p>
           </div>
         </div>
       </div>

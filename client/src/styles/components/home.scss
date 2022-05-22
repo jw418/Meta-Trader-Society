@@ -27,10 +27,28 @@
     flex-direction: column;
     height: 100vh;
 
-    img {
-      height: 91vh;
-      //   width: 93%;
+    .alert-enter {
+      opacity: 0;
+      transform: scale(0.9);
     }
+    .alert-enter-active {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 300ms, transform 300ms;
+    }
+    .alert-exit {
+      opacity: 1;
+    }
+    .alert-exit-active {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 300ms, transform 300ms;
+    }
+    
+    img {
+      height: 85vh;
+    }
+
 
     .bottom_navbar {
       display: grid;
@@ -76,19 +94,20 @@
   }
   .left_part {
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.685);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     .text_description {
-      background-color: white;
+      // background-color: white;
+      color: white;
       height: 25%;
       width: 75%;
       padding: 10px;
       margin: auto;
       text-align: center;
       border-radius: 10px;
-      box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.3);
     }
+
     .div_title_NFT {
         display: flex;
       position: absolute;
@@ -96,13 +115,14 @@
       width: 350px;
       bottom: 0;
       background-color: #3e76ab;
-      margin-bottom: 88px;
+      margin-bottom: 15vh;
       border: 1px solid black;
       border-left:0px;
       color: white;
       p{
           margin: auto;
           font-size: 2rem;
+          transition: 0.5s ease-in-out;
       }
     }
   }
