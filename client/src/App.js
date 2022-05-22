@@ -24,7 +24,7 @@ const App = () => {
   const [infoMinted, setInfoMinted] = useState();
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
-  const [mintOpen, setMintOpen] = useState(true);
+  const [mintStatus, setMintStatus] = useState(true);
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
   const [, fctMiseAJour] = useState({});
@@ -46,7 +46,6 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    console.log(deployedNetwork.address);
     //Set to all the state
     setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
     setBalance(Balance / 10 ** 18);
@@ -54,11 +53,19 @@ const App = () => {
     setMintPrice(await contract.methods.priceSale().call());
     setWeb3(web3);
     setAccouts(accounts);
+    mintState(contract);
     await setUserAddress(accounts[0]);
     await getNFTBalance(contract, accounts[0]);
     setNetwordId(networkId);
     loadWalletNFT(contract);
   };
+
+  const mintState = async (contract) => {
+    let status = await contract.methods.StateMint().call()
+    if(status == 0) setMintStatus("paused")
+    if(status == 1) setMintStatus("pre mint")
+    if(status == 2) setMintStatus("mint open")
+  }
 
   //Load the wallet of the user
   const loadWalletNFT = (contract) => {
@@ -234,8 +241,11 @@ const App = () => {
               </div>
             )}
             <div className="text_mint" style={isMinted && { width: "150%" }}>
-              {mintOpen ? (
+              {mintStatus == "mint open" ? (
                 <div className="mint_display">
+                  <p style={{margin:"auto"}}>
+                  Status : {mintStatus}
+                    </p>
                   <div className="input_display">
                     <div className="input_title">
                       <p>Number of tokens</p>

@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 
   .inner_display_mint {
     position: relative;
@@ -46,8 +47,8 @@
             display: flex;
             height: 50px;
             margin: 5px;
-            background-color: rgba(199, 236, 247, 0.396);
-            border: 1px solid rgba(64, 64, 64, 0.396);
+            background-color: rgba(255, 255, 255, 0.396);
+            border:1px solid  rgba(105, 235, 255, 0.779);
             border-radius: 10px;
 
             p {

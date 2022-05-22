@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Nav";
-import  {gsap, TimelineMax} from "gsap"
+import { gsap, TimelineMax } from "gsap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 let i = 1;
@@ -36,11 +36,10 @@ const Home = () => {
       const thisText = document.querySelector("#sliderText");
       var tl = new TimelineMax();
       // setTimeout(() => {
-        tl.from(thisText, 1, { scaleX: 0, transformOrigin: "left" });
-        gsap.from(thisImage, { duration: 1, ease:"expo.out", y: 400 })
+      tl.from(thisText, 1, { scaleX: 0, transformOrigin: "left" });
+      gsap.from(thisImage, { duration: 2, ease: "expo.out", y: 200 });
       // },100)
     }, 5000);
-    
 
     return () => clearInterval(interval);
   });
@@ -50,17 +49,23 @@ const Home = () => {
       {/* <Navbar /> */}
       <div className="home_comonent">
         <div className="right_part">
-            <img id="slider" src={images ? images :"../img/1.png" } />
+          <img id="slider" src={images ? images : "../img/1.png"} />
           <div className="bottom_navbar">
-            <div className="navbar_list">
-              <a className="un">Discord</a>
-            </div>
-            <div className="navbar_list">
-              <a className="un">Twitter</a>
-            </div>
-            <div className="navbar_list">
-              <a className="un">Open Sea</a>
-            </div>
+            <a href="https://opensea.io/" target={"_blank"}>
+              <div className="navbar_list">
+                <a className="un">Discord</a>
+              </div>
+            </a>
+            <a href="https://opensea.io/" target={"_blank"}>
+              <div className="navbar_list">
+                <a className="un">Twitter</a>
+              </div>
+            </a>
+            <a href="https://opensea.io/" target={"_blank"}>
+              <div className="navbar_list">
+                <a className="un">Open Sea</a>
+              </div>
+            </a>
           </div>
           <div></div>
         </div>
