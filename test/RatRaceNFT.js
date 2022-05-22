@@ -1,4 +1,5 @@
 const RatRaceNFT = artifacts.require(`./RatRaceNFT.sol`);
+const TestTxOrigin = artifacts.require(`./TestTxOrigin.sol`);
 const {
   BN,
   expectRevert,
@@ -15,6 +16,7 @@ contract(`RatRaceNFT`, function (accounts) {
   const owner = accounts[0];
   const user1 = accounts[1];
   const user2 = accounts[2];
+  const tester = accounts[9];
 
   const team = [accounts[2], accounts[3], accounts[4]];
   const share = [45, 45, 10];
@@ -47,7 +49,7 @@ contract(`RatRaceNFT`, function (accounts) {
         `max_supply is not 3333`
       );
     });
-
+    
     it(`${testCounter++}: giftLimit must be equal to 33`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.giftLimit();
       await expect(maxSupply).to.be.bignumber.equal(
@@ -269,6 +271,15 @@ contract(`RatRaceNFT`, function (accounts) {
   });
 
   context(`###### test mint ######`, () => {
+    
+    it(`${testCounter++}: minfNFT() should have a revert:"Contract cannot call this function"`, async function () {
+      const addressRat= await this.RatRaceNFTInstance.address;
+      await this.RatRaceNFTInstance.setMintOpen({ from: owner });
+      const qty = 1;
+      this.TestTxOriginInstance = await TestTxOrigin.new({from: tester});
+      await expectRevert(this.TestTxOriginInstance.testMint(addressRat,qty, {from: tester}),`Contract cannot call this function`);  
+    });
+
 
     it(`${testCounter++}: will fail to mint not enought funds`, async function () {
       await this.RatRaceNFTInstance.setMintOpen();
