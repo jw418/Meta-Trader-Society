@@ -44,15 +44,17 @@ Vous pouvez copiez notre repo avec la commande :
 git clone https://github.com/jw418/Meta-Trader-Society.git
 ```
 
-Allez à la racine du fichier et utilisez la commande suivante :
+Pour installer les dépendances allez à la racine du fichier et utilisez les commandes suivante :
 ```sh
+npm install
+cd client
 npm install
 ```
 
 Pensez à modifier le fichier truffle-config.js selon le réseau choisi.
 https://trufflesuite.com/docs/truffle/reference/configuration/
 
-Pensez à configurer votre fichier .ENV et l'ajouter à votre .gitignore.
+Pensez à créer et à configurer votre fichier .ENV à la racine et l'ajouter à votre .gitignore.
 
 Pour l’assemblage des calques et la créations des metadata nous avons 
 utiliser Hashlips_Art_Engine.
@@ -60,6 +62,13 @@ Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
 ## Usage
 
+### Front
+Pour voir le front en local:
+```sh
+ cd client
+ npm run start
+```
+Sinon directement sur: https://mtsalyra.herokuapp.com/
 
 ### Tests :test_tube:
 
