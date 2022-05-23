@@ -127,20 +127,20 @@ contract PaymentSplitter is
         return _shares[account];
     }
 
-    //Function ajouté a revoir
-    // function resetPayee(address[] memory _newPayee, uint256[] memory _newShare)
-    //     public
-    //     onlyOwner
-    // {
-    //     for (uint256 i = 0; i < _payees.length; i++) {
-    //         isTeam[_payees[i]] = false;
-    //     }
-    //     delete _payees;
-    //     for (uint256 i = 0; i < _newPayee.length; i++) {
-    //         isTeam[_newPayee[i]] = true;
-    //         _addPayee(_newPayee[i], _newShare[i]);
-    //     }
-    // }
+    // Function ajouté a revoir
+    function resetPayee(address[] memory _newPayee, uint256[] memory _newShare)
+        public
+    // onlyOwner
+    {
+        for (uint256 i = 0; i < _payees.length; i++) {
+            isTeam[_payees[i]] = false;
+        }
+        delete _payees;
+        for (uint256 i = 0; i < _newPayee.length; i++) {
+            isTeam[_newPayee[i]] = true;
+            _addPayee(_newPayee[i], _newShare[i]);
+        }
+    }
 
     /**
      * @notice this function allows to know the amount received for a given address
