@@ -21,7 +21,7 @@ This is a test contract. It tests the require tx.origin == msg.sender of the min
 |    💵    | Function is payable |
 
 ## Graph
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphTestTxOrigin.PNG)m; }
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/docs/graphTestTxOrigin.PNG);
 
 ## TestTxOrigin : Contract testTxOrigin
 
