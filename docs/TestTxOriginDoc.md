@@ -1,5 +1,5 @@
 # Readme TestTxOrigin.sol.sol : Contract TestTxOrigin
-
+This is a test contract. It tests the require tx.origin == msg.sender of the mintNFT function of our smart contract RatRaceNFT.sol
 ## Sūrya's Description Report
 
  Contracts Description Table
@@ -21,21 +21,16 @@
 |    💵    | Function is payable |
 
 ## Graph
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphTestTxOrigin.PNG)
-
-
-    #ethdoc-viewer{ font-size: 0.8em; padding: 1em; } #ethdoc-viewer .lead{ font-size: 1em; } #ethdoc-viewer table { width: 50%; } #ethdoc-viewer hr { margin: 0; margin-bottom: 0.5rem; } #ethdoc-viewer p{ margin-bottom: 0.5rem; }
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/graphTestTxOrigin.PNG)m; }
 
 ## TestTxOrigin : Contract testTxOrigin
-
-this is a test contract. It tests the require tx.origin == msg.sender of the mintNFT function of our smart contract RatRaceNFT.sol
 
 Author: Julien Wolff Tristan Boettger
 
 ## Doc generate with ETHDOC
   
 
-**Functions**
+**Function**
 
 * * *
 

@@ -101,25 +101,24 @@ No parameters
 
 Returns:
 
-| Name | Type   | Description |
-| ---- | ------ | ----------- |
-|      | string |             |
+| name         | Type   | Description          |
+|--------------|--------|----------------------|
+| baseExtensio | string | extension of our URI |
 
 ---
 
 ###### baseURI
 
-**\*\*baseUri empty strin\*\***
+**\*\*baseUri empty string\*\***
 stock metadata of the collection
 
 No parameters
 
 Returns:
 
-| Name | Type   | Description |
-| ---- | ------ | ----------- |
-|      | string |             |
-
+| name    | Type   | Description     |
+|---------|--------|-----------------|
+| baseURI | string | base of our URI |
 ---
 
 ###### changeMaxMintAllowed
@@ -185,7 +184,7 @@ Returns:
 
 ###### isTeam
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*Team address array\*\***
 Verify if a address is a part of the team
 
 | Name | Type    | Description |

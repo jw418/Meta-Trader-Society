@@ -15,6 +15,19 @@ Libérez-vous de la Rat Race! Minter un Rat!! En plus de l'œuvre désigner par 
 
 Pour plus d'info consultez notre site web : https://mtsalyra.herokuapp.com/
 
+## Livrables Certification :file_folder:
+
+Le README du Smart Contract RatRaceNFT.sol :
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/RatRaceNFTDoc.md
+
+Le README du Smart Contract PayementSpliter.sol :
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/PayementSplitterDoc.md
+
+Le document avoiding_common_atacks.md qui éxplique quelles mesures ont été prises pour éviter les failles de sécurité:
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/avoiding_common_attacks.md
+
+le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/design_patern_desicions.md
 
 
 ## Installation 🛠️
@@ -38,30 +51,32 @@ Pour l’assemblage des calques et la créations des metadata nous avons
 utiliser Hashlips_Art_Engine.
 Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
+## Usage
 
-## Livrables Certification :file_folder:
 
-Le README du Smart Contract RatRaceNFT.sol :
-https://github.com/jw418/Meta-Trader-Society/blob/main/RatRaceNFTDoc.md
+### Tests :test_tube:
 
-Le README du Smart Contract PayementSpliter.sol :
-https://github.com/jw418/Meta-Trader-Society/blob/main/PayementSplitterDoc.md
-
-Le document avoiding_common_atacks.md qui éxplique quelles mesures ont été prises pour éviter les failles de sécurité:
-https://github.com/jw418/Meta-Trader-Society/blob/main/avoiding_common_attacks.md
-
-le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
-https://github.com/jw418/Meta-Trader-Society/blob/main/design_patern_desicions.md
-
-## Tests :test_tube:
-
-Vous pouvez exécuter les scripts de test de nos smart contract:
+Vous pouvez exécuter les scripts de tests de nos smart contracts:
 
 Pour RatRaceNFT.sol tapez la commande:
 ```sh
 truffle  test test/RatRaceNFT.js
 ```
-Et pour PayementSpliter.sol tapez la commande:
+Pour PayementSpliter.sol tapez la commande:
 ```sh
  truffle  test test/PayementSpliter.js
 ```
+
+## Livrables Certification :file_folder:
+
+Le README du Smart Contract RatRaceNFT.sol :
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/RatRaceNFTDoc.md
+
+Le README du Smart Contract PayementSpliter.sol :
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/PayementSplitterDoc.md
+
+Le document avoiding_common_atacks.md qui éxplique quelles mesures ont été prises pour éviter les failles de sécurité:
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/avoiding_common_attacks.md
+
+le document design_pattern_desicions.md qui éxplique les modèles de conception choisis et la raison du choix:
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/design_patern_desicions.md
