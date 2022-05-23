@@ -20,7 +20,7 @@ const App = () => {
   const [nftBalance, setNftBalance] = useState();
   const [inputError, setInputError] = useState();
   const [isMinted, setIsMinted] = useState();
-  const [infoMinted, setInfoMinted] = useState();
+  const [infoMinted, setInfoMinted] = useState([]);
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
   const [nftWallet, setNftWallet] = useState([]);
@@ -70,73 +70,55 @@ const App = () => {
   };
 
   //Load the wallet of the user
-  const loadWalletNFT = (contract) => {
+  const loadWalletNFT = async (contract) => {
+    await getNFTIndex(contract, userAddress);
     nftBalanceIndex.forEach(async (n, i) => {
-      try {
-        let url = await contract.methods.tokenURI(n).call();
-        url = url.slice(7, url.length);
-        await fetch("https://ipfs.io/ipfs/" + url)
-          .then((res) => res.json())
-          .then((data) => {
-            let temps2 = data;
-            temps2.image = data.image.replace(
-              "ipfs://",
-              "https://ipfs.io/ipfs/"
-            );
-            nftWallet.push(temps2);
-            // setNftWallet([...nftWallet, temps2]);
-            miseAJour();
-          });
-      } catch (err) {
-        console.log(nftBalanceIndex);
-        nftBalanceIndex.forEach(async (n, i) => {
-          let temp = { image: "", attributes: "" };
-          temp.image = "../img/error.png";
-          nftWallet.push(temp);
-        });
-      }
+      let url = await contract.methods.tokenURI(n).call();
+      nftWallet.push(await fetchData(url));
+      miseAJour();
     });
+    console.log(nftWallet);
     if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
   };
 
-  //Load nft by their index
-  const loadImagesByIndex = async (index, length) => {
-    let temp = [];
-    if (length > 1) {
-      try {
-        temp = await loadMultiNFT(index);
-      } catch (err) {
-        console.log(err);
+  const loadMint = async (number, index) => {
+    console.log(number, index);
+    let data = [];
+    if (number > 1) {
+      setMultiMint(true);
+      for (let i = 0; i < number; i++) {
+        let url = await contract.methods.tokenURI(index[i]).call();
+        data.push(await fetchData(url));
       }
-      return temp;
+      setNftInfos(data);
     } else {
+      setMultiMint(false);
       let url = await contract.methods.tokenURI(index[0]).call();
-      url = url.slice(7, url.length);
-      await fetch("https://ipfs.io/ipfs/" + url)
-        .then((res) => res.json())
-        .then((data) => {
-          temp = data;
-          temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
-        });
-      return temp;
+      setNftInfos(await fetchData(url));
     }
   };
 
-  //If there more than 1 nft to load
-  const loadMultiNFT = async (index) => {
-    let temp = [];
-    await index.forEach(async (n) => {
-      let url = await contract.methods.tokenURI(n).call();
-      url = url.slice(7, url.length);
-      await fetch("https://ipfs.io/ipfs/" + url)
-        .then((res) => res.json())
-        .then((data) => {
-          let temp2 = data;
-          temp2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
-          temp.push(temp2);
-        });
-    });
+  const fetchData = async (url) => {
+    let temp;
+    url = url.slice(7, url.length);
+    await fetch("https://ipfs.io/ipfs/" + url)
+      .then((res) => res.json())
+      .then((data) => {
+        temp = data;
+        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+      });
     return temp;
+  };
+
+  const getNFTIndex = async (contract, accounts) => {
+    const totalSupply = await contract.methods.totalSupply().call();
+    for (let i = 1; i <= totalSupply; i++) {
+      if ((await contract.methods.ownerOf(i).call()) == accounts) {
+        if (!nftBalanceIndex.includes(i)) {
+          nftBalanceIndex.push(i);
+        }
+      }
+    }
   };
 
   const mintFonction = async () => {
@@ -154,13 +136,14 @@ const App = () => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
-          if (index.length == 1) {
-            setMultiMint(false);
-            getImage(index[0]);
-          } else {
-            setMultiMint(true);
-            setNftInfos(await loadImagesByIndex(index, index.length));
-          }
+          // if (index.length == 1) {
+          //   setMultiMint(false);
+          //   getImage(index[0]);
+          // } else {
+          //   setMultiMint(true);
+          //   setNftInfos(await loadImagesByIndex(index, index.length));
+          // }
+          await loadMint(inputValue, index);
 
           setInputError(false);
           setIsMinted(true);
@@ -169,38 +152,6 @@ const App = () => {
           updateBalance();
           loadWalletNFT(contract);
         });
-  };
-
-  const getNFTIndex = async (contract, accounts) => {
-    const totalSupply = await contract.methods.totalSupply().call();
-    for (let i = 1; i <= totalSupply; i++) {
-      if ((await contract.methods.ownerOf(i).call()) == accounts) {
-        if (!nftBalanceIndex.includes(i)) {
-          nftBalanceIndex.push(i);
-        }
-      }
-    }
-  };
-
-  const getImage = async (token_id) => {
-    let url = await contract.methods.tokenURI(token_id).call();
-    url = url.slice(7, url.length);
-    await fetch("https://ipfs.io/ipfs/" + url)
-      .then((res) => {
-        console.log(res);
-        res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        let temps2 = data;
-        temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
-        setInfoMinted(temps2);
-      })
-      .catch((err) => {
-        let temp = { image: "" };
-        temp.image = "../img/error.png";
-        setInfoMinted(temp);
-      });
   };
 
   const updateNFTBalance = async () => {
@@ -213,6 +164,7 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
     setBalance(Balance / 10 ** 18);
   };
+
   const handleScroll = (e) => {
     const navbar = document.querySelector(".navbar_components");
     if (window.scrollY > 400) {
@@ -234,8 +186,6 @@ const App = () => {
     <>
       <div className="home">
         <Navbar userAddress={userAddress} />
-        {/* <Navbar userAddress={userAddress} /> */}
-        {/* <Description /> */}
         <Home />
         <div className="trait"></div>
         <div className="mint_component">
@@ -248,11 +198,11 @@ const App = () => {
               <div className="image_mint">
                 {!multiMint ? (
                   <>
-                    <img src={infoMinted && infoMinted.image} />
+                    <img src={nftInfos && nftInfos.image} />
                     Attributes :
                     <ul className="showAttributes">
-                      {infoMinted &&
-                        infoMinted.attributes.map((n, i) => (
+                      {nftInfos &&
+                        nftInfos.attributes.map((n, i) => (
                           <li key={i}>
                             <p>
                               {n.trait_type} : {n.value}
