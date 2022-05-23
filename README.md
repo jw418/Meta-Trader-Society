@@ -70,6 +70,21 @@ Pour voir le front en local:
 ```
 Sinon directement sur: https://mtsalyra.herokuapp.com/
 
+#### Importer dans metamask
+
+Rendez-vous sur votre compte metamask et cilquez sur "importer des jetons".
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/CaptureMetamask.PNG.png)
+
+Renseignez L'addresse du contrat(ROPSTEN Testnet) et mettre 0 pour "Token Decimal".
+```sh
+0x438505946e9F4b1dFE7Bd83cf353b5B5505651F3
+```
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/addToken.PNG)
+
+Voila, vous pouvez visualiser le nombre de NFT que vous possédez.
+ ![](https://github.com/jw418/Meta-Trader-Society/blob/main/ratToken.PNG)
+
+
 ### Tests :test_tube:
 
 Vous pouvez exécuter les scripts de tests de nos smart contracts:
