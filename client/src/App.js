@@ -91,7 +91,6 @@ const App = () => {
         console.log(err);
       }
     });
-    console.log(nftBalanceIndex.length + nftWallet.length);
     if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
   };
 
@@ -178,7 +177,10 @@ const App = () => {
     let url = await contract.methods.tokenURI(token_id).call();
     url = url.slice(7, url.length);
     await fetch("https://ipfs.io/ipfs/" + url)
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        res.json();
+      })
       .then((data) => {
         let temp = data;
         temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");

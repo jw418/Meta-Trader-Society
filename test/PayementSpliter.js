@@ -14,7 +14,7 @@ contract("PayementSpliter", async (accounts) => {
 
   const amount = ether("1");
 
-  context("deployed ", () => {
+  context("###### Only Teams ######", () => {
     beforeEach(async () => {
       this.payees = [payee1, payee2, payee3];
       this.share = [45, 45, 10];
