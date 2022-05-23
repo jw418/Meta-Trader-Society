@@ -103,7 +103,11 @@ const App = () => {
   const loadImagesByIndex = async (index, length) => {
     let temp = [];
     if (length > 1) {
-      temp = await loadMultiNFT(index);
+      try {
+        temp = await loadMultiNFT(index);
+      } catch (err) {
+        console.log(err);
+      }
       return temp;
     } else {
       let url = await contract.methods.tokenURI(index[0]).call();
