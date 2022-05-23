@@ -28,12 +28,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
  * @notice This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
  */
 
-// import "@openzeppelin/contracts/access/Ownable.sol";
-
-contract PaymentSplitter is
-    Context
-    // Ownable
-{
+contract PaymentSplitter is Context {
     event PayeeAdded(address account, uint256 shares);
     event PaymentReleased(address to, uint256 amount);
     event ERC20PaymentReleased(
@@ -125,21 +120,6 @@ contract PaymentSplitter is
     /// @return amount of shares held by an account
     function shares(address account) public view returns (uint256) {
         return _shares[account];
-    }
-
-    // Function ajouté a revoir
-    function resetPayee(address[] memory _newPayee, uint256[] memory _newShare)
-        public
-    // onlyOwner
-    {
-        for (uint256 i = 0; i < _payees.length; i++) {
-            isTeam[_payees[i]] = false;
-        }
-        delete _payees;
-        for (uint256 i = 0; i < _newPayee.length; i++) {
-            isTeam[_newPayee[i]] = true;
-            _addPayee(_newPayee[i], _newShare[i]);
-        }
     }
 
     /**
