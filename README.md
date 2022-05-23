@@ -16,7 +16,6 @@ Libérez-vous de la Rat Race! Minter un Rat!! En plus de l'œuvre désigner par 
 Pour plus d'info consultez notre site web : https://mtsalyra.herokuapp.com/
 
 ## Livrables Certification :file_folder:
-# Livrables Certification :file_folder:
 
 Le README du Smart Contract RatRaceNFT.sol :
 https://github.com/jw418/Meta-Trader-Society/blob/main/docs/RatRaceNFTDoc.md
