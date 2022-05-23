@@ -94,32 +94,31 @@ Returns:
 
 ###### baseExtension
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*Extension de l'uri\*\***
 set the extension of the metadata
 
 No parameters
 
 Returns:
 
-| Name | Type   | Description |
-| ---- | ------ | ----------- |
-|      | string |             |
+| name         | Type   | Description          |
+|--------------|--------|----------------------|
+| baseExtensio | string | extension of our URI |
 
 ---
 
 ###### baseURI
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*baseUri empty string\*\***
 stock metadata of the collection
 
 No parameters
 
 Returns:
 
-| Name | Type   | Description |
-| ---- | ------ | ----------- |
-|      | string |             |
-
+| name    | Type   | Description     |
+|---------|--------|-----------------|
+| baseURI | string | base of our URI |
 ---
 
 ###### changeMaxMintAllowed
@@ -185,7 +184,7 @@ Returns:
 
 ###### isTeam
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*Team address array\*\***
 Verify if a address is a part of the team
 
 | Name | Type    | Description |
