@@ -187,7 +187,11 @@ const App = () => {
         temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
         setInfoMinted(temps2);
       })
-      .catch((err) => setInfoMinted("../img/error.png"));
+      .catch((err) => {
+        let temp;
+        temp.image = "../img/error.png";
+        setInfoMinted("../img/error.png");
+      });
   };
 
   const updateNFTBalance = async () => {
