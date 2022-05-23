@@ -7,7 +7,7 @@ Le README du Smart Contract PayementSpliter.sol :
 https://github.com/jw418/Meta-Trader-Society/blob/main/docs/PayementSplitterDoc.md
 
 Le README du Smart Contract TestTxOrigin.sol :
-https://github.com/jw418/Meta-Trader-Society/blob/main/docs/TestTxOrigin.md
+https://github.com/jw418/Meta-Trader-Society/blob/main/docs/TestTxOriginDoc.md
 
 Le document avoiding_common_atacks.md qui éxplique quelles mesures ont été prises pour éviter les failles de sécurité:
 https://github.com/jw418/Meta-Trader-Society/blob/main/docs/avoiding_common_attacks.md
