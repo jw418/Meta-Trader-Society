@@ -5,9 +5,8 @@ import DisplayNFT from "./components/DisplayNFT";
 import DisplayMint from "./components/DisplayMint";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
-import Description from "./components/Description"
-import Navbar
- from "./components/Nav";
+import Description from "./components/Description";
+import Navbar from "./components/Nav";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -24,6 +23,7 @@ const App = () => {
   const [infoMinted, setInfoMinted] = useState();
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
+  const [nftWallet, setNftWallet] = useState([]);
   const [mintStatus, setMintStatus] = useState(true);
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
@@ -47,7 +47,9 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
 
     //Set to all the state
-    setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
+    setNftBalance(
+      await contract.methods.balanceOfNftMinted(accounts[0]).call()
+    );
     setBalance(Balance / 10 ** 18);
     setContract(contract);
     setMintPrice(await contract.methods.priceSale().call());
@@ -55,17 +57,17 @@ const App = () => {
     setAccouts(accounts);
     mintState(contract);
     await setUserAddress(accounts[0]);
-    await getNFTBalance(contract, accounts[0]);
+    await getNFTIndex(contract, accounts[0]);
     setNetwordId(networkId);
     loadWalletNFT(contract);
   };
 
   const mintState = async (contract) => {
-    let status = await contract.methods.StateMint().call()
-    if(status == 0) setMintStatus("paused")
-    if(status == 1) setMintStatus("pre mint")
-    if(status == 2) setMintStatus("mint open")
-  }
+    let status = await contract.methods.StateMint().call();
+    if (status == 0) setMintStatus("paused");
+    if (status == 1) setMintStatus("pre mint");
+    if (status == 2) setMintStatus("mint open");
+  };
 
   //Load the wallet of the user
   const loadWalletNFT = (contract) => {
@@ -81,13 +83,16 @@ const App = () => {
               "ipfs://",
               "https://ipfs.io/ipfs/"
             );
-            nftInfos.push(temps2);
+            nftWallet.push(temps2);
+            // setNftWallet([...nftWallet, temps2]);
             miseAJour();
           });
       } catch (err) {
         console.log(err);
       }
     });
+    console.log(nftBalanceIndex.length + nftWallet.length);
+    if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
   };
 
   //Load nft by their index
@@ -141,21 +146,24 @@ const App = () => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
-          if (index.length == 1) getImage(index[0]);
-          else {
+          if (index.length == 1) {
+            setMultiMint(false);
+            getImage(index[0]);
+          } else {
             setMultiMint(true);
             setNftInfos(await loadImagesByIndex(index, index.length));
           }
 
           setInputError(false);
           setIsMinted(true);
+          await getNFTIndex(contract, accounts[0]);
           updateNFTBalance();
           updateBalance();
-          // loadWalletNFT(contract);
+          loadWalletNFT(contract);
         });
   };
 
-  const getNFTBalance = async (contract, accounts) => {
+  const getNFTIndex = async (contract, accounts) => {
     const totalSupply = await contract.methods.totalSupply().call();
     for (let i = 1; i <= totalSupply; i++) {
       if ((await contract.methods.ownerOf(i).call()) == accounts) {
@@ -179,7 +187,9 @@ const App = () => {
   };
 
   const updateNFTBalance = async () => {
-    setNftBalance(await contract.methods.balanceOfNftMinted(accounts[0]).call());
+    setNftBalance(
+      await contract.methods.balanceOfNftMinted(accounts[0]).call()
+    );
   };
 
   const updateBalance = async () => {
@@ -199,10 +209,14 @@ const App = () => {
     window.addEventListener("scroll", handleScroll);
   }, []);
 
+  const mintOpen = async () => {
+    await contract.methods.setMintOpen().send({ from: accounts[0] });
+  };
+
   return (
     <>
       <div className="home">
-        <Navbar userAddress={userAddress}/>
+        <Navbar userAddress={userAddress} />
         {/* <Navbar userAddress={userAddress} /> */}
         {/* <Description /> */}
         <Home />
@@ -233,7 +247,7 @@ const App = () => {
                 ) : (
                   <button
                     onClick={() => setShowMultiMint(true)}
-                    style={{ margin: "auto" }}
+                    style={{ margin: "auto", padding: "2px" }}
                   >
                     Display Mint
                   </button>
@@ -243,9 +257,7 @@ const App = () => {
             <div className="text_mint" style={isMinted && { width: "150%" }}>
               {mintStatus == "mint open" ? (
                 <div className="mint_display">
-                  <p style={{margin:"auto"}}>
-                  Status : {mintStatus}
-                    </p>
+                  <p style={{ margin: "auto" }}>Status : {mintStatus}</p>
                   <div className="input_display">
                     <div className="input_title">
                       <p>Number of tokens</p>
@@ -287,16 +299,15 @@ const App = () => {
                   </button>
                 </div>
               ) : (
-                "mint closed"
+                <h3 style={{ margin: "auto" }}>Mint Closed</h3>
               )}
             </div>
-            
           </div>
         </div>
       </div>
-
-      {nftBalance >= 1 && <DisplayNFT nftInfos={nftInfos} />}
+      {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
       <Footer />
+      <button onClick={mintOpen}>mint Open</button>
     </>
   );
 };

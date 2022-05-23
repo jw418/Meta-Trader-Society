@@ -145,13 +145,13 @@
             outline: none;
             padding: 19px 26px;
             pointer-events: auto;
-            position: absolute;
+            // position: absolute;
+            position: relative;
             text-align: center;
             width: 250px;
             height: 50px;
-            left: 40%;
-            bottom: 0;
-            margin-bottom: 10%;
+            margin: auto;
+            // margin-top: 75px;
             // transform: translateX(-50px);
             z-index: 0;
           }
@@ -202,12 +202,7 @@
           }
 
           .mint_button:active:not(:disabled):after {
-            background-image: linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.2),
-                rgba(0, 0, 0, 0.2)
-              ),
-              linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+            background: linear-gradient(90deg, rgba(235,235,236,0.7175245098039216) 0%, rgb(163, 163, 163) 100%);;
             bottom: 4px;
             left: 4px;
             right: 4px;

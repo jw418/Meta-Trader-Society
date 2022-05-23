@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Nav";
 import { gsap, TimelineMax } from "gsap";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 let i = 1;
 const Home = () => {
@@ -34,11 +33,14 @@ const Home = () => {
       if (i == 4) i = 0;
       const thisImage = document.querySelector("#slider");
       const thisText = document.querySelector("#sliderText");
-      var tl = new TimelineMax();
-      // setTimeout(() => {
+      let tl = new TimelineMax();
+      let tl2 = gsap.timeline({ paused: true });
+      //   setTimeout(() => {
+      tl.from(thisImage, 0.3, { scaleY: 0, transformOrigin: "bottom" });
       tl.from(thisText, 1, { scaleX: 0, transformOrigin: "left" });
-      gsap.from(thisImage, { duration: 2, ease: "expo.out", y: 200 });
-      // },100)
+
+      //   gsap.from(thisImage, { duration: 2, ease: "expo.out", y: 200 });
+      //   }, 100);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -46,7 +48,6 @@ const Home = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <div className="home_comonent">
         <div className="right_part">
           <img id="slider" src={images ? images : "../img/1.png"} />
