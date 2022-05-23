@@ -94,7 +94,7 @@ Returns:
 
 ###### baseExtension
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*Extension de l'uri\*\***
 set the extension of the metadata
 
 No parameters
@@ -109,7 +109,7 @@ Returns:
 
 ###### baseURI
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*baseUri empty strin\*\***
 stock metadata of the collection
 
 No parameters
