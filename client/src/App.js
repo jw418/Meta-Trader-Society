@@ -71,7 +71,7 @@ const App = () => {
 
   //Load the wallet of the user
   const loadWalletNFT = (contract) => {
-    nftBalanceIndex.forEach(async (n) => {
+    nftBalanceIndex.forEach(async (n, i) => {
       try {
         let url = await contract.methods.tokenURI(n).call();
         url = url.slice(7, url.length);
@@ -88,7 +88,7 @@ const App = () => {
             miseAJour();
           });
       } catch (err) {
-        console.log(err);
+        nftWallet[i].image = "../img/error.png";
       }
     });
     if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
@@ -187,7 +187,7 @@ const App = () => {
         temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
         setInfoMinted(temps2);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setImages("../img/error.png"));
   };
 
   const updateNFTBalance = async () => {
