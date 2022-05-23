@@ -182,10 +182,12 @@ const App = () => {
         res.json();
       })
       .then((data) => {
-        let temp = data;
-        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
-        setInfoMinted(temp);
-      });
+        console.log(data);
+        let temps2 = data;
+        temps2.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+        setInfoMinted(temps2);
+      })
+      .catch((err) => console.log(err));
   };
 
   const updateNFTBalance = async () => {
