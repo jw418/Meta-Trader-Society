@@ -88,8 +88,12 @@ const App = () => {
             miseAJour();
           });
       } catch (err) {
-        let temp = { image: "" };
-        nftWallet[i].image = "../img/error.png";
+        console.log(nftBalanceIndex);
+        nftBalanceIndex.forEach(async (n, i) => {
+          let temp = { image: "", attributes: "" };
+          temp.image = "../img/error.png";
+          nftWallet.push(temp);
+        });
       }
     });
     if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
@@ -191,7 +195,7 @@ const App = () => {
       .catch((err) => {
         let temp = { image: "" };
         temp.image = "../img/error.png";
-        setInfoMinted("../img/error.png");
+        setInfoMinted(temp);
       });
   };
 
