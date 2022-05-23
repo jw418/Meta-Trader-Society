@@ -9,13 +9,12 @@ const DisplayNFT = ({ nftInfos }) => {
         {nftInfos &&
           nftInfos.map((n, i) => (
             <ul key={i}>
-              {!imagesLoaded && <img src="../img/load.gif" />}
               <img
                 className="wallet_images"
-                src={n.image}
+                src={imagesLoaded ? n.image : "../img/load.gif"}
                 onLoad={() => setImagesLoaded(true)}
               />
-                  <h3>Name : {n.name}</h3>
+              <h3>Name : {n.name}</h3>
               <ul className="showAttributes">
                 {n.attributes.map((n, i) => (
                   <li key={i}>
