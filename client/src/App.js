@@ -274,7 +274,7 @@ const App = () => {
       </div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
       <Footer />
-      <button onClick={mintOpen}>mint Open</button>
+      {/* <button onClick={mintOpen}>mint Open</button> */}
     </>
   );
 };
