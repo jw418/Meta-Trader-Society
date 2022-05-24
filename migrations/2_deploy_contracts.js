@@ -6,8 +6,8 @@ module.exports = function (deployer) {
     RatRaceNFT,
     "ipfs://QmZmSxYD77kYeFNi5FUB8qd6J6rUEZqieGATAbpigfqLqK/",
     [
-      "0xde28322100395F0aaFaAb232993cF9ef14334328",
-      "0x9A09c80fccede9b53b8125c36832e4e8354825b3",
+      "0x4BA1ed62756D0Cb2b2327349adC1E0088Aed513C",
+      "0x00e075882d414fc1eD737444c8Deef120221F906",
     ],
     [50, 50]
   );

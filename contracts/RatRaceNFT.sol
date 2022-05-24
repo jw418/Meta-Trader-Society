@@ -44,6 +44,8 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     mapping(address => uint256) public balanceOfNftMinted;
 
+    mapping(address => bool) public team;
+
     /// events
     event PriceChange(uint256 oldPrice, uint256 newPrice);
     event MaxMintAllowedChange(uint256 oldMax, uint256 newMax);
@@ -58,6 +60,9 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
         uint256[] memory _share
     ) ERC721("RatRace", "RAT") PaymentSplitter(_teams, _share) {
         baseURI = _newBaseURI;
+        for (uint256 index = 0; index < _teams.length; index++) {
+            team[_teams[index]] = true;
+        }
     }
 
     /// @notice turn state of the mint to premint and emit an event
