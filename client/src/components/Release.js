@@ -52,7 +52,7 @@ const Release = () => {
     let toRealse = (totalReleased * share) / totalShare - released;
     console.log(toRealse);
     setAmountRealesed(released / 10 ** 18);
-    setAmountToRealse(toRealse);
+    setAmountToRealse(toRealse / 10 ** 18);
     setContractBalance(contractBalance / 10 ** 18);
   };
 
@@ -61,19 +61,21 @@ const Release = () => {
       .release(userAddress)
       .send({ from: userAddress })
       .then(() => {
-        updateAmount(web3, contract, accounts[0]);
+        updateAmount(web3, contract, userAddress);
       });
   };
 
   return (
     <div className="release">
-      <h1>Release</h1>
+      <h1>Récuperer les fonds</h1>
       {isTeam ? (
-        <div>
+        <div className="release_container">
           <h3>Montant sur le contract : {contractBalance} ETH</h3>
           <h3>Vous avez déjà retiré : {amountRealesed} ETH</h3>
           <h3>Vous pouvez retirer : {amountToRealse} ETH</h3>
-          <button onClick={() => handleRelease()}>Récuperer</button>
+          {amountToRealse > 0 && (
+            <button onClick={() => handleRelease()}>Récuperer</button>
+          )}
         </div>
       ) : (
         <h3>Vous ne faites pas partie l'équipe</h3>
