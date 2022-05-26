@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const DisplayMint = ({ trigger, nftInfos }) => {
   const [imagesLoaded, setImagesLoaded] = useState();
 
   return (
-    <div className="display_mint">
+    <div className="display_mint" id="mint">
       <div className="inner_display_mint">
         <div className="title">
           <h3>Your Minting</h3>

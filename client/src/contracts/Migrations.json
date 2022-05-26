@@ -1276,12 +1276,12 @@
     "1337": {
       "events": {},
       "links": {},
-      "address": "0xbB7f8457C54c7cd36B9daa4466B0fFdE3C190781",
-      "transactionHash": "0x29f46ba0678225b6e2cd3645877ae458b6c015e8413a6163927a5a376034b62d"
+      "address": "0x00CF92825e7C6dF6300e9716D6e09CEf38B7F67E",
+      "transactionHash": "0x533c2471032855ed175e4df3d68384ae923238e63c66fee487b0b8f01a68d27f"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-05-25T15:15:31.742Z",
+  "updatedAt": "2022-05-26T12:31:21.480Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

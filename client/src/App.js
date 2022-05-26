@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Description from "./components/Description";
 import Navbar from "./components/Nav";
+import { scroller } from "react-scroll/modules";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -20,13 +21,13 @@ const App = () => {
   const [nftBalance, setNftBalance] = useState();
   const [inputError, setInputError] = useState();
   const [isMinted, setIsMinted] = useState();
-  const [infoMinted, setInfoMinted] = useState([]);
   const [nftBalanceIndex, setNftBalanceIndex] = useState([]);
   const [nftInfos, setNftInfos] = useState([]);
   const [nftWallet, setNftWallet] = useState([]);
   const [mintStatus, setMintStatus] = useState(true);
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
+  const [isOwner, setIsOwner] = useState(false);
   const [, fctMiseAJour] = useState({});
   const miseAJour = useCallback(() => fctMiseAJour({}), []);
 
@@ -46,9 +47,13 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
+    if (await contract.methods.owner().call()) {
+      setIsOwner(true);
+    }
     //Set to all the state
     setNftBalance(
-      await contract.methods.balanceOfNftMinted(accounts[0]).call()
+      (await contract.methods.balanceOfNftMinted(accounts[0]).call()) ==
+        accounts[0]
     );
     setBalance(Balance / 10 ** 18);
     setContract(contract);
@@ -71,18 +76,21 @@ const App = () => {
 
   //Load the wallet of the user
   const loadWalletNFT = async (contract) => {
+    if (nftBalanceIndex.length + nftWallet.length >= 3) {
+      for (let index = 0; index < nftWallet.length; index++) {
+        nftWallet.splice(index, 1);
+      }
+    }
     await getNFTIndex(contract, userAddress);
     nftBalanceIndex.forEach(async (n, i) => {
       let url = await contract.methods.tokenURI(n).call();
       nftWallet.push(await fetchData(url));
       miseAJour();
     });
-    console.log(nftWallet);
     if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
   };
 
   const loadMint = async (number, index) => {
-    console.log(number, index);
     let data = [];
     if (number > 1) {
       setMultiMint(true);
@@ -136,15 +144,8 @@ const App = () => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
-          // if (index.length == 1) {
-          //   setMultiMint(false);
-          //   getImage(index[0]);
-          // } else {
-          //   setMultiMint(true);
-          //   setNftInfos(await loadImagesByIndex(index, index.length));
-          // }
-          await loadMint(inputValue, index);
 
+          await loadMint(inputValue, index);
           setInputError(false);
           setIsMinted(true);
           await getNFTIndex(contract, accounts[0]);
@@ -274,7 +275,7 @@ const App = () => {
       </div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
       <Footer />
-      <button onClick={mintOpen}>mint Open</button>
+      {isOwner && <button onClick={mintOpen}>mint Open</button>}
     </>
   );
 };

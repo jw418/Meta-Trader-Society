@@ -62,7 +62,10 @@ const Home = () => {
                 <a className="un">Twitter</a>
               </div>
             </a>
-            <a href="https://opensea.io/" target={"_blank"}>
+            <a
+              href="https://testnets.opensea.io/collection/ratrace"
+              target={"_blank"}
+            >
               <div className="navbar_list">
                 <a className="un">Open Sea</a>
               </div>
