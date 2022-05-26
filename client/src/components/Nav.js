@@ -8,13 +8,16 @@ const Navbar = ({ userAddress }) => {
       </a>
       <ul className="navbar">
         <span className="un">
-          <a>Meta Trader Society </a>
+          <a href="#home">Meta Trader Society </a>
         </span>
         <span className="un">
-          <a>Roadmap </a>
+          <a href="#mint">Mint</a>
         </span>
         <span className="un">
-          <a>Team</a>
+          <a href="#roadmap">Roadmap </a>
+        </span>
+        <span className="un">
+          <a href="#team">Team</a>
         </span>
         <span className="un">
           <a>NFT Wallet</a>

@@ -35,6 +35,7 @@
   .mint_component {
     height: 100vh;
     display: flex;
+    background-color: rgba(0, 0, 0, 0.8);
     .mint_interface {
       position: relative;
       display: flex;
@@ -224,6 +225,8 @@
   height: 1px;
   background-color: #886fbf;
 }
+
+
 
 //Reponsive
 

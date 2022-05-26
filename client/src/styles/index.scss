@@ -23,6 +23,7 @@ body::-webkit-scrollbar {
   width: 12px; /* width of the entire scrollbar */
 }
 
+
 body::-webkit-scrollbar-track {
   background: black; /* color of the tracking area */
 }
@@ -42,6 +43,8 @@ body::-webkit-scrollbar-thumb {
 @import "./components/displayMint";
 @import "./components/footer";
 @import "./components/home";
+@import "./components/team";
+@import "./components/roadmap";
 @import "./components/release";
 
 

@@ -74,7 +74,7 @@ const Home = () => {
           <div className="text_description">
             <h3>Rat Race NFT</h3>
             <p>
-              Le ticket d'entrée au HedgeFund Étant réservé aux plus fortunés a
+            Le ticket d'entrée au Hedge Fund étant réservé aux plus fortunés a
               ce jour, Meta Trader Society(MTS) a pour but d'en démocratiser
               l’accès via la création d'un hedge fund collaboratif (DAO), où les
               trade seront effectuer par bot de trading, crée grâce à
@@ -83,11 +83,10 @@ const Home = () => {
               allons créer trois séries de NFT. Ceci est le page web de notre
               Première série Libérez vous de la Rat Race! Minter un Rat!!
             </p>
-
             <p>
-              En plus de l'oeuvre designer par (Nom de l'auteur), cette première
+              En plus de l'oeuvre désigner par (Nom de l'auteur), cette première
               série vous donnera des avantages pour les étapes suivantes de
-              notre roadmap mais également accés a un bot de trading (insérer
+              notre roadmap mais également accès à un bot de trading (insérer
               les specs du bot ici(AI,MT4, etc..)).
             </p>
           </div>

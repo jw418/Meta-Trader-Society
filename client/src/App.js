@@ -6,6 +6,8 @@ import DisplayMint from "./components/DisplayMint";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Description from "./components/Description";
+import Team from "./components/Team";
+import Roadmap from "./components/Roadmap";
 import Navbar from "./components/Nav";
 
 const App = () => {
@@ -188,7 +190,7 @@ const App = () => {
         <Navbar userAddress={userAddress} />
         <Home />
         <div className="trait"></div>
-        <div className="mint_component">
+        <div className="mint_component" id="mint">
           <div className="mint_interface">
             {showMultiMint && (
               <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
@@ -273,7 +275,13 @@ const App = () => {
         </div>
       </div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
-      <Footer />
+      <section id="roadmap">
+        <Roadmap />
+      </section>
+      <section id="team">
+        <Team />
+      </section>      
+      <Footer />      
       <button onClick={mintOpen}>mint Open</button>
     </>
   );
