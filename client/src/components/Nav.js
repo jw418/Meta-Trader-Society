@@ -1,6 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import getWeb3 from "../getWeb3";
 
-const Navbar = ({ userAddress }) => {
+const Navbar = () => {
+  const [userAddress, setUserAddress] = useState();
+  const [chainId, setChainId] = useState(null);
+  const [network, setNetwork] = useState();
+
+  const NETWORKS = {
+    1: "Ethereum Main Network",
+    3: "Ropsten Test Network",
+    4: "Rinkeby Test Network",
+    5: "Goerli Test Network",
+    42: "Kovan Test Network",
+    1337: "Ganache",
+  };
+
+  useEffect(async () => {
+    await loadData();
+  });
+
+  const loadData = async () => {
+    const web3 = await getWeb3();
+    const chainId = await web3.eth.getChainId();
+    setUserAddress(window.ethereum.selectedAddress);
+    await setChainId(chainId);
+    setNetwork(getCurrentNetwork(chainId));
+  };
+
+  const disconnect = async () => {
+    await window.ethereum.request({
+      method: "eth_requestAccounts",
+      params: [{ eth_accounts: {} }],
+    });
+  };
+
+  const getCurrentNetwork = (chainId) => {
+    console.log(chainId);
+    return NETWORKS[chainId];
+  };
+
   return (
     <div className="navbar_components">
       <a>
@@ -8,13 +46,16 @@ const Navbar = ({ userAddress }) => {
       </a>
       <ul className="navbar">
         <span className="un">
-          <a>Meta Trader Society </a>
+          <a href="#home">Meta Trader Society </a>
         </span>
         <span className="un">
-          <a>Roadmap </a>
+          <a href="#mint">Mint</a>
         </span>
         <span className="un">
-          <a>Team</a>
+          <a href="#roadmap">Roadmap </a>
+        </span>
+        <span className="un">
+          <a href="#team">Team</a>
         </span>
         <span className="un">
           <a>NFT Wallet</a>
@@ -22,7 +63,7 @@ const Navbar = ({ userAddress }) => {
       </ul>
 
       <div className="logos">
-        <div className="metamask_input">
+        <div className="metamask_input" onClick={disconnect}>
           <img id="metamask" src="../img/metamask_icon.png" />
           <p>
             {userAddress != undefined
@@ -33,17 +74,7 @@ const Navbar = ({ userAddress }) => {
               : "Connect"}
           </p>
         </div>
-        {/* <div className="logo_contain">
-          <a href="https://discord.com/" target="_blank">
-            <img id="logo" src="../img/discord_logo.png" />
-          </a>
-          <a href="https://opensea.io/" target="_blank">
-            <img id="logo" src="../img/open_sea3.png" />
-          </a>
-          <a href="https://twitter.com/" target="_blank">
-            <img id="logo" src="../img/twitter_logo.png" />
-          </a>
-        </div> */}
+        <p style={{ margin: "auto", color: "white" }}>Chain : {network}</p>
       </div>
     </div>
   );

@@ -7,7 +7,12 @@ const Footer = () => {
         <ul>
           <li>
             <span className="un">
-              <a>WhitePaper</a>
+              <a
+                href="https://docs.google.com/document/d/1OyeZUfrOKAdhtV6nqrwvWel56u87sQB5/edit?usp=sharing&ouid=117391921727074288315&rtpof=true&sd=true"
+                target={"_blank"}
+              >
+                WhitePaper
+              </a>
             </span>
           </li>
         </ul>

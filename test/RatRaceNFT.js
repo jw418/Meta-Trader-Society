@@ -28,16 +28,6 @@ contract(`RatRaceNFT`, function (accounts) {
     });
   });
 
-  //--a faire
-  // modifier le sc pour passer en gwei et modifier les test en conséquence (https://eth-converter.com/)
-  // tester les nouveaux require
-  // tester les fonctions de StateMint V
-  // tester les changemetns d'états
-  // decider de la solutions pour l'index
-  // tester les events V
-  // tester gift fonction (en partie)
-  // faire une capture avec tous les test qui passent et ajouté a expication test
-
   context(`###### variable test ######`, () => {
     it(`${testCounter++}: max_supply must be equal to 3333`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.max_supply();

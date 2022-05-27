@@ -6,6 +6,8 @@ import DisplayMint from "./components/DisplayMint";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Description from "./components/Description";
+import Team from "./components/Team";
+import Roadmap from "./components/Roadmap";
 import Navbar from "./components/Nav";
 import { scroller } from "react-scroll/modules";
 
@@ -47,9 +49,6 @@ const App = () => {
     );
     const Balance = await web3.eth.getBalance(accounts[0]);
 
-    if (await contract.methods.owner().call()) {
-      setIsOwner(true);
-    }
     //Set to all the state
     setNftBalance(
       (await contract.methods.balanceOfNftMinted(accounts[0]).call()) ==
@@ -166,22 +165,18 @@ const App = () => {
     setBalance(Balance / 10 ** 18);
   };
 
-  const handleScroll = (e) => {
-    const navbar = document.querySelector(".navbar_components");
-    if (window.scrollY > 400) {
-      navbar.style.top = "-150px";
-    } else {
-      navbar.style.top = "0";
-    }
-  };
+  // const handleScroll = (e) => {
+  //   const navbar = document.querySelector(".navbar_components");
+  //   if (window.scrollY > 400) {
+  //     navbar.style.top = "-150px";
+  //   } else {
+  //     navbar.style.top = "0";
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
-
-  const mintOpen = async () => {
-    await contract.methods.setMintOpen().send({ from: accounts[0] });
-  };
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <>
@@ -189,7 +184,7 @@ const App = () => {
         <Navbar userAddress={userAddress} />
         <Home />
         <div className="trait"></div>
-        <div className="mint_component">
+        <div className="mint_component" id="mint">
           <div className="mint_interface">
             {showMultiMint && (
               <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
@@ -255,7 +250,7 @@ const App = () => {
                         Mint price : {mintPrice && mintPrice / 10 ** 18} ETH
                       </p>
                       <p id="nft_balance">
-                        NFT balance : {nftBalance && nftBalance}
+                        NFT balance : {nftBalance ? nftBalance : "0"}
                       </p>
                     </div>
                   </div>
@@ -274,8 +269,16 @@ const App = () => {
         </div>
       </div>
       {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
+      <div className="trait"></div>
+      <section id="roadmap">
+        <Roadmap />
+      </section>
+      <div className="trait"></div>
+
+      <section id="team">
+        <Team />
+      </section>
       <Footer />
-      {isOwner && <button onClick={mintOpen}>mint Open</button>}
     </>
   );
 };
