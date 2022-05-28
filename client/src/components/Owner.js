@@ -29,8 +29,8 @@ const Owner = () => {
 
     if (await contract.methods.owner().call()) setIsOwner(true);
     await setWeb3(web3);
-    await setUserAddress(accounts[0]);
-    await setAccouts(accounts[0]);
+    await setUserAddress(accounts);
+    await setAccouts(accounts);
     setContract(contract);
     setDeployedNetwork(deployedNetwork);
     getState(contract);
@@ -38,29 +38,32 @@ const Owner = () => {
 
   const getState = async (contract) => {
     let status = await contract.methods.StateMint().call();
-    if (status == 0) setMintStatus("paused");
-    if (status == 1) setMintStatus("pre mint");
-    if (status == 2) setMintStatus("mint open");
+    if (status == 0) setMintStatus("Paused");
+    if (status == 1) setMintStatus("Pre mint");
+    if (status == 2) setMintStatus("Mint open");
   };
 
   const mintOpen = async () => {
     await contract.methods.setMintOpen().send({ from: accounts[0] });
+    getState(contract);
   };
 
   const preMint = async () => {
     await contract.methods.setMintOpen().send({ from: accounts[0] });
+    getState(contract);
   };
 
   const paused = async () => {
     await contract.methods.setMintPaused().send({ from: accounts[0] });
+    getState(contract);
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       {isOwner ? (
         <div>
           <h3>Etat actuel : {mintStatus}</h3>
-          {mintStatus == "paused" && (
+          {mintStatus == "Paused" && (
             <>
               <h3>Passer à premint :</h3>
               <button onClick={preMint}>Premint</button>
@@ -69,7 +72,7 @@ const Owner = () => {
               <button onClick={mintOpen}>Mint Open</button>
             </>
           )}
-          {mintStatus == "mint open" && (
+          {mintStatus == "Mint open" && (
             <>
               <h3>Mettre en pause le contract</h3>
               <button onClick={paused}>Pause</button>

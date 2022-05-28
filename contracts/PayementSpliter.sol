@@ -27,7 +27,6 @@ import "@openzeppelin/contracts/utils/Context.sol";
  *
  * @notice This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have added a modifier isTeam
  */
-
 contract PaymentSplitter is Context {
     event PayeeAdded(address account, uint256 shares);
     event PaymentReleased(address to, uint256 amount);
@@ -46,6 +45,7 @@ contract PaymentSplitter is Context {
     mapping(address => bool) public isTeam;
 
     address[] private _payees;
+
     mapping(IERC20 => uint256) private _erc20TotalReleased;
     mapping(IERC20 => mapping(address => uint256)) private _erc20Released;
 

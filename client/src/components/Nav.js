@@ -22,7 +22,9 @@ const Navbar = () => {
   const loadData = async () => {
     const web3 = await getWeb3();
     const chainId = await web3.eth.getChainId();
-    setUserAddress(window.ethereum.selectedAddress);
+    try {
+      setUserAddress(window.ethereum.selectedAddress);
+    } catch (err) {}
     await setChainId(chainId);
     setNetwork(getCurrentNetwork(chainId));
   };
