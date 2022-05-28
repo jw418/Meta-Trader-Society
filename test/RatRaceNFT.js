@@ -1,5 +1,8 @@
+// Tests pour le Smart contract RatRaceNFT.sol
+// import des SC
 const RatRaceNFT = artifacts.require(`./RatRaceNFT.sol`);
 const TestTxOrigin = artifacts.require(`./TestTxOrigin.sol`);
+// import chai/test-helpers
 const {
   BN,
   expectRevert,
@@ -10,24 +13,34 @@ const {
 } = require(`@openzeppelin/test-helpers`);
 const { expect } = require(`chai`);
 
+
+
 contract(`RatRaceNFT`, function (accounts) {
+
+  // constant des adresses pour les tests
   const owner = accounts[0];
   const user1 = accounts[1];
   const user2 = accounts[2];
   const tester = accounts[9];
 
+  // pour le constructeur
   const team = [accounts[2], accounts[3], accounts[4]];
   const share = [45, 45, 10];
+  
+  const reelAmount = ether(`1`);  // pour tester le prix du mint
+ 
+  var testCounter = 0;   // variable qui permet de numéroter nos tests
 
-  const reelAmount = ether(`1`);
-  var testCounter = 0;
 
+  // on déploie le contrat avant chaque test
   beforeEach(async function () {
     this.RatRaceNFTInstance = await RatRaceNFT.new(`URI`, team, share, {
       from: owner,
     });
   });
 
+
+  // on vérifie toutes les variables/constantes de notre contrat 
   context(`###### variable test ######`, () => {
     it(`${testCounter++}: max_supply must be equal to 3333`, async function () {
       const maxSupply = await this.RatRaceNFTInstance.max_supply();
@@ -140,6 +153,7 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // les tests pour le constructeur
     context(`###### test contructor ######`, () => {
       it(`${testCounter++}: name must be RatRace`, async function () {
         const name = await this.RatRaceNFTInstance.name();
@@ -176,6 +190,8 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // test de enum statemint, on vérifie l'état au déploiement
+    // puis que l'état du mint sois correcctement changé
     context(`###### test StateMint ######`, () => {
       it(`${testCounter++}: StateMint should be paused`, async function () {
         const state = await this.RatRaceNFTInstance.StateMint.call();
@@ -218,6 +234,7 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // on vérifie que les valeurs dans le contrat soit correctement changé
     context(`###### change value ######`, () => {
       it(`${testCounter++}: baseUri must be change`, async function () {
         const NewUri = `newuri.test`;
@@ -271,8 +288,11 @@ contract(`RatRaceNFT`, function (accounts) {
         await expect(newMAxMintAllowed).to.be.bignumber.equal(`5`);
       });
     });
-
+    
+    // on test la fonction mintNFT
     context(`###### test mint ######`, () => {
+
+      // pour ce test on déploie un contrat de test (TestTxOrigin.sol) qui apelle la fonction minNFT 
       it(`${testCounter++}: minfNFT() should have a revert:"Contract cannot call this function"`, async function () {
         const addressRat = await this.RatRaceNFTInstance.address;
         await this.RatRaceNFTInstance.setMintOpen({ from: owner });
@@ -404,6 +424,7 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // on test le modifier owner sur les fonctions qui l'utilisent
     context(`###### only owner ######`, () => {
       it(`${testCounter++}: Should revert priceSale`, async function () {
         await expectRevert(
@@ -461,10 +482,13 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+     // test de la fonction release qui permet aux différentes adresses de isTeam d'être payé 
     context(`###### test release ######`, () => {
       it(`${testCounter++}: Should release to a member of the team`, async function () {
-        //Send 1 eth
+        //Send 1 eth au contrat
         await send.ether(owner, this.RatRaceNFTInstance.address, reelAmount);
+
+        // on vérifie que les adresses font bien partie de isTeam
         await expect(
           await this.RatRaceNFTInstance.isTeam(accounts[2])
         ).to.be.equal(true);
@@ -474,6 +498,7 @@ contract(`RatRaceNFT`, function (accounts) {
         await expect(
           await this.RatRaceNFTInstance.isTeam(accounts[4])
         ).to.be.equal(true);
+
         //Test first share
         const tracker1 = await balance.tracker(accounts[2]);
         await this.RatRaceNFTInstance.release(accounts[2], {
@@ -481,6 +506,7 @@ contract(`RatRaceNFT`, function (accounts) {
         });
         const profit1 = await tracker1.delta();
         await expect(profit1).to.be.bignumber.equal(ether(`0.45`));
+
         //Test second share
         const tracker2 = await balance.tracker(accounts[3]);
         await this.RatRaceNFTInstance.release(accounts[3], {
@@ -488,6 +514,7 @@ contract(`RatRaceNFT`, function (accounts) {
         });
         const profit2 = await tracker2.delta();
         await expect(profit2).to.be.bignumber.equal(ether(`0.45`));
+
         //Test third share
         const tracker3 = await balance.tracker(accounts[4]);
         await this.RatRaceNFTInstance.release(accounts[4], {
@@ -497,6 +524,7 @@ contract(`RatRaceNFT`, function (accounts) {
         await expect(profit3).to.be.bignumber.equal(ether(`0.10`));
       });
 
+      // on vérifie qu'une autres adresse ne puisse déclencher un paiement
       it(`${testCounter++}: Shouldn't release`, async function () {
         await send.ether(owner, this.RatRaceNFTInstance.address, reelAmount);
         await expectRevert(
@@ -506,6 +534,7 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // on test la fonction tokenURI
     context(`###### tokenURI ######`, () => {
       it(`${testCounter++}: Shouldn't return tokenId doesn't exist`, async function () {
         await expectRevert(
@@ -525,6 +554,7 @@ contract(`RatRaceNFT`, function (accounts) {
       });
     });
 
+    // on test l'émission des events
     context("###### events ######", () => {
       it(`${testCounter++}: Emit premit`, async function () {
         const receipt = await this.RatRaceNFTInstance.setToPremint({

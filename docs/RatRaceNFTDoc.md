@@ -24,7 +24,6 @@ This contract is an ERC721 was written as part of our final project alyra
 | └ | mintNFT | External ❗️ |  💵 |NO❗️ |
 | └ | tokenURI | Public ❗️ |   |NO❗️ |
 
-
  Legend
 
 |  Symbol  |  Meaning  |
@@ -201,8 +200,8 @@ Returns:
 
 ###### max_mint_allowed
 
-**\*\*Add Documentation for the method here\*\***
-max mint per address
+**\*\*max mint allowed per address\*\***
+
 No parameters
 
 Returns:
@@ -215,8 +214,8 @@ Returns:
 
 ###### max_supply
 
-**\*\*Add Documentation for the method here\*\***
-is the max_supply of the collection
+**\*\*is the max_supply of the collection\*\***
+
 
 No parameters
 
@@ -241,8 +240,8 @@ No parameters
 
 ###### mintOpen
 
-**\*\*Add Documentation for the method here\*\***
-boolean return if the mint is open
+**\*\*boolean return if the mint is open\*\***
+
 
 No parameters
 
@@ -270,8 +269,8 @@ Returns:
 
 ###### nftBalance
 
-**\*\*Add Documentation for the method here\*\***
-Balance nft of each address
+**\*\*Balance nft of each address\*\***
+
 
 | Name | Type    | Description |
 | ---- | ------- | ----------- |
@@ -333,8 +332,8 @@ Returns:
 
 ###### priceSale
 
-**\*\*Add Documentation for the method here\*\***
-Price of the mint
+**\*\*Price of the mint\*\***
+
 
 No parameters
 
@@ -658,18 +657,6 @@ Transfers ownership of the contract to a new account (\`newOwner\`). Can only be
 | Name     | Type    | Description |
 | -------- | ------- | ----------- |
 | newOwner | address |
-
-Returns:
-
-No parameters
-
----
-
-###### undefined
-
-**\*\*Add Documentation for the method here\*\***
-
-No parameters
 
 Returns:
 
