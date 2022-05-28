@@ -45,29 +45,15 @@ This is the smart contract of OppenZeppelin PayementSpliter.sol to which we have
 
 **Functions**
 
-* * *
-
 ###### constructor
 
 \[object Object\]
 
-Name
+| Name    | Type      | Description                            |
+|---------|-----------|----------------------------------------|
+| payees  | address[] | array of addresses to be paid          |
+| shares_ | uint256[] | arrays of the distribution of payments |
 
-Type
-
-Description
-
-payees
-
-address\[\]
-
-array of addresses to be paid
-
-shares\_
-
-uint256\[\]
-
-arrays of the distribution of payments
 
 Returns:
 
@@ -77,51 +63,36 @@ No parameters
 
 ###### isTeam
 
-**\*\*Add Documentation for the method here\*\***
+**\*\*Verify for a given address if is a team members\*\***
 
 Name
 
-Type
-
-Description
-
-address
+| Name    | Type | Description |
+|---------|------|-------------|
+| address |
 
 Returns:
 
-Name
+| Name | Type | Description |
+|------|------|-------------|
+| bool |
 
-Type
-
-Description
-
-bool
 
 * * *
 
 ###### payee
 
-Name
+| Name  | Type    | Description                 |
+|-------|---------|-----------------------------|
+| index | uint256 | an index of the payee array |
 
-Type
-
-Description
-
-index
-
-uint256
-
-an index of the payee array
 
 Returns:
 
-Name
+| Name    | Type | Description |
+|---------|------|-------------|
+| address |
 
-Type
-
-Description
-
-address
 
 * * *
 
@@ -129,17 +100,10 @@ address
 
 Triggers a transfer to \`account\` of the amount of Ether they are owed, according to their percentage of the total shares and their previous withdrawals.
 
-Name
+| Name    | Type    | Description         |
+|---------|---------|---------------------|
+| account | address | account to released |
 
-Type
-
-Description
-
-account
-
-address
-
-account to released
 
 Returns:
 
@@ -151,21 +115,11 @@ No parameters
 
 Triggers a transfer to \`account\` of the amount of Ether they are owed, according to their percentage of the total shares and their previous withdrawals.
 
-Name
+| Name    | Type    | Description         |
+|---------|---------|---------------------|
+| token   | address |
+| account | address | account to released |
 
-Type
-
-Description
-
-token
-
-address
-
-account
-
-address
-
-account to released
 
 Returns:
 
@@ -175,107 +129,64 @@ No parameters
 
 ###### released
 
-Name
+| Name    | Type    | Description               |
+|---------|---------|---------------------------|
+| token   | address |
+| account | address | the account to be queried |
 
-Type
-
-Description
-
-token
-
-address
-
-account
-
-address
-
-the account to be queried
 
 Returns:
 
-Name
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
 
-Type
-
-Description
-
-uint256
 
 * * *
 
 ###### released
 
-Name
+| Name    | Type    | Description               |
+|---------|---------|---------------------------|
+| account | address | the account to be queried |
 
-Type
-
-Description
-
-account
-
-address
-
-the account to be queried
 
 Returns:
 
-Name
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
 
-Type
-
-Description
-
-uint256
 
 * * *
 
 ###### shares
 
-Name
-
-Type
-
-Description
-
-account
-
-address
-
-account to be queried
+| Name    | Type    | Description           |
+|---------|---------|-----------------------|
+| account | address | account to be queried |
 
 Returns:
 
-Name
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
 
-Type
-
-Description
-
-uint256
 
 * * *
 
 ###### totalReleased
 
-Name
+| Name  | Type    | Description |
+|-------|---------|-------------|
+| token | address |
 
-Type
-
-Description
-
-token
-
-address
 
 Returns:
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
 
-Name
-
-Type
-
-Description
-
-uint256
 
 * * *
 
@@ -285,13 +196,10 @@ No parameters
 
 Returns:
 
-Name
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
 
-Type
-
-Description
-
-uint256
 
 * * *
 
@@ -301,22 +209,6 @@ No parameters
 
 Returns:
 
-Name
-
-Type
-
-Description
-
-uint256
-
-* * *
-
-###### undefined
-
-**\*\*Add Documentation for the method here\*\***
-
-No parameters
-
-Returns:
-
-No parameters
+| Name    | Type | Description |
+|---------|------|-------------|
+| uint256 |
