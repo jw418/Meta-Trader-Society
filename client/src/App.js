@@ -189,7 +189,6 @@ const App = () => {
             {showMultiMint && (
               <DisplayMint trigger={setShowMultiMint} nftInfos={nftInfos} />
             )}
-
             {isMinted && (
               <div className="image_mint">
                 {!multiMint ? (

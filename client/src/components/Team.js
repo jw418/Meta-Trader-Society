@@ -22,8 +22,8 @@ const Team = () => {
         </div>
         <div className="team_member">
             <img className="team_member_img" src="../img/dev_2.png"/>
-            <h3>DEV2</h3>
-            <p>bala bla bla ùdloijzjd ùdo, qzji</p>
+            <h3>Tristan Boettger-Magnier</h3>
+            <p>Dévoloppeur depuis...</p>
         </div>
      </div>       
     </div>
