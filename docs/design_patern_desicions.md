@@ -33,4 +33,4 @@ hashlips_art_engine est outil créé spécifiquement pour ça, il permet de gér
 
 ## Stockage des images et des metadata
 
-Pinata et NFT.Storage sont les deux principaux service de stockage décentarlisé, nous avons utilisé Pinata lors du dévloppement de ce projet ( ...cela peut changer) 
+Pinata est l'un des principaux service de stockage décentarlisé, il est facile d'utilisation et assure un stockage décentarlisé sur IPFS.
