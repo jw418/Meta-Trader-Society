@@ -70,13 +70,18 @@ Pour voir le front en local:
 Sinon directement sur: https://mtsalyra.herokuapp.com/
 
 ## Se connecter et minter un Rat
+
 Rendez-vous sur nôtre DAPP.
+
 Assurez vous d'être sur le réseau de test Rinkeby puis cliquer sur le bouton connect:
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/Connect.PNG)
+
 Sélectionner le compte auquel vous désirez vous connecter puis cliquer sur suivant:
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/Connexion.PNG)
+
 Vôtre adresse devrait apparaître à côté de l'icône Metamask.
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/Connected.PNG)
+
 Vous pouvez désormais cliquer sur mint dans la barre de navigation.
 Pour minter un RatRaceNFT, indiquez la quantité souhaité et cliquez sur mint,
 Metamask s'ouvrira et vous demandera si vous souhaitez valider la transaction.
