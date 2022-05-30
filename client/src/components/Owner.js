@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Release from "./Release"
 import RatRaceNFT from "../contracts/RatRaceNFT.json";
 import getWeb3 from "../getWeb3";
 
@@ -15,7 +16,7 @@ const Owner = () => {
   const [address, setAddress] = useState("");
   const [mintInfo, setMintInfo] = useState();
   const [imagesLoaded, setImagesLoaded] = useState();
-
+  const [price,setPrice] = useState();
 
   useEffect(async () => {
     await loadData();
@@ -71,6 +72,15 @@ const Owner = () => {
     setMintInfo(await loadNft(tokenId));
   };
 
+
+  const handlePriceChange = async (price) => {
+    // price = price / 10**18
+    price = web3.utils.toWei(price.toString(), "ether");
+    await contract.methods.changePriceSale(price).send({from:accounts[0]}).then(() => {
+      alert(`prix changé`)
+    })
+  }
+
   const loadNft = async (tokenId) => {
     let url = await contract.methods.tokenURI(tokenId).call();
     let temp;
@@ -102,6 +112,9 @@ const Owner = () => {
             <>
               <h3>Mettre en pause le contract</h3>
               <button onClick={paused}>Pause</button>
+              <h4>Changer le prix du mint</h4>
+              <input type={"number"} name="price" onChange={(e) => setPrice(e.target.value)}/>
+              <button onClick={() => handlePriceChange(price)}>Changer</button>
             </>
           )}
           {mintStatus == "Pre mint" &&
@@ -139,6 +152,7 @@ const Owner = () => {
       ) : (
         <h1>Vous n'êtes pas un dev</h1>
       )}
+      <Release/>
     </div>
   );
 };

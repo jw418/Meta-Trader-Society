@@ -29,7 +29,6 @@ const App = () => {
   const [mintStatus, setMintStatus] = useState(true);
   const [multiMint, setMultiMint] = useState(false);
   const [showMultiMint, setShowMultiMint] = useState();
-  const [isOwner, setIsOwner] = useState(false);
   const [, fctMiseAJour] = useState({});
   const miseAJour = useCallback(() => fctMiseAJour({}), []);
 
@@ -50,9 +49,7 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
 
     //Set to all the state
-    setNftBalance(
-      await contract.methods.balanceOfNftMinted(accounts[0]).call()
-    );
+    setNftBalance(await getNFTIndex(contract, accounts[0]));
     setBalance(Balance / 10 ** 18);
     setContract(contract);
     setMintPrice(await contract.methods.priceSale().call());
@@ -75,18 +72,19 @@ const App = () => {
 
   //Load the wallet of the user
   const loadWalletNFT = async (contract) => {
-    if (nftBalanceIndex.length + nftWallet.length >= 3) {
-      for (let index = 0; index < nftWallet.length; index++) {
-        nftWallet.splice(index, 1);
-      }
-    }
+    let data = [];
     await getNFTIndex(contract, userAddress);
-    nftBalanceIndex.forEach(async (n, i) => {
+    console.log(nftBalanceIndex.length);
+    for (let index = 0; index <= nftBalanceIndex.length; index++) {
+      nftWallet.splice(index, 1);
+    }
+    await nftBalanceIndex.forEach(async (n, i) => {
       let url = await contract.methods.tokenURI(n).call();
       nftWallet.push(await fetchData(url));
+      data.push(await fetchData(url));
       miseAJour();
     });
-    if (nftBalanceIndex.length + nftWallet.length == 4) nftWallet.shift();
+    return data;
   };
 
   const loadMint = async (number, index) => {
@@ -119,13 +117,16 @@ const App = () => {
 
   const getNFTIndex = async (contract, accounts) => {
     const totalSupply = await contract.methods.totalSupply().call();
+    let balance = 0;
     for (let i = 1; i <= totalSupply; i++) {
       if ((await contract.methods.ownerOf(i).call()) == accounts) {
         if (!nftBalanceIndex.includes(i)) {
           nftBalanceIndex.push(i);
+          balance++;
         }
       }
     }
+    return balance;
   };
 
   const mintFonction = async () => {
@@ -147,17 +148,10 @@ const App = () => {
           await loadMint(inputValue, index);
           setInputError(false);
           setIsMinted(true);
-          await getNFTIndex(contract, accounts[0]);
-          updateNFTBalance();
           updateBalance();
-          loadWalletNFT(contract);
+          setNftBalance(parseInt(nftBalance) + parseInt(inputValue));
+          setNftWallet(await loadWalletNFT(contract));
         });
-  };
-
-  const updateNFTBalance = async () => {
-    setNftBalance(
-      await contract.methods.balanceOfNftMinted(accounts[0]).call()
-    );
   };
 
   const updateBalance = async () => {
