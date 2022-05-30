@@ -82,10 +82,10 @@ contract(`RatRaceNFT`, function (accounts) {
       );
     });
 
-    it(`${testCounter++} : priceMin must be equal to 1 ether`, async function () {
+    it(`${testCounter++} : priceMin must be equal to 0.01 ether`, async function () {
       const priceMin = await this.RatRaceNFTInstance.priceMin();
       await expect(priceMin).to.be.bignumber.equal(
-        ether(`1`),
+        ether(`0.01`),
         `priceMin is not equal to 1 ether`
       );
     });

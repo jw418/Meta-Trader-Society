@@ -269,7 +269,6 @@ const App = () => {
       <section id="team">
         <Team />
       </section>
-      <Footer />
     </>
   );
 };
