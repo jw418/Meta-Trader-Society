@@ -2,7 +2,7 @@
 
 Lancement de la première collection NFTs ART TRADING BOT qui rassemble l'art numérique, la technologie algorithmique prédictive et l'intelligence artificielle appliquée au trading.
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/logo.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/logo.png)
 
 ## Présentation du projet
 
@@ -73,17 +73,17 @@ Sinon directement sur: https://mtsalyra.herokuapp.com/
 #### Importer dans metamask
 
 Rendez-vous sur votre compte metamask et cilquez sur "importer des jetons".
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/CaptureMetamask.PNG.png)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/CaptureMetamask.PNG)
 
 Renseignez L'addresse du contrat(ROPSTEN Testnet) et mettre 0 pour "Token Decimal".
 ```sh
 0x438505946e9F4b1dFE7Bd83cf353b5B5505651F3
 ```
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/addToken.PNG)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/addToken.PNG)
 
 Voila, vous pouvez visualiser le nombre de NFT que vous possédez.
 
-![](https://github.com/jw418/Meta-Trader-Society/blob/main/ratToken.PNG)
+![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/ratToken.PNG)
 
 
 ### Tests :test_tube:
