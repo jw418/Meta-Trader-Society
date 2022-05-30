@@ -14,11 +14,9 @@ const DisplayMint = ({ trigger, nftInfos }) => {
           {nftInfos &&
             nftInfos.map((n, i) => (
               <ul key={i}>
-                {!imagesLoaded && <img src="../img/load.gif" />}
-
                 <img
                   style={{ width: "300px", height: "300px" }}
-                  src={n.image}
+                  src={imagesLoaded ? n.image : "../img/load.gif"}
                   onLoad={() => setImagesLoaded(true)}
                 />
                 <ul className="showAttributes">

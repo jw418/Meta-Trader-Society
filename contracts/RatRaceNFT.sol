@@ -32,7 +32,7 @@ contract RatRaceNFT is ERC721Enumerable, PaymentSplitter, Ownable {
 
     uint256 public max_mint_allowed = 3;
 
-    uint256 public constant priceMin = 1000000000 gwei;
+    uint256 public constant priceMin = 10000000 gwei;
 
     uint256 public constant priceMax = 5000000000 gwei;
 

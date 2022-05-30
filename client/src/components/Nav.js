@@ -60,7 +60,7 @@ const Navbar = () => {
           <a href="#team">Team</a>
         </span>
         <span className="un">
-          <a>NFT Wallet</a>
+          <a href="#wallet">NFT Wallet</a>
         </span>
       </ul>
 

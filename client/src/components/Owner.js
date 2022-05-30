@@ -12,6 +12,10 @@ const Owner = () => {
   const [isTeam, setIsTeam] = useState();
   const [isOwner, setIsOwner] = useState();
   const [mintStatus, setMintStatus] = useState("");
+  const [address, setAddress] = useState("");
+  const [mintInfo, setMintInfo] = useState();
+  const [imagesLoaded, setImagesLoaded] = useState();
+
 
   useEffect(async () => {
     await loadData();
@@ -49,7 +53,7 @@ const Owner = () => {
   };
 
   const preMint = async () => {
-    await contract.methods.setMintOpen().send({ from: accounts[0] });
+    await contract.methods.setToPremint().send({ from: accounts[0] });
     getState(contract);
   };
 
@@ -57,6 +61,27 @@ const Owner = () => {
     await contract.methods.setMintPaused().send({ from: accounts[0] });
     getState(contract);
   };
+
+  const handleGift = async (address) => {
+    let tokenId;
+    await contract.methods.gift(address).send({ from: accounts[0] }).then(async (data) => {
+      tokenId = data.events.Transfer.returnValues.tokenId
+    });
+    setMintInfo(await loadNft(tokenId));
+  };
+
+  const loadNft = async (tokenId) => {
+    let url = await contract.methods.tokenURI(tokenId).call();
+    let temp;
+    url = url.slice(7, url.length);
+    await fetch("https://ipfs.io/ipfs/" + url)
+      .then((res) => res.json())
+      .then((data) => {
+        temp = data;
+        temp.image = data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+      })
+      return temp
+    }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -78,6 +103,37 @@ const Owner = () => {
               <button onClick={paused}>Pause</button>
             </>
           )}
+          {mintStatus == "Pre mint" &&
+          <div>
+            <h3>Passer à mint open :</h3>
+              <button onClick={mintOpen}>Mint Open</button>
+            <p  style={{marginTop:"25px"}}>Faire un gift</p>
+            <label htmlFor="address" >
+              Address
+              <input name="address" type={"text"} onChange={(e) => setAddress(e.target.value)}/>
+            </label>
+            <button onClick={() => handleGift(address)}>Gift</button>
+
+            {mintInfo &&
+              <ul>
+                <img
+                  style={{ width: "300px", height: "300px" }}
+                  src={imagesLoaded ? mintInfo.image : "../img/load.gif"}
+                  onLoad={() => setImagesLoaded(true)}
+                />
+                <ul className="showAttributes">
+                  {mintInfo.attributes.map((n, i) => (
+                    <li key={i}>
+                      <p>
+                        {n.trait_type} : {n.value}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </ul>
+              }
+          </div>
+          }
         </div>
       ) : (
         <h1>Vous n'êtes pas un dev</h1>

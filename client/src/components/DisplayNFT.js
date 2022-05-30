@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const DisplayNFT = ({ nftInfos }) => {
   const [imagesLoaded, setImagesLoaded] = useState();
   return (
-    <div className="displayNFT_pages">
+    <div className="displayNFT_pages" id="wallet">
       <h1>Wallet NFT</h1>
       <div className="displayOwned">
         {nftInfos &&

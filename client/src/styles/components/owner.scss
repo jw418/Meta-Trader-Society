@@ -1,0 +1,18 @@
+.showAttributes{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 5px;
+
+    li{
+        display: flex;
+        height: 50px;
+        margin: 5px;
+        background-color: rgba(255, 255, 255, 0.396);
+        border:1px solid  rgba(105, 235, 255, 0.779);
+        border-radius: 10px;
+    
+        p{
+            margin: auto;
+        }
+    }
+}

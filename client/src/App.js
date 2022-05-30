@@ -51,8 +51,7 @@ const App = () => {
 
     //Set to all the state
     setNftBalance(
-      (await contract.methods.balanceOfNftMinted(accounts[0]).call()) ==
-        accounts[0]
+      await contract.methods.balanceOfNftMinted(accounts[0]).call()
     );
     setBalance(Balance / 10 ** 18);
     setContract(contract);
@@ -165,19 +164,6 @@ const App = () => {
     setBalance(Balance / 10 ** 18);
   };
 
-  // const handleScroll = (e) => {
-  //   const navbar = document.querySelector(".navbar_components");
-  //   if (window.scrollY > 400) {
-  //     navbar.style.top = "-150px";
-  //   } else {
-  //     navbar.style.top = "0";
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  // }, []);
-
   return (
     <>
       <div className="home">
@@ -267,7 +253,12 @@ const App = () => {
           </div>
         </div>
       </div>
-      {nftBalance >= 1 && <DisplayNFT nftInfos={nftWallet} />}
+      {nftBalance >= 1 && (
+        <>
+          <div className="trait"></div>
+          <DisplayNFT nftInfos={nftWallet} />
+        </>
+      )}
       <div className="trait"></div>
       <section id="roadmap">
         <Roadmap />

@@ -3,11 +3,8 @@
     flex-direction: column;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.8);    
+    color: white;
 
-
-    h1{
-        color: black;
-    }
     .displayOwned{
         display: grid;
         grid-template-columns: 33% 33% 33%;
