@@ -9,7 +9,7 @@ import Description from "./components/Description";
 import Team from "./components/Team";
 import Roadmap from "./components/Roadmap";
 import Navbar from "./components/Nav";
-import { scroller } from "react-scroll/modules";
+//import { scroller } from "react-scroll/modules";
 
 const App = () => {
   const [web3, setWeb3] = useState();

@@ -10,12 +10,16 @@ const Team = () => {
             <h3>CDP_1</h3>
             <p>Chef de projet</p>
             <p>Product Owner</p>
+            <br></br>
+            <p>Etablie la stratégie des Rats</p>
         </div>
         <div className="team_member">
             <img className="team_member_img" src="../img/cdp_2.png"/>
             <h3>CDP_2</h3>
             <p>Chef de projet</p>
             <p>Scrum Master</p>
+            <br></br>
+            <p>Nous guide dans le labyrinthe</p>
         </div>
         <div className="team_member">
             <img className="team_member_img" src="../img/dev_1.png"/>
