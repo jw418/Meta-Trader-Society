@@ -45,6 +45,7 @@ const Owner = () => {
     if (status == 0) setMintStatus("Paused");
     if (status == 1) setMintStatus("Pre mint");
     if (status == 2) setMintStatus("Mint open");
+    if (status == 3) setMintStatus("Mint close");
   };
 
   const mintOpen = async () => {

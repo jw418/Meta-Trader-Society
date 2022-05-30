@@ -9,7 +9,7 @@ import Description from "./components/Description";
 import Team from "./components/Team";
 import Roadmap from "./components/Roadmap";
 import Navbar from "./components/Nav";
-import { scroller } from "react-scroll/modules";
+//import { scroller } from "react-scroll/modules";
 
 const App = () => {
   const [web3, setWeb3] = useState();
@@ -70,6 +70,7 @@ const App = () => {
     if (status == 0) setMintStatus("paused");
     if (status == 1) setMintStatus("pre mint");
     if (status == 2) setMintStatus("mint open");
+    if (status == 3) setMintStatus("Mint close");
   };
 
   //Load the wallet of the user
