@@ -62,7 +62,7 @@ Le lien de leur repo : https://github.com/HashLips/hashlips_art_engine
 
 ## Usage
 
-### Front
+## Front
 Pour voir le front en local:
 ```sh
  cd client
@@ -70,7 +70,7 @@ Pour voir le front en local:
 ```
 Sinon directement sur: https://mtsalyra.herokuapp.com/
 
-#### Importer dans metamask
+## Importer dans metamask
 
 Rendez-vous sur votre compte metamask et cilquez sur "importer des jetons".
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/CaptureMetamask.PNG)
@@ -86,7 +86,7 @@ Voila, vous pouvez visualiser le nombre de NFT que vous possédez.
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/ratToken.PNG)
 
 
-### Tests :test_tube:
+# Tests :test_tube:
 
 Vous pouvez exécuter les scripts de tests de nos smart contracts:
 
