@@ -106,6 +106,7 @@ Renseignez L'addresse du contrat(ROPSTEN Testnet) et mettre 0 pour "Token Decima
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/addToken.PNG)
 
 Voila, vous pouvez visualiser le nombre de NFT que vous possédez.
+
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/ratToken.PNG)
 
 # Tests :test_tube:
