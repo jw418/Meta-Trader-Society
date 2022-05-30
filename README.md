@@ -98,11 +98,13 @@ Vous pourrez aussi y suivre les données de la collection comme la rareté, le v
 
 Rendez-vous sur votre compte metamask et cilquez sur "importer des jetons".
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/CaptureMetamask.PNG)
+
 Renseignez L'addresse du contrat(ROPSTEN Testnet) et mettre 0 pour "Token Decimal".
 ```sh
 0x438505946e9F4b1dFE7Bd83cf353b5B5505651F3
 ```
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/addToken.PNG)
+
 Voila, vous pouvez visualiser le nombre de NFT que vous possédez.
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/ratToken.PNG)
 
