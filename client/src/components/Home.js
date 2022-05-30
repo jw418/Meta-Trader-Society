@@ -8,16 +8,16 @@ const Home = () => {
   const [name, setNames] = useState();
   const data = [
     {
-      image: "../img/1.png",
-      name: "RatRace_1",
+      image: "../img/429.png",
+      name: "RatRace_429",
     },
     {
-      image: "../img/4.png",
-      name: "RatRace_4",
+      image: "../img/103.png",
+      name: "RatRace_103",
     },
     {
       image: "../img/5.png",
-      name: "RatRace_5",
+      name: "RatRace_450",
     },
     {
       image: "../img/43.png",
@@ -94,7 +94,7 @@ const Home = () => {
             </p>
           </div>
           <div id="sliderText" className="div_title_NFT">
-            <p>{name ? name : "RatRace_1"}</p>
+            <p>{name ? name : "RatRace_875"}</p>
           </div>
         </div>
       </div>

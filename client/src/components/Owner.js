@@ -31,14 +31,14 @@ const Owner = () => {
       RatRaceNFT.abi,
       deployedNetwork && deployedNetwork.address
     );
-
+    
+    getState(contract);
     if (await contract.methods.owner().call()) setIsOwner(true);
     await setWeb3(web3);
     await setUserAddress(accounts);
     await setAccouts(accounts);
     setContract(contract);
     setDeployedNetwork(deployedNetwork);
-    getState(contract);
   };
 
   const getState = async (contract) => {

@@ -49,13 +49,13 @@ const App = () => {
     const Balance = await web3.eth.getBalance(accounts[0]);
 
     //Set to all the state
+    mintState(contract);
     setNftBalance(await getNFTIndex(contract, accounts[0]));
     setBalance(Balance / 10 ** 18);
     setContract(contract);
     setMintPrice(await contract.methods.priceSale().call());
     setWeb3(web3);
     setAccouts(accounts);
-    mintState(contract);
     await setUserAddress(accounts[0]);
     await getNFTIndex(contract, accounts[0]);
     setNetwordId(networkId);
