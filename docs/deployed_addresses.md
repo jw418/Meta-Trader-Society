@@ -1,6 +1,6 @@
 # Deployed addresses :memo::pencil:
 
-## Ropsten
+## Rinkeby
 
 ### RatRaceNFT
 
