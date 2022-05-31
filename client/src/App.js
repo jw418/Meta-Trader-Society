@@ -144,6 +144,7 @@ const App = () => {
               index.push(n.returnValues.tokenId);
             });
           else index = res.events.Transfer.returnValues.tokenId;
+          console.log(index);
 
           await loadMint(inputValue, index);
           setInputError(false);
