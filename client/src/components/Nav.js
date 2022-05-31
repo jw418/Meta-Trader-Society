@@ -37,7 +37,6 @@ const Navbar = () => {
   };
 
   const getCurrentNetwork = (chainId) => {
-    console.log(chainId);
     return NETWORKS[chainId];
   };
 

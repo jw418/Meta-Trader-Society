@@ -470,7 +470,7 @@
   "sourceMap": "348:347:17:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "348:347:17:-:0;;;;;;;;;;;;;;;;;;;;;568:124;;;;;;:::i;:::-;;:::i;:::-;;;659:25;;-1:-1:-1;;;659:25:17;;;;;538::18;;;-1:-1:-1;;;;;659:16:17;;;;;511:18:18;;659:25:17;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;568:124;;:::o;14:373:18:-;101:6;109;162:2;150:9;141:7;137:23;133:32;130:52;;;178:1;175;168:12;130:52;204:23;;-1:-1:-1;;;;;256:31:18;;246:42;;236:70;;302:1;299;292:12;236:70;325:5;377:2;362:18;;;;349:32;;-1:-1:-1;;;14:373:18:o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\nimport \"./RatRaceNFT.sol\"; \r\n\r\n/**\r\n*   @title Contract testTxOrigin\r\n*   \r\n*   @author Julien Wolff Tristan Boettger\r\n*   \r\n*   @notice this is a test contract. It tests the require tx.origin == msg.sender \r\n*   of the mintNFT function of our smart contract RatRaceNFT.sol \r\n*/\r\ncontract TestTxOrigin {    \r\n    /** \r\n    *   @notice this fonction test a require in RatRaceNFT.sol  \r\n    *\r\n    *   @param _address addres du SC RatRaceNFT.sol\r\n    *\r\n    *   @param _amount qty to mint\r\n    */\r\n    function testMint(RatRaceNFT _address, uint256 _amount) external payable {        \r\n       _address.mintNFT(_amount);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\Tristan\\Desktop\\Meta-Trader-Society\\contracts\\TestTxOrigin.sol",
+  "sourcePath": "E:\\Projet Final\\Meta-Trader-Society\\contracts\\TestTxOrigin.sol",
   "ast": {
     "absolutePath": "project:/contracts/TestTxOrigin.sol",
     "exportedSymbols": {
@@ -1044,8 +1044,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-05-30T14:46:05.389Z",
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2022-05-31T08:07:33.226Z",
   "devdoc": {
     "author": "Julien Wolff Tristan Boettger   ",
     "kind": "dev",

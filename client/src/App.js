@@ -98,7 +98,7 @@ const App = () => {
       setNftInfos(data);
     } else {
       setMultiMint(false);
-      let url = await contract.methods.tokenURI(index[0]).call();
+      let url = await contract.methods.tokenURI(index).call();
       setNftInfos(await fetchData(url));
     }
   };
