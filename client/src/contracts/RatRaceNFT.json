@@ -37565,12 +37565,12 @@
         }
       },
       "links": {},
-      "address": "0xe4601f7a0ACba1b36C321Cfdc5666E77009Ca58E",
-      "transactionHash": "0x0a441897da68d585523a8e062729fa6fae1fd936bafdbf7cff274f1c6fc7e17b"
+      "address": "0x92c1FE9b88610794Bbbfb1625018a3A88Ea46535",
+      "transactionHash": "0x7cbfb99f409c989219f47f8916522e5bca223dc97b398014e07ba111753fd60b"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-05-31T08:07:39.646Z",
+  "updatedAt": "2022-05-31T12:35:33.630Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Julien Wolff Tristan Boettger",
