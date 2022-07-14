@@ -101,7 +101,7 @@ Rendez-vous sur votre compte metamask et cilquez sur "importer des jetons".
 
 Renseignez L'addresse du contrat(Rinkeby Testnet) et mettre 0 pour "Token Decimal".
 ```sh
-0x438505946e9F4b1dFE7Bd83cf353b5B5505651F3
+0x235AF693CbF50A365c5e8E3FF08EEC5d135EB5Aa
 ```
 ![](https://github.com/jw418/Meta-Trader-Society/blob/main/img/addToken.PNG)
 
